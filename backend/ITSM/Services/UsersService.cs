@@ -1,4 +1,5 @@
-﻿using ITSM.Data;
+﻿using AutoMapper;
+using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
 
@@ -6,23 +7,23 @@ namespace ITSM.Services
 {
     public class UsersService
     {
-        ITSMContext _context;
+        private readonly IMapper _mapper;
+        private readonly ITSMContext _context;
 
-        public UsersService(ITSMContext context) 
+        public UsersService(ITSMContext context, IMapper mapper) 
         {
-            _context = context; 
+            _context = context;
+            _mapper = mapper;
         }
 
         public List<UserDto> GetUsers()
         {
-            return _context.Users.Select(user => new UserDto { Id = user.Id, Name = user.Name, Email = user.Email}).ToList();
+            return _context.Users.Select(user => _mapper.Map<UserDto>(user)).ToList();
         }
 
         public UserDto GetUserById(int id)
         {
-            var user = _context.Users.Where(u => u.Id == id)
-                .Select(u => new UserDto { Id = u.Id, Name = u.Name, Email = u.Email })
-                .FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == id).Select(u => _mapper.Map<UserDto>(u)).FirstOrDefault();
             if (user == null)
                 return null;
             return user;
@@ -30,11 +31,11 @@ namespace ITSM.Services
 
         public UserDto CreateUser(CreateUserDto userDto)
         {
-            User user = new User { Name = userDto.Name, Email = userDto.Email, Password = userDto.Password };
+            User user = _mapper.Map<User>(userDto);
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return new UserDto { Id = user.Id, Name = user.Name, Email = user.Email };
+            return _mapper.Map<UserDto>(user);
         }
 
         public UserDto UpdateUser(UserDto userDto)
@@ -43,15 +44,33 @@ namespace ITSM.Services
             if (user == null)
                 return null;
 
+            if (!string.IsNullOrEmpty(userDto.Login))
+                user.Login = userDto.Login;
+
             if (!string.IsNullOrEmpty(userDto.Name))
                 user.Name = userDto.Name;
+
+            if (!string.IsNullOrEmpty(userDto.Surname))
+                user.Surname = userDto.Surname;
 
             if (!string.IsNullOrEmpty(userDto.Email))
                 user.Email = userDto.Email;
 
+            if (userDto.CreationDate != DateTime.MinValue)
+                user.CreationDate = userDto.CreationDate;
+
+            if (!string.IsNullOrEmpty(userDto.Group))
+                user.Group = userDto.Group;
+
+            if (!string.IsNullOrEmpty(userDto.Occupation))
+                user.Occupation = userDto.Occupation;
+
+            if (!string.IsNullOrEmpty(userDto.Status))
+                user.Status = userDto.Status;
+
             _context.SaveChanges();
 
-            return new UserDto { Id = user.Id, Name = user.Name, Email = user.Email };
+            return _mapper.Map<UserDto>(user);
         }
 
         public void DeleteUser(int id)

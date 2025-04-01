@@ -1,4 +1,5 @@
-﻿using ITSM.Data;
+﻿using AutoMapper;
+using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
 
@@ -6,40 +7,32 @@ namespace ITSM.Services
 {
     public class ServicesService
     {
-        private ITSMContext _context;
+        private readonly IMapper _mapper;
+        private readonly ITSMContext _context;
 
-        public ServicesService(ITSMContext context)
+        public ServicesService(ITSMContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public List<ServiceDto> GetServices()
         {
-            return _context.Services.Select(
-                service => 
-                new ServiceDto 
-                {   
-                    Id = service.Id, 
-                    Name =  service.Name, 
-                    Description = service.Description, 
-                    ContractingDate = service.ContractingDate, 
-                    SLA = service.SLA, 
-                    Status = service.Status 
-                }).ToList();
+            return _context.Services.Select(service => _mapper.Map<ServiceDto>(service)).ToList();
         }
 
         public ServiceDto GetService(int id)
         {
             var service = _context.Services.Where(s => s.Id == id).FirstOrDefault();
-            return new ServiceDto { Id = service.Id, Name = service.Name, Description = service.Description, ContractingDate = service.ContractingDate, SLA = service.SLA, Status = service.Status };
+            return _mapper.Map<ServiceDto>(service);
         }
 
         public ServiceDto CreateService(ServiceDto serviceDto)
         {
-            Service service = new Service { Id = serviceDto.Id, Name = serviceDto.Name, Description = serviceDto.Description, ContractingDate = serviceDto.ContractingDate, SLA = serviceDto.SLA, Status = serviceDto.Status };
+            Service service = _mapper.Map<Service>(serviceDto);
             _context.Services.Add(service);
             _context.SaveChanges();
-            return new ServiceDto { Id = service.Id, Name = service.Name, Description = service.Description, ContractingDate= service.ContractingDate, SLA = service.SLA, Status = service.Status };
+            return _mapper.Map<ServiceDto>(service);
         }
 
         public ServiceDto UpdateService(ServiceDto serviceDto)
@@ -65,7 +58,7 @@ namespace ITSM.Services
 
             _context.SaveChanges();
 
-            return new ServiceDto { Id = service.Id, Name = service.Name, Description = service.Description,ContractingDate = service.ContractingDate, SLA = service.SLA, Status = service.Status };
+            return _mapper.Map<ServiceDto>(service);
         }
 
         public void DeleteService(int id)
