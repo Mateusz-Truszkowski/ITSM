@@ -1,0 +1,6 @@
+@ITSMv2_HostAddress = http://localhost:5116
+
+GET {{ITSMv2_HostAddress}}/users
+Accept: application/json
+
+###
