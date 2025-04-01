@@ -16,6 +16,9 @@ namespace ITSM.Mapper
 
             CreateMap<Device, DeviceDto>();
             CreateMap<DeviceDto, Device>();
+
+            CreateMap<Ticket, TicketDto>();
+            CreateMap<TicketDto, Ticket>();
         }
     }
 }

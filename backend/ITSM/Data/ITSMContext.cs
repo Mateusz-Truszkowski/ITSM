@@ -6,7 +6,7 @@ namespace ITSM.Data
 {
     public class ITSMContext(DbContextOptions<ITSMContext> options) : DbContext(options)
     {
-        //public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Device> Devices { get; set; }
@@ -178,6 +178,93 @@ namespace ITSM.Data
                      UserId = 1,
                      Status = "Active"
                  }
+            );
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.Requester)
+                .WithMany()
+                .HasForeignKey(t => t.RequesterId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.Assignee)
+                .WithMany()
+                .HasForeignKey(t => t.AssigneeId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Ticket>().HasData(
+                new Ticket
+                {
+                    Id = 1,
+                    Name = "Issue with login",
+                    Description = "User is unable to log into the system. Error message: 'Invalid credentials.'",
+                    CreationDate = new DateTime(2025, 4, 1),
+                    SolutionDate = null,
+                    SolutionDescription = null,
+                    Priority = 2,
+                    Type = "Bug",
+                    Status = "Open",
+                    ServiceId = 1, // Przykład: pierwsza usługa
+                    RequesterId = 1, // Przykład: pierwszy użytkownik zgłaszający
+                    AssigneeId = 2, // Przykład: drugi użytkownik przypisany
+                },
+                new Ticket
+                {
+                    Id = 2,
+                    Name = "System performance issue",
+                    Description = "The application is lagging when loading the dashboard.",
+                    CreationDate = new DateTime(2025, 4, 1),
+                    SolutionDate = null,
+                    SolutionDescription = null,
+                    Priority = 1,
+                    Type = "Performance",
+                    Status = "In Progress",
+                    ServiceId = 2, // Przykład: druga usługa
+                    RequesterId = 2, // Przykład: drugi użytkownik zgłaszający
+                    AssigneeId = 3, // Przykład: trzeci użytkownik przypisany
+                },
+                new Ticket
+                {
+                    Id = 3,
+                    Name = "Password reset request",
+                    Description = "User has forgotten their password and needs a reset.",
+                    CreationDate = new DateTime(2025, 4, 1),
+                    SolutionDate = new DateTime(2025, 4, 2),
+                    SolutionDescription = "Password was successfully reset and communicated to the user.",
+                    Priority = 3,
+                    Type = "Support",
+                    Status = "Closed",
+                    ServiceId = 3, // Przykład: trzecia usługa
+                    RequesterId = 3, // Przykład: trzeci użytkownik zgłaszający
+                    AssigneeId = 1, // Przykład: pierwszy użytkownik przypisany
+                },
+                new Ticket
+                {
+                    Id = 4,
+                    Name = "New feature request",
+                    Description = "A user requests the addition of a dark mode feature in the app.",
+                    CreationDate = new DateTime(2025, 4, 1),
+                    SolutionDate = null,
+                    SolutionDescription = null,
+                    Priority = 4,
+                    Type = "Feature Request",
+                    Status = "Open",
+                    ServiceId = 1, // Przykład: pierwsza usługa
+                    RequesterId = 4, // Przykład: czwarty użytkownik zgłaszający
+                    AssigneeId = 3, // Przykład: trzeci użytkownik przypisany
+                },
+                new Ticket
+                {
+                    Id = 5,
+                    Name = "Error while updating profile",
+                    Description = "User is receiving an error when trying to update their profile information.",
+                    CreationDate = new DateTime(2025, 4, 1),
+                    SolutionDate = new DateTime(2025, 4, 3),
+                    SolutionDescription = "The issue was resolved by fixing the validation error in the form.",
+                    Priority = 2,
+                    Type = "Bug",
+                    Status = "Closed",
+                    ServiceId = 2, // Przykład: druga usługa
+                    RequesterId = 5, // Przykład: piąty użytkownik zgłaszający
+                    AssigneeId = 2, // Przykład: drugi użytkownik przypisany
+                }
             );
         }
     }
