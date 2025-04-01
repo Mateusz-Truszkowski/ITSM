@@ -1,8 +1,8 @@
-﻿using backend.Data;
-using backend.Dto;
-using backend.Entity;
+﻿using ITSM.Data;
+using ITSM.Dto;
+using ITSM.Entity;
 
-namespace backend.Services
+namespace ITSM.Services
 {
     public class UsersService
     {
@@ -20,9 +20,12 @@ namespace backend.Services
 
         public UserDto GetUserById(int id)
         {
-            return _context.Users.Where(u => u.Id ==  id)
-                .Select(u => new UserDto{Id = u.Id, Name = u.Name, Email = u.Email})
+            var user = _context.Users.Where(u => u.Id == id)
+                .Select(u => new UserDto { Id = u.Id, Name = u.Name, Email = u.Email })
                 .FirstOrDefault();
+            if (user == null)
+                return null;
+            return user;
         }
 
         public UserDto CreateUser(CreateUserDto userDto)
@@ -36,7 +39,7 @@ namespace backend.Services
 
         public UserDto UpdateUser(UserDto userDto)
         {
-            User user = _context.Users.Where(user => user.Id == userDto.Id).FirstOrDefault();
+            var user = _context.Users.Where(user => user.Id == userDto.Id).FirstOrDefault();
             if (user == null)
                 return null;
 
@@ -53,7 +56,7 @@ namespace backend.Services
 
         public void DeleteUser(int id)
         {
-            User toDelete = _context.Users.Where(user => user.Id == id).FirstOrDefault();
+            var toDelete = _context.Users.Where(user => user.Id == id).FirstOrDefault();
             if (toDelete != null)
             {
                 _context.Users.Remove(toDelete);

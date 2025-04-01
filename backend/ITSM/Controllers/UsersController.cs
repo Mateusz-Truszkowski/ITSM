@@ -1,8 +1,8 @@
-using backend.Dto;
-using backend.Services;
+using ITSM.Dto;
+using ITSM.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ITSMv2.Controllers
+namespace ITSM.Controllers
 {
     [ApiController]
     [Route("[controller]")]

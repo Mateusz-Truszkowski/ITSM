@@ -1,11 +1,12 @@
-using backend.Data;
-using backend.Services;
+using ITSM.Data;
+using ITSM.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<ServicesService>();
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ITSMContext>(options =>

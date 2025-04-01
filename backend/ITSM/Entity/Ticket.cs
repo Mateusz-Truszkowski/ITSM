@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace backend.Entity
+namespace ITSM.Entity
 {
     public class Ticket
     {

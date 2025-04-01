@@ -1,4 +1,4 @@
-﻿namespace backend.Entity
+﻿namespace ITSM.Entity
 {
     public class Device
     {
