@@ -1,15 +1,34 @@
 using ITSM.Data;
 using ITSM.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+        };
+    });
+
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<UsersService>();
 builder.Services.AddScoped<ServicesService>();
 builder.Services.AddScoped<DevicesService>();
 builder.Services.AddScoped<TicketsService>();
+builder.Services.AddScoped<JwtTokenService>();
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ITSMContext>(options =>
@@ -33,6 +52,7 @@ using (var scope = app.Services.CreateScope())
 
 // Configure the HTTP request pipeline.
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

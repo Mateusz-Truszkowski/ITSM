@@ -29,6 +29,24 @@ namespace ITSM.Services
             return user;
         }
 
+        public UserDto GetUserByLogin(string login)
+        {
+            var user = _context.Users.Where(u => u.Login == login).FirstOrDefault();
+            if (user == null)
+                return null;
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public bool Authenticate(string login, string password)
+        {
+            var user = _context.Users.Where(u => u.Login == login).FirstOrDefault();
+            if (user == null)
+                return false;
+            if (password != user.Password)
+                return false;
+            return true;
+        }
+
         public UserDto CreateUser(CreateUserDto userDto)
         {
             User user = _mapper.Map<User>(userDto);
