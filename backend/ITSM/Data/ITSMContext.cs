@@ -1,5 +1,6 @@
 ﻿using ITSM.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Intrinsics.X86;
 
 namespace ITSM.Data
 {
@@ -8,7 +9,7 @@ namespace ITSM.Data
         //public DbSet<Ticket> Tickets { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Service> Services { get; set; }
-        //public DbSet<Device> Devices { get; set; }
+        public DbSet<Device> Devices { get; set; }
 
         // Initial database data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -125,6 +126,58 @@ namespace ITSM.Data
                     Status = "Active",
                     SLA = 95
                 }
+            );
+            modelBuilder.Entity<Device>().HasData(
+                 new Device
+                 {
+                     Id = 1,  // Id urządzenia
+                     Name = "Laptop Dell XPS 13",
+                     Description = "Laptop ultrabook, 13 cali, i7, 16GB RAM",
+                     AcquisitionDate = new DateTime(2023, 1, 15),  // Data zakupu
+                     DepreciationDate = new DateTime(2025, 1, 15),  // Data amortyzacji
+                     UserId = 1,  // Powiązanie z użytkownikiem
+                     Status = "Active"
+                 },
+                 new Device
+                 {
+                     Id = 2,  // Id urządzenia
+                     Name = "Smartphone Samsung Galaxy S21",
+                     Description = "Smartphone z ekranem 6.2 cala, 8GB RAM",
+                     AcquisitionDate = new DateTime(2023, 3, 10),
+                     DepreciationDate = new DateTime(2025, 3, 10),
+                     UserId = 2,
+                     Status = "Active"
+                 },
+                 new Device
+                 {
+                     Id = 3,  // Id urządzenia
+                     Name = "Monitor LG 27",
+                     Description = "Monitor 27 cali, 4K",
+                     AcquisitionDate = new DateTime(2022, 6, 30),
+                     DepreciationDate = new DateTime(2024, 6, 30),
+                     UserId = 1,
+                     Status = "Active"
+                 },
+                 new Device
+                 {
+                     Id = 4,  // Id urządzenia
+                     Name = "Printer HP LaserJet Pro",
+                     Description = "Drukarka laserowa, czarno-biała",
+                     AcquisitionDate = new DateTime(2021, 11, 20),
+                     DepreciationDate = new DateTime(2023, 11, 20),
+                     UserId = 2,
+                     Status = "Inactive"
+                 },
+                 new Device
+                 {
+                     Id = 5,  // Id urządzenia
+                     Name = "Tablet iPad Pro 12.9",
+                     Description = "Tablet 12.9 cala, 256GB, iOS",
+                     AcquisitionDate = new DateTime(2022, 9, 5),
+                     DepreciationDate = new DateTime(2024, 9, 5),
+                     UserId = 1,
+                     Status = "Active"
+                 }
             );
         }
     }

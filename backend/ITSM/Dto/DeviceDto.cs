@@ -1,20 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using ITSM.Entity;
 
-namespace ITSM.Entity
+namespace ITSM.Dto
 {
-    public class Device
+    public class DeviceDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime AcquisitionDate { get; set; }
         public DateTime DepreciationDate { get; set; }
         public int UserId { get; set; }
-        [ValidateNever]
         public User? User { get; set; }
         public string Status { get; set; }
     }

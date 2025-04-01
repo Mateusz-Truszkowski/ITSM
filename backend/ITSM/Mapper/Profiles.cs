@@ -13,6 +13,9 @@ namespace ITSM.Mapper
 
             CreateMap<Service, ServiceDto>();
             CreateMap<ServiceDto, Service>();
+
+            CreateMap<Device, DeviceDto>();
+            CreateMap<DeviceDto, Device>();
         }
     }
 }

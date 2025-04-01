@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<UsersService>();
 builder.Services.AddScoped<ServicesService>();
+builder.Services.AddScoped<DevicesService>();
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ITSMContext>(options =>
