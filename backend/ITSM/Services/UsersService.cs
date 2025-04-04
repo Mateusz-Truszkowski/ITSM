@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BCrypt.Net;
 using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
@@ -42,7 +43,7 @@ namespace ITSM.Services
             var user = _context.Users.Where(u => u.Login == login).FirstOrDefault();
             if (user == null)
                 return false;
-            if (password != user.Password)
+            if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                 return false;
             return true;
         }
@@ -50,6 +51,7 @@ namespace ITSM.Services
         public UserDto CreateUser(CreateUserDto userDto)
         {
             User user = _mapper.Map<User>(userDto);
+            user.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
             _context.Users.Add(user);
             _context.SaveChanges();
 

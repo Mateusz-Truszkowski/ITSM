@@ -68,11 +68,11 @@ namespace ITSM.Migrations
                 columns: new[] { "Id", "CreationDate", "Email", "Group", "Login", "Name", "Occupation", "Password", "Status", "Surname" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jdoe@example.com", "Admin", "jdoe", "John", "Software Engineer", "Password123", "Active", "Doe" },
-                    { 2, new DateTime(2022, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "asmith@example.com", "User", "asmith", "Alice", "Product Manager", "SecurePass456", "Active", "Smith" },
-                    { 3, new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "bjohnson@example.com", "Moderator", "bjohnson", "Bob", "QA Engineer", "TestPass789", "Inactive", "Johnson" },
-                    { 4, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "klane@example.com", "User", "klane", "Kate", "UX Designer", "KatePass999", "Active", "Lane" },
-                    { 5, new DateTime(2023, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "mwhite@example.com", "Admin", "mwhite", "Michael", "CTO", "MikePass111", "Suspended", "White" }
+                    { 1, new DateTime(2023, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jdoe@example.com", "Admin", "jdoe", "John", "Software Engineer", "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni", "Active", "Doe" },
+                    { 2, new DateTime(2022, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "asmith@example.com", "User", "asmith", "Alice", "Product Manager", "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni", "Active", "Smith" },
+                    { 3, new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "bjohnson@example.com", "Moderator", "bjohnson", "Bob", "QA Engineer", "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni", "Inactive", "Johnson" },
+                    { 4, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "klane@example.com", "User", "klane", "Kate", "UX Designer", "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni", "Active", "Lane" },
+                    { 5, new DateTime(2023, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "mwhite@example.com", "Admin", "mwhite", "Michael", "CTO", "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni", "Suspended", "White" }
                 });
         }
 

@@ -10,6 +10,7 @@ namespace ITSM.Mapper
         {
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+            CreateMap<CreateUserDto, User>();
 
             CreateMap<Service, ServiceDto>();
             CreateMap<ServiceDto, Service>();
