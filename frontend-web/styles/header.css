@@ -1,0 +1,36 @@
+* {
+  font-size: Poppins;
+}
+
+.header {
+  color: white;
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+}
+
+.header img {
+  width: 100px;
+  margin: 20px 200px 20px 50px;
+}
+
+.navigation-bar {
+  margin: 20px 20px 20px 200px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  position: right;
+}
+
+.navigation-item {
+  margin-right: 30px;
+  margin-left: 30px;
+  font-size: 14px;
+  padding: 20px 20px 20px 20px;
+  border: 2px solid transparent;
+}
+
+.navigation-item:hover {
+  border-color: white;
+  border-style: solid;
+}

@@ -1,0 +1,54 @@
+.itsm-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 4rem 2rem;
+  margin-top: auto;
+  align-items: end;
+}
+
+.itsm-card-1 {
+  flex: 1 1 250px;
+  max-width: 300px;
+  background-color: rgba(255, 255, 255, 0.05);
+  margin: 1rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  height: 300px;
+}
+
+.itsm-card {
+  flex: 1 1 250px;
+  max-width: 300px;
+  background-color: rgba(255, 255, 255, 0.05);
+  margin: 1rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  height: 170px;
+}
+
+.itsm-card:hover {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.itsm-number {
+  font-size: 1.5rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.itsm-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.itsm-description {
+  font-size: 0.95rem;
+  color: #ccc;
+  line-height: 1.4;
+}

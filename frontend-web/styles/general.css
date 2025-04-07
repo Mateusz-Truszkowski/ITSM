@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Poppins;
+}
+
+a {
+  color: white;
+}
+
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  min-height: 100vh;
+  background-image: url("../images/main-page.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.slogan {
+  font-size: 70px;
+  color: white;
+  width: 500px;
+  margin: 150px 50px 50px 200px;
+}
+
+.buzzword {
+  color: #fe8100;
+  font-weight: 900;
+}
