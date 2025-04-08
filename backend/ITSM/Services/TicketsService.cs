@@ -22,7 +22,7 @@ namespace ITSM.Services
             return _context.Tickets.Include(t => t.Service).Include(t => t.Requester).Include(t => t.Assignee).Select(t => _mapper.Map<TicketDto>(t)).ToList();
         }
 
-        public TicketDto GetTicket(int id)
+        public TicketDto? GetTicket(int id)
         {
             var ticket = _context.Tickets.Where(t => t.Id == id).FirstOrDefault();
             if (ticket == null)
@@ -40,7 +40,7 @@ namespace ITSM.Services
             return _mapper.Map<TicketDto>(ticket);
         }
 
-        public TicketDto UpdateTicket(TicketDto ticketDto)
+        public TicketDto? UpdateTicket(TicketDto ticketDto)
         {
             var ticket = _context.Tickets.Where(t => t.Id == ticketDto.Id).FirstOrDefault();
             if (ticket == null)

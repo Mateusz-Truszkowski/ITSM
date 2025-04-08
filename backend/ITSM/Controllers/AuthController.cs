@@ -22,7 +22,10 @@ namespace ITSM.Controllers
             if (_usersService.Authenticate(credentials.Login, credentials.Password))
             {
                 var user = _usersService.GetUserByLogin(credentials.Login);
-                return Ok(_jwtTokenService.GenerateToken(user.Login, user.Group));
+                if (user != null)
+                    return Ok(_jwtTokenService.GenerateToken(user.Login, user.Group));
+                else
+                    return StatusCode(500, "Existing user doesn't exists");
             }
             else
                 return Unauthorized();
@@ -31,7 +34,7 @@ namespace ITSM.Controllers
 
     public class Credentials
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public required string Login { get; set; }
+        public required string Password { get; set; }
     }
 }

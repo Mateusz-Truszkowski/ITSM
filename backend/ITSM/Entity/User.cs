@@ -8,14 +8,14 @@ namespace ITSM.Entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Login { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public required string Login { get; set; }
+        public required string Name { get; set; }
+        public required string Surname { get; set; }
+        public required string Email { get; set; }
+        public required string Password { get; set; }
         public DateTime CreationDate { get; set; }
-        public string Group { get; set; }
-        public string Occupation { get; set; }
-        public string Status { get; set; }
+        public required string Group { get; set; }
+        public required string Occupation { get; set; }
+        public required string Status { get; set; }
     }
 }

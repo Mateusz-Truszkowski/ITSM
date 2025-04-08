@@ -23,7 +23,10 @@ namespace ITSM.Services
                 new Claim(ClaimTypes.Role, role)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
+            var secretKey = _configuration["Jwt:SecretKey"]
+                    ?? throw new InvalidOperationException("Missing JWT key in configuration (Jwt:SecretKey)");
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

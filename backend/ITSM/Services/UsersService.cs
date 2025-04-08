@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BCrypt.Net;
 using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
@@ -22,7 +21,7 @@ namespace ITSM.Services
             return _context.Users.Select(user => _mapper.Map<UserDto>(user)).ToList();
         }
 
-        public UserDto GetUserById(int id)
+        public UserDto? GetUserById(int id)
         {
             var user = _context.Users.Where(u => u.Id == id).Select(u => _mapper.Map<UserDto>(u)).FirstOrDefault();
             if (user == null)
@@ -30,7 +29,7 @@ namespace ITSM.Services
             return user;
         }
 
-        public UserDto GetUserByLogin(string login)
+        public UserDto? GetUserByLogin(string login)
         {
             var user = _context.Users.Where(u => u.Login == login).FirstOrDefault();
             if (user == null)
@@ -58,7 +57,7 @@ namespace ITSM.Services
             return _mapper.Map<UserDto>(user);
         }
 
-        public UserDto UpdateUser(UserDto userDto)
+        public UserDto? UpdateUser(UserDto userDto)
         {
             var user = _context.Users.Where(user => user.Id == userDto.Id).FirstOrDefault();
             if (user == null)
