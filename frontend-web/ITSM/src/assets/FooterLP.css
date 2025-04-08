@@ -4,8 +4,9 @@
   justify-content: center;
   padding: 4rem 2rem;
   padding-bottom: 0;
-  margin-top: 200px;
+  margin-top: 40vh;
   align-items: end;
+  bottom: 0;
 }
 
 .itsm-card-1 {

@@ -1,27 +1,12 @@
 import "../assets/FooterLP.css";
 import "../assets/HeaderLP.css";
 import "../assets/GeneralLP.css";
-import { Link } from "react-router-dom";
-import logo from "../assets/images/itsm.png";
-
+import NavigationLP from "../components/NavigationLP";
 
 function LandingPage() {
   return (
     <>
-      <section className="header">
-      <img src={logo} alt="" />
-        <div className="navigation-bar">
-          <div className="navigation-item">
-            <Link to="/">About</Link>
-          </div>
-          <div className="navigation-item">
-            <Link to="/">Contact</Link>
-          </div>
-          <div className="navigation-item">
-            <Link to="/login">Login</Link> | <Link to="/">Register</Link>
-          </div>
-        </div>
-      </section>
+      <NavigationLP />
       <div className="slogan">
         We are just simply <span className="buzzword">THE BEST</span>
       </div>

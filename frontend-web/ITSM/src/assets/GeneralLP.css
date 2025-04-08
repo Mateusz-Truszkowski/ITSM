@@ -11,14 +11,16 @@ a {
 
 html,
 body {
-  height: auto;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 body {
   background-image: url("../assets/images/main-page.jpg");
-  background-size: cover;
+  background-size: auto;
   background-position: center;
   background-repeat: no-repeat;
   margin: 0;

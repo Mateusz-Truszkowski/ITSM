@@ -13,7 +13,7 @@
   box-shadow: 0 0 7px white;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
@@ -38,7 +38,6 @@ input {
   border-style: solid;
   padding-left: 20px;
   color: white;
-
 }
 
 input::placeholder {
@@ -67,7 +66,7 @@ input::placeholder {
   margin-bottom: 40px;
 }
 
-.password{
+.password {
   position: relative;
 }
 
@@ -109,7 +108,7 @@ input::placeholder {
 
 .login-register {
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
   color: white;
   margin-top: 20px;
