@@ -22,7 +22,7 @@ namespace ITSM.Services
             return _context.Devices.Include(d => d.User).Select(d => _mapper.Map<DeviceDto>(d)).ToList();
         }
 
-        public DeviceDto GetDeviceById(int id)
+        public DeviceDto? GetDeviceById(int id)
         {
             var device = _context.Devices.Where(d => d.Id == id).FirstOrDefault();
             if (device == null)
@@ -40,7 +40,7 @@ namespace ITSM.Services
             return _mapper.Map<DeviceDto>(device);
         }
 
-        public DeviceDto UpdateDevice(DeviceDto deviceDto)
+        public DeviceDto? UpdateDevice(DeviceDto deviceDto)
         {
             var device = _context.Devices.Where(d => d.Id == deviceDto.Id).FirstOrDefault();
 

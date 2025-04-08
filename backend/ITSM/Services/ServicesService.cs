@@ -21,9 +21,12 @@ namespace ITSM.Services
             return _context.Services.Select(service => _mapper.Map<ServiceDto>(service)).ToList();
         }
 
-        public ServiceDto GetService(int id)
+        public ServiceDto? GetService(int id)
         {
             var service = _context.Services.Where(s => s.Id == id).FirstOrDefault();
+            if (service == null)
+                return null;
+
             return _mapper.Map<ServiceDto>(service);
         }
 
@@ -35,7 +38,7 @@ namespace ITSM.Services
             return _mapper.Map<ServiceDto>(service);
         }
 
-        public ServiceDto UpdateService(ServiceDto serviceDto)
+        public ServiceDto? UpdateService(ServiceDto serviceDto)
         {
             var service = _context.Services.Where(s => s.Id == serviceDto.Id).FirstOrDefault();
             if (service == null)

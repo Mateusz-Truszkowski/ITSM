@@ -46,7 +46,11 @@ namespace ITSM.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult<UserDto> Patch(UserDto user)
         {
-            return Ok(_usersService.UpdateUser(user));
+            var updatedUser = _usersService.UpdateUser(user);
+
+            if (updatedUser == null) return NotFound();
+
+            return Ok(updatedUser);
         }
 
         [HttpDelete]

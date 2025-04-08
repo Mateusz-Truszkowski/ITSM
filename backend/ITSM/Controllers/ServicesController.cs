@@ -29,7 +29,11 @@ namespace ITSM.Controllers
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<ServiceDto> Get(int id)
         {
-            return Ok(_service.GetService(id));
+            var foundService = _service.GetService(id);
+
+            if (foundService == null) return NotFound();
+
+            return Ok(foundService);
         }
 
         [HttpPost]
@@ -45,6 +49,9 @@ namespace ITSM.Controllers
         public ActionResult<ServiceDto> Patch([FromBody] ServiceDto service)
         {
             var updatedService = _service.UpdateService(service);
+
+            if (updatedService == null) return NotFound();
+
             return Ok(updatedService);
         }
 

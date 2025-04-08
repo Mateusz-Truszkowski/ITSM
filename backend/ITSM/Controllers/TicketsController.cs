@@ -22,28 +22,37 @@ namespace ITSM.Controllers
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<List<TicketDto>> Get()
         {
-            return _service.GetTickets();
+            return Ok(_service.GetTickets());
         }
 
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<TicketDto> Get(int id)
         {
-            return _service.GetTicket(id);
+            var foundTicket = _service.GetTicket(id);
+
+            if (foundTicket == null) return NotFound();
+
+            return Ok(foundTicket);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<TicketDto> Post([FromBody] TicketDto ticket)
         {
-            return _service.CreateTicket(ticket);
+            var createdService = _service.CreateTicket(ticket);
+            return CreatedAtAction(nameof(Get), new {id =  createdService.Id}, createdService);
         }
 
         [HttpPatch]
         [Authorize(Roles = "Admin,Operator")]
         public ActionResult<TicketDto> Patch([FromBody] TicketDto ticket)
         {
-            return _service.UpdateTicket(ticket);
+            var updatedTicket = _service.UpdateTicket(ticket);
+
+            if (updatedTicket == null) return NotFound();
+
+            return Ok(updatedTicket);
         }
 
         [HttpDelete("{id}")]

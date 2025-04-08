@@ -29,7 +29,11 @@ namespace ITSM.Controllers
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<DeviceDto> Get(int id)
         {
-            return Ok(_service.GetDeviceById(id));
+            var foundDevice = _service.GetDeviceById(id);
+
+            if (foundDevice == null) return NotFound();
+
+            return Ok(foundDevice);
         }
 
         [HttpPost]
@@ -44,7 +48,11 @@ namespace ITSM.Controllers
         [Authorize(Roles = "Admin,Operator")]
         public ActionResult<DeviceDto> Patch([FromBody] DeviceDto deviceDto)
         {
-            return Ok(_service.UpdateDevice(deviceDto));
+            var updatedDevice = _service.UpdateDevice(deviceDto);
+
+            if (updatedDevice == null) return NotFound();
+
+            return Ok(updatedDevice);
         }
 
         [HttpDelete("{id}")]
