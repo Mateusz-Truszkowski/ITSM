@@ -1,0 +1,134 @@
+.login-container {
+  width: 500px;
+  margin: 200px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  height: 500px;
+  border-radius: 8px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  border-radius: 20px;
+  backdrop-filter: blur(5px) brightness(110%);
+  box-shadow: 0 0 7px white;
+}
+
+a{
+  text-decoration: none;
+}
+
+.login {
+  font-size: 40px;
+  font-weight: 900;
+  color: white;
+  height: 70px;
+  text-align: center;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+input {
+  width: 340px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: white;
+  border-width: 2px;
+  border-radius: 100px;
+  border-style: solid;
+  padding-left: 20px;
+  color: white;
+
+}
+
+input::placeholder {
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.inputs img {
+  width: 25px;
+  position: absolute;
+  right: 15px;
+  top: 13px;
+}
+
+.username {
+  width: 340px;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.password{
+  position: relative;
+}
+
+.remember-me input {
+  width: 13px;
+  margin-right: -16px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 10px;
+  color: white;
+  font-size: 14px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.remember-me span {
+  margin-right: 60px;
+}
+
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-button button {
+  width: 100%;
+  height: 45px;
+  border-radius: 100px;
+  border-style: solid;
+  border: none;
+  font-size: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.login-register {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  color: white;
+  margin-top: 20px;
+}
+
+.login-register a {
+  margin-left: 5px;
+  font-weight: 700;
+}
+
+.forgot-password {
+  font-weight: 700;
+}
+
+.form {
+  width: 340px;
+}
+
+.login-button button:hover {
+  background-color: #fe8100;
+  color: white;
+}

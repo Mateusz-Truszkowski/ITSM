@@ -11,17 +11,18 @@ a {
 
 html,
 body {
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
 }
 
 body {
-  min-height: 100vh;
-  background-image: url("..\assets\images\main-page.jpg");
+  background-image: url("../assets/images/main-page.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
 }
 
 .slogan {
