@@ -19,12 +19,14 @@ namespace ITSM.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,Operator")]
         public ActionResult<List<UserDto>> Get()
         {
             return Ok(_usersService.GetUsers());
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Operator")]
         public ActionResult<UserDto> Get(int id)
         {
             var user = _usersService.GetUserById(id);
@@ -33,6 +35,7 @@ namespace ITSM.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult<UserDto> Post(CreateUserDto user)
         {
             var createdUser = _usersService.CreateUser(user);
@@ -40,12 +43,14 @@ namespace ITSM.Controllers
         }
 
         [HttpPatch]
+        [Authorize(Roles = "Admin")]
         public ActionResult<UserDto> Patch(UserDto user)
         {
             return Ok(_usersService.UpdateUser(user));
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             _usersService.DeleteUser(id);

@@ -1,5 +1,6 @@
 import Navigation from "../components/Navigation"
 
+
 function Tickets() {
     return (
         <>

@@ -1,5 +1,6 @@
 ﻿using ITSM.Dto;
 using ITSM.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITSM.Controllers
@@ -18,18 +19,21 @@ namespace ITSM.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<List<ServiceDto>> Get()
         {
             return Ok(_service.GetServices());
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<ServiceDto> Get(int id)
         {
             return Ok(_service.GetService(id));
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult<ServiceDto> Post([FromBody] ServiceDto service)
         {
             var createdService = _service.CreateService(service);
@@ -37,6 +41,7 @@ namespace ITSM.Controllers
         }
 
         [HttpPatch]
+        [Authorize(Roles = "Admin")]
         public ActionResult<ServiceDto> Patch([FromBody] ServiceDto service)
         {
             var updatedService = _service.UpdateService(service);
@@ -44,6 +49,7 @@ namespace ITSM.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             _service.DeleteService(id);

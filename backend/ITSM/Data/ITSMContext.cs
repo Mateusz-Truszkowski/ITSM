@@ -21,7 +21,7 @@ namespace ITSM.Data
                     Name = "John",
                     Surname = "Doe",
                     Email = "jdoe@example.com",
-                    Password = "$2a$11$gLkNA5KWnUXXyYxexBoSxOBQjRQMFZHFCQmZ.1nMBS32HIrjZY1W2", // 1234
+                    Password = "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni", // 1234
                     CreationDate = new DateTime(2023, 9, 1),
                     Group = "Admin",
                     Occupation = "Software Engineer",
@@ -34,7 +34,7 @@ namespace ITSM.Data
                     Name = "Alice",
                     Surname = "Smith",
                     Email = "asmith@example.com",
-                    Password = "$2a$11$gLkNA5KWnUXXyYxexBoSxOBQjRQMFZHFCQmZ.1nMBS32HIrjZY1W2",
+                    Password = "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni",
                     CreationDate = new DateTime(2022, 12, 15),
                     Group = "User",
                     Occupation = "Product Manager",
@@ -47,7 +47,7 @@ namespace ITSM.Data
                     Name = "Bob",
                     Surname = "Johnson",
                     Email = "bjohnson@example.com",
-                    Password = "$2a$11$KbPdkb4tRn7/8JFGYOHMHe0dKa0aZpMLMzZxeUpPRi9kXygKgMY0K",
+                    Password = "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni",
                     CreationDate = new DateTime(2023, 5, 10),
                     Group = "Moderator",
                     Occupation = "QA Engineer",
@@ -60,7 +60,7 @@ namespace ITSM.Data
                     Name = "Kate",
                     Surname = "Lane",
                     Email = "klane@example.com",
-                    Password = "$2a$11$KbPdkb4tRn7/8JFGYOHMHe0dKa0aZpMLMzZxeUpPRi9kXygKgMY0K",
+                    Password = "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni",
                     CreationDate = new DateTime(2022, 8, 1),
                     Group = "User",
                     Occupation = "UX Designer",
@@ -73,7 +73,7 @@ namespace ITSM.Data
                     Name = "Michael",
                     Surname = "White",
                     Email = "mwhite@example.com",
-                    Password = "$2a$11$KbPdkb4tRn7/8JFGYOHMHe0dKa0aZpMLMzZxeUpPRi9kXygKgMY0K",
+                    Password = "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni",
                     CreationDate = new DateTime(2023, 3, 20),
                     Group = "Admin",
                     Occupation = "CTO",
@@ -130,17 +130,17 @@ namespace ITSM.Data
             modelBuilder.Entity<Device>().HasData(
                  new Device
                  {
-                     Id = 1,  // Id urządzenia
+                     Id = 1,
                      Name = "Laptop Dell XPS 13",
                      Description = "Laptop ultrabook, 13 cali, i7, 16GB RAM",
-                     AcquisitionDate = new DateTime(2023, 1, 15),  // Data zakupu
-                     DepreciationDate = new DateTime(2025, 1, 15),  // Data amortyzacji
-                     UserId = 1,  // Powiązanie z użytkownikiem
+                     AcquisitionDate = new DateTime(2023, 1, 15),
+                     DepreciationDate = new DateTime(2025, 1, 15),
+                     UserId = 1,
                      Status = "Active"
                  },
                  new Device
                  {
-                     Id = 2,  // Id urządzenia
+                     Id = 2,
                      Name = "Smartphone Samsung Galaxy S21",
                      Description = "Smartphone z ekranem 6.2 cala, 8GB RAM",
                      AcquisitionDate = new DateTime(2023, 3, 10),
@@ -150,7 +150,7 @@ namespace ITSM.Data
                  },
                  new Device
                  {
-                     Id = 3,  // Id urządzenia
+                     Id = 3, 
                      Name = "Monitor LG 27",
                      Description = "Monitor 27 cali, 4K",
                      AcquisitionDate = new DateTime(2022, 6, 30),
@@ -160,7 +160,7 @@ namespace ITSM.Data
                  },
                  new Device
                  {
-                     Id = 4,  // Id urządzenia
+                     Id = 4,
                      Name = "Printer HP LaserJet Pro",
                      Description = "Drukarka laserowa, czarno-biała",
                      AcquisitionDate = new DateTime(2021, 11, 20),
@@ -170,7 +170,7 @@ namespace ITSM.Data
                  },
                  new Device
                  {
-                     Id = 5,  // Id urządzenia
+                     Id = 5,
                      Name = "Tablet iPad Pro 12.9",
                      Description = "Tablet 12.9 cala, 256GB, iOS",
                      AcquisitionDate = new DateTime(2022, 9, 5),
@@ -201,9 +201,9 @@ namespace ITSM.Data
                     Priority = 2,
                     Type = "Bug",
                     Status = "Open",
-                    ServiceId = 1, // Przykład: pierwsza usługa
-                    RequesterId = 1, // Przykład: pierwszy użytkownik zgłaszający
-                    AssigneeId = 2, // Przykład: drugi użytkownik przypisany
+                    ServiceId = 1,
+                    RequesterId = 1,
+                    AssigneeId = 2,
                 },
                 new Ticket
                 {
@@ -216,9 +216,9 @@ namespace ITSM.Data
                     Priority = 1,
                     Type = "Performance",
                     Status = "In Progress",
-                    ServiceId = 2, // Przykład: druga usługa
-                    RequesterId = 2, // Przykład: drugi użytkownik zgłaszający
-                    AssigneeId = 3, // Przykład: trzeci użytkownik przypisany
+                    ServiceId = 2,
+                    RequesterId = 2,
+                    AssigneeId = 3,
                 },
                 new Ticket
                 {
@@ -231,9 +231,9 @@ namespace ITSM.Data
                     Priority = 3,
                     Type = "Support",
                     Status = "Closed",
-                    ServiceId = 3, // Przykład: trzecia usługa
-                    RequesterId = 3, // Przykład: trzeci użytkownik zgłaszający
-                    AssigneeId = 1, // Przykład: pierwszy użytkownik przypisany
+                    ServiceId = 3,
+                    RequesterId = 3,
+                    AssigneeId = 1,
                 },
                 new Ticket
                 {
@@ -246,9 +246,9 @@ namespace ITSM.Data
                     Priority = 4,
                     Type = "Feature Request",
                     Status = "Open",
-                    ServiceId = 1, // Przykład: pierwsza usługa
-                    RequesterId = 4, // Przykład: czwarty użytkownik zgłaszający
-                    AssigneeId = 3, // Przykład: trzeci użytkownik przypisany
+                    ServiceId = 1,
+                    RequesterId = 4,
+                    AssigneeId = 3,
                 },
                 new Ticket
                 {
@@ -261,9 +261,9 @@ namespace ITSM.Data
                     Priority = 2,
                     Type = "Bug",
                     Status = "Closed",
-                    ServiceId = 2, // Przykład: druga usługa
-                    RequesterId = 5, // Przykład: piąty użytkownik zgłaszający
-                    AssigneeId = 2, // Przykład: drugi użytkownik przypisany
+                    ServiceId = 2,
+                    RequesterId = 5,
+                    AssigneeId = 2,
                 }
             );
         }

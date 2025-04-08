@@ -1,5 +1,6 @@
 ﻿using ITSM.Dto;
 using ITSM.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITSM.Controllers
@@ -18,18 +19,21 @@ namespace ITSM.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<List<DeviceDto>> Get()
         {
             return Ok(_service.GetDevices());
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<DeviceDto> Get(int id)
         {
             return Ok(_service.GetDeviceById(id));
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Operator")]
         public ActionResult<DeviceDto> Post([FromBody] DeviceDto deviceDto)
         {
             var device = _service.CreateDevice(deviceDto);
@@ -37,12 +41,14 @@ namespace ITSM.Controllers
         }
 
         [HttpPatch]
+        [Authorize(Roles = "Admin,Operator")]
         public ActionResult<DeviceDto> Patch([FromBody] DeviceDto deviceDto)
         {
             return Ok(_service.UpdateDevice(deviceDto));
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Operator")]
         public ActionResult Delete(int id)
         {
             _service.DeleteDevice(id);
