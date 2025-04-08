@@ -1,5 +1,5 @@
 * {
-  font-size: Poppins;
+  font-family: Poppins;
 }
 
 .header {
@@ -19,7 +19,6 @@
   display: flex;
   align-items: center;
   justify-content: right;
-  position: right;
 }
 
 .navigation-item {
@@ -33,4 +32,8 @@
 .navigation-item:hover {
   border-color: white;
   border-style: solid;
+}
+
+.navigation-item a {
+  display: inline;
 }

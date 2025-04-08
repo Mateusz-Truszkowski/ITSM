@@ -18,7 +18,7 @@ body {
 
 body {
   min-height: 100vh;
-  background-image: url("../images/main-page.jpg");
+  background-image: url("..\assets\images\main-page.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
