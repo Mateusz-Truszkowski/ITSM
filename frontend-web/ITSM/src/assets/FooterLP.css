@@ -3,7 +3,8 @@
   flex-wrap: wrap;
   justify-content: center;
   padding: 4rem 2rem;
-  margin-top: auto;
+  padding-bottom: 0;
+  margin-top: 200px;
   align-items: end;
 }
 
