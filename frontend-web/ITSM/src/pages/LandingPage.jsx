@@ -2,14 +2,14 @@ import "../assets/FooterLP.css";
 import "../assets/HeaderLP.css";
 import "../assets/GeneralLP.css";
 import { Link } from "react-router-dom";
-import itsm from "../assets/images/itsm.png";
+import logo from "../assets/images/itsm.png";
 
 
 function LandingPage() {
   return (
     <>
       <section className="header">
-        <img src={itsm} alt="" />
+      <img src={logo} alt="" />
         <div className="navigation-bar">
           <div className="navigation-item">
             <Link to="/">About</Link>
@@ -23,7 +23,7 @@ function LandingPage() {
         </div>
       </section>
       <div className="slogan">
-        We are just simply <span className="buzzword">THE BEST.</span>
+        We are just simply <span className="buzzword">THE BEST</span>
       </div>
       <section className="itsm-section">
         <div className="itsm-card-1">
