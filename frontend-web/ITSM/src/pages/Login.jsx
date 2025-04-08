@@ -7,19 +7,19 @@ import lock from "../assets/icons/password-icon.png";
 import NavigationLP from "../components/NavigationLP";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const userCredentials = {
-      username: username,
+      login: login,
       password: password,
     };
 
     try {
-      let response = await fetch("/auth/login", {
+      let response = await fetch("https://localhost:63728/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ function Login() {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.text();
         console.log("Zalogowano pomyślnie:", data);
       } else {
         console.log("Błąd logowania:", response.status);
@@ -39,7 +39,7 @@ function Login() {
   };
 
   const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+    setLogin(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
