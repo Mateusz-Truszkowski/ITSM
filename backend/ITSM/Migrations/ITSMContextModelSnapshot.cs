@@ -372,7 +372,7 @@ namespace ITSM.Migrations
                             Login = "jdoe",
                             Name = "John",
                             Occupation = "Software Engineer",
-                            Password = "Password123",
+                            Password = "$2a$11$gLkNA5KWnUXXyYxexBoSxOBQjRQMFZHFCQmZ.1nMBS32HIrjZY1W2",
                             Status = "Active",
                             Surname = "Doe"
                         },
@@ -385,7 +385,7 @@ namespace ITSM.Migrations
                             Login = "asmith",
                             Name = "Alice",
                             Occupation = "Product Manager",
-                            Password = "SecurePass456",
+                            Password = "$2a$11$gLkNA5KWnUXXyYxexBoSxOBQjRQMFZHFCQmZ.1nMBS32HIrjZY1W2",
                             Status = "Active",
                             Surname = "Smith"
                         },
@@ -398,7 +398,7 @@ namespace ITSM.Migrations
                             Login = "bjohnson",
                             Name = "Bob",
                             Occupation = "QA Engineer",
-                            Password = "TestPass789",
+                            Password = "$2a$11$KbPdkb4tRn7/8JFGYOHMHe0dKa0aZpMLMzZxeUpPRi9kXygKgMY0K",
                             Status = "Inactive",
                             Surname = "Johnson"
                         },
@@ -411,7 +411,7 @@ namespace ITSM.Migrations
                             Login = "klane",
                             Name = "Kate",
                             Occupation = "UX Designer",
-                            Password = "KatePass999",
+                            Password = "$2a$11$KbPdkb4tRn7/8JFGYOHMHe0dKa0aZpMLMzZxeUpPRi9kXygKgMY0K",
                             Status = "Active",
                             Surname = "Lane"
                         },
@@ -424,7 +424,7 @@ namespace ITSM.Migrations
                             Login = "mwhite",
                             Name = "Michael",
                             Occupation = "CTO",
-                            Password = "MikePass111",
+                            Password = "$2a$11$KbPdkb4tRn7/8JFGYOHMHe0dKa0aZpMLMzZxeUpPRi9kXygKgMY0K",
                             Status = "Suspended",
                             Surname = "White"
                         });

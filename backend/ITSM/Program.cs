@@ -23,6 +23,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()  // Zezwala na wszystkie Ÿród³a
+              .AllowAnyHeader()  // Zezwala na wszystkie nag³ówki
+              .AllowAnyMethod(); // Zezwala na wszystkie metody (GET, POST, itp.)
+    });
+});
+
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<UsersService>();
 builder.Services.AddScoped<ServicesService>();
@@ -35,6 +45,8 @@ builder.Services.AddDbContext<ITSMContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ITSM_DbCS")));
 
 var app = builder.Build();
+
+app.UseCors("AllowAllOrigins");
 
 using (var scope = app.Services.CreateScope())
 {
