@@ -9,11 +9,11 @@ namespace ITSM.Controllers
     [Route("[controller]")]
     public class TicketsController : ControllerBase
     {
-        private readonly TicketsService _service;
-        private readonly UsersService _usersService;
+        private readonly ITicketsService _service;
+        private readonly IUsersService _usersService;
         private readonly ILogger<TicketsController> _logger;
 
-        public TicketsController(TicketsService service, UsersService usersService, ILogger<TicketsController> logger)
+        public TicketsController(ITicketsService service, IUsersService usersService, ILogger<TicketsController> logger)
         {
             _service = service;
             _usersService = usersService;

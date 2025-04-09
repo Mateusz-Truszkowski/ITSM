@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace ITSM.Services
 {
-    public class UsersService
+    public class UsersService : IUsersService
     {
         private readonly IMapper _mapper;
         private readonly ITSMContext _context;

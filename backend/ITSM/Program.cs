@@ -37,10 +37,10 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ServicesService>();
 builder.Services.AddScoped<DevicesService>();
-builder.Services.AddScoped<TicketsService>();
+builder.Services.AddScoped<ITicketsService, TicketsService>();
 builder.Services.AddScoped<JwtTokenService>();
 builder.Services.AddControllers();
 
