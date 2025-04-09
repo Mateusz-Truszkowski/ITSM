@@ -58,5 +58,18 @@ namespace ITSM.Tests.TestUtil
                 Status = "Active"
             };
         }
+
+        public static Service CreateTestService()
+        {
+            return new Service
+            {
+                Id = 1,
+                Name = "Web Hosting",
+                Description = "Providing reliable and fast web hosting services.",
+                ContractingDate = new DateTime(2023, 9, 1),
+                Status = "Active",
+                SLA = 99
+            };
+        }
     }
 }
