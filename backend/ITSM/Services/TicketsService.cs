@@ -19,7 +19,7 @@ namespace ITSM.Services
 
         public List<TicketDto> GetTickets()
         {
-            return _context.Tickets.Include(t => t.Service).Include(t => t.Requester).Include(t => t.Assignee).Select(t => _mapper.Map<TicketDto>(t)).ToList();
+            return _context.Tickets.Select(t => _mapper.Map<TicketDto>(t)).ToList();
         }
 
         public TicketDto? GetTicket(int id)

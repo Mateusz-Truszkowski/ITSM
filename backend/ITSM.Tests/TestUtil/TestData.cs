@@ -25,5 +25,24 @@ namespace ITSM.Tests.TestUtil
                 Status = "Active"
             };
         }
+
+        public static Ticket CreateTestTicket()
+        {
+            return new Ticket
+            {
+                Id = 1,
+                Name = "Issue with login",
+                Description = "User is unable to log into the system. Error message: 'Invalid credentials.'",
+                CreationDate = DateTime.Parse("09.04.2025 14:30:00"),
+                SolutionDate = null,
+                SolutionDescription = null,
+                Priority = 2,
+                Type = "Bug",
+                Status = "Open",
+                ServiceId = 1,
+                RequesterId = 1,
+                AssigneeId = 2,
+            };
+        }
     }
 }
