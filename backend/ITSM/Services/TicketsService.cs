@@ -2,7 +2,6 @@
 using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
-using Microsoft.EntityFrameworkCore;
 
 namespace ITSM.Services
 {

@@ -1,4 +1,5 @@
-﻿using ITSM.Services;
+﻿using ITSM.Dto;
+using ITSM.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITSM.Controllers
@@ -17,13 +18,13 @@ namespace ITSM.Controllers
         }
 
         [HttpPost("/auth/login")]
-        public ActionResult<string> Login([FromBody] Credentials credentials)
+        public ActionResult<Response> Login([FromBody] Credentials credentials)
         {
             if (_usersService.Authenticate(credentials.Login, credentials.Password))
             {
                 var user = _usersService.GetUserByLogin(credentials.Login);
                 if (user != null)
-                    return Ok(_jwtTokenService.GenerateToken(user.Login, user.Group));
+                    return Ok(new Response { User = user, Token = _jwtTokenService.GenerateToken(user.Login, user.Group) });
                 else
                     return StatusCode(500, "Existing user doesn't exists");
             }
@@ -36,5 +37,11 @@ namespace ITSM.Controllers
     {
         public required string Login { get; set; }
         public required string Password { get; set; }
+    }
+
+    public class Response
+    {
+        public required UserDto User { get; set; }
+        public required string Token { get; set; }
     }
 }

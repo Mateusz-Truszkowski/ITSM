@@ -44,5 +44,32 @@ namespace ITSM.Tests.TestUtil
                 AssigneeId = 2,
             };
         }
+
+        public static Device CreateTestDevice()
+        {
+            return new Device
+            {
+                Id = 1,
+                Name = "Laptop Dell XPS 13",
+                Description = "Laptop ultrabook, 13 cali, i7, 16GB RAM",
+                AcquisitionDate = new DateTime(2023, 1, 15),
+                DepreciationDate = new DateTime(2025, 1, 15),
+                UserId = 1,
+                Status = "Active"
+            };
+        }
+
+        public static Service CreateTestService()
+        {
+            return new Service
+            {
+                Id = 1,
+                Name = "Web Hosting",
+                Description = "Providing reliable and fast web hosting services.",
+                ContractingDate = new DateTime(2023, 9, 1),
+                Status = "Active",
+                SLA = 99
+            };
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace ITSM.Services
 
         public List<DeviceDto> GetDevices()
         {
-            return _context.Devices.Include(d => d.User).Select(d => _mapper.Map<DeviceDto>(d)).ToList();
+            return _context.Devices.Select(d => _mapper.Map<DeviceDto>(d)).ToList();
         }
 
         public DeviceDto? GetDeviceById(int id)
