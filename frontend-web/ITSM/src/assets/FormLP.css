@@ -153,6 +153,8 @@ input::placeholder {
   margin-top: 20px;
   font-size: 20px;
   font-weight: 500;
+  position: relative;
+  cursor: pointer;
 }
 
 .confirmation-message p,
@@ -165,6 +167,31 @@ input::placeholder {
   font-weight: 900;
   font-size: 22px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.confirmation-message span,
+.failed-message span {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 6px 8px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  font-size: 14px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.confirmation-message:hover span,
+.failed-message:hover span {
+  visibility: visible;
+  opacity: 1;
 }
 
 .confirmation-message p {

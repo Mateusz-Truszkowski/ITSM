@@ -60,11 +60,13 @@ function PasswordReset() {
           {success === 2 && (
             <div className="confirmation-message">
               <p>&#x2713;</p> {/*checkmark */}
+              <span>Email sent!</span>
             </div>
           )}
           {success === 1 && (
             <div className="failed-message">
               <p>!</p>
+              <span>Incorrect login</span>
             </div>
           )}
         </form>
