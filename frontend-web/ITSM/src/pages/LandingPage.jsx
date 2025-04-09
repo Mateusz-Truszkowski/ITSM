@@ -2,6 +2,7 @@ import "../assets/FooterLP.css";
 import "../assets/HeaderLP.css";
 import "../assets/GeneralLP.css";
 import NavigationLP from "../components/NavigationLP";
+import { Link } from "react-router-dom";
 
 function LandingPage() {
   return (
@@ -19,10 +20,10 @@ function LandingPage() {
             business functions.
           </div>
         </div>
-        <div className="itsm-card">
+        <Link to="/devices"><div className="itsm-card">
           <div className="itsm-number">02</div>
           <div className="itsm-title">Service Request Management</div>
-        </div>
+        </div></Link>
         <div className="itsm-card">
           <div className="itsm-number">03</div>
           <div className="itsm-title">Problem Management</div>
