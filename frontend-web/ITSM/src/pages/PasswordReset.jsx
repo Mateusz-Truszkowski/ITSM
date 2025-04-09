@@ -1,14 +1,12 @@
 import "../assets/GeneralLP.css";
 import "../assets/FormLP.css";
-import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import person from "../assets/icons/user-icon.png";
-import lock from "../assets/icons/password-icon.png";
 import NavigationLP from "../components/NavigationLP";
 
 function PasswordReset() {
   const [login, setLogin] = useState("");
-  
+  const [success, setSuccess] = useState(0); // 0 - not tried, 1 - failed, 2 - success
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,8 +23,10 @@ function PasswordReset() {
       if (response.ok) {
         const data = await response.text();
         console.log("Reset hasła:", data);
+        setSuccess(2);
       } else {
         console.log("Nie znaleziono podanego loginu:", response.status);
+        setSuccess(1);
       }
     } catch (error) {
       console.error("Wystąpił błąd:", error);
@@ -36,8 +36,6 @@ function PasswordReset() {
   const handleUsernameChange = (event) => {
     setLogin(event.target.value);
   };
-
- 
 
   return (
     <>
@@ -58,10 +56,20 @@ function PasswordReset() {
           <div className="login-button">
             <button type="submit">Ok</button>
           </div>
+          {success === 2 && (
+            <div className="confirmation-message">
+              <p>&#x2713;</p> {/*checkmark */}
+            </div>
+          )}
+          {success === 1 && (
+            <div className="failed-message">
+              <p>!</p>
+            </div>
+          )}
         </form>
       </div>
     </>
   );
 }
 
-export default PasswordReset
+export default PasswordReset;

@@ -144,3 +144,33 @@ input::placeholder {
   background-color: #fe8100;
   color: white;
 }
+
+.confirmation-message,
+.failed-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.confirmation-message p,
+.failed-message p {
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 5px;
+  border-radius: 100px;
+  font-weight: 900;
+  font-size: 22px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.confirmation-message p {
+  background-color: lightgreen;
+}
+
+.failed-message p {
+  background-color: #ff2e2e;
+}
