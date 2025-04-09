@@ -8,30 +8,25 @@ import NavigationLP from "../components/NavigationLP";
 
 function PasswordReset() {
   const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userCredentials = {
-      login: login,
-      password: password,
-    };
-
     try {
-      let response = await fetch("https://localhost:63728/auth/login", {
+      let response = await fetch("https://localhost:63728/auth/reset", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userCredentials),
+        body: JSON.stringify(login),
       });
 
       if (response.ok) {
         const data = await response.text();
-        console.log("Zalogowano pomyślnie:", data);
+        console.log("Reset hasła:", data);
       } else {
-        console.log("Błąd logowania:", response.status);
+        console.log("Nie znaleziono podanego loginu:", response.status);
       }
     } catch (error) {
       console.error("Wystąpił błąd:", error);
@@ -42,14 +37,12 @@ function PasswordReset() {
     setLogin(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+ 
 
   return (
     <>
       <NavigationLP />
-      <div className="login-container">
+      <div className="resetpass-container">
         <form onSubmit={handleSubmit} className="form">
           <p className="login">Password reset</p>
           <div className="inputs">

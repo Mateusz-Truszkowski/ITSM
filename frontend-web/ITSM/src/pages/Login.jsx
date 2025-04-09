@@ -28,8 +28,10 @@ function Login() {
       });
 
       if (response.ok) {
-        const data = await response.text();
-        console.log("Zalogowano pomyślnie:", data);
+        const data = await response.json();
+        localStorage.setItem("authToken", data.token);
+        console.log("Zalogowano pomyślnie:", data.user.login);
+        //window.location.href = "/dashboard"; przy prawidowym logowaniu przekierowanie na docelową stronę
       } else {
         console.log("Błąd logowania:", response.status);
       }
@@ -73,7 +75,7 @@ function Login() {
           <div className="remember-me">
             <input type="checkbox" />
             <span className="remember-me-text">Remember me</span>
-            <Link className="forgot-password" to="/">
+            <Link className="forgot-password" to="/PasswordReset">
               Forgot Password?
             </Link>
           </div>
