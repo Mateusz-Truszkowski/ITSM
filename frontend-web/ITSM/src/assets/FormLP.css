@@ -3,7 +3,7 @@
   margin: 200px auto;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.05);
-  height: 500px;
+  height: 540px;
   border-radius: 8px;
   display: flex;
   align-items: start;
@@ -143,4 +143,61 @@ input::placeholder {
 .login-button button:hover {
   background-color: #fe8100;
   color: white;
+}
+
+.confirmation-message,
+.failed-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+  cursor: pointer;
+}
+
+.confirmation-message p,
+.failed-message p {
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 5px;
+  border-radius: 100px;
+  font-weight: 900;
+  font-size: 22px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.confirmation-message span,
+.failed-message span {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 6px 8px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  font-size: 14px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.confirmation-message:hover span,
+.failed-message:hover span {
+  visibility: visible;
+  opacity: 1;
+}
+
+.confirmation-message p {
+  background-color: lightgreen;
+}
+
+.failed-message p {
+  background-color: #ff2e2e;
 }

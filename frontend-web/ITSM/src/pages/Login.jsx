@@ -9,6 +9,7 @@ import NavigationLP from "../components/NavigationLP";
 function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState(0); // 0 - not tried, 1 - failed
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +35,7 @@ function Login() {
         //window.location.href = "/dashboard"; przy prawidowym logowaniu przekierowanie na docelową stronę
       } else {
         console.log("Błąd logowania:", response.status);
+        setSuccess(1);
       }
     } catch (error) {
       console.error("Wystąpił błąd:", error);
@@ -42,10 +44,12 @@ function Login() {
 
   const handleUsernameChange = (event) => {
     setLogin(event.target.value);
+    setSuccess(0);
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+    setSuccess(0);
   };
 
   return (
@@ -85,6 +89,18 @@ function Login() {
           <div className="login-register">
             Don't have an account yet? <Link to="/">Register</Link>
           </div>
+          {success === 2 && (
+            <div className="confirmation-message">
+              <p>&#x2713;</p> {/*checkmark */}
+              <span>Email sent!</span>
+            </div>
+          )}
+          {success === 1 && (
+            <div className="failed-message">
+              <p>!</p>
+              <span>Incorrect login or password</span>
+            </div>
+          )}
         </form>
       </div>
     </>
