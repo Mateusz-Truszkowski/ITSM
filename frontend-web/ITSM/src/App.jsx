@@ -6,6 +6,7 @@ import Users from "./pages/Users.jsx";
 import Services from "./pages/Services.jsx";
 import Devices from "./pages/Devices.jsx";
 import Login from "./pages/Login.jsx";
+import PasswordReset from "./pages/PasswordReset.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/services" element={<Services />} />
           <Route path="/devices" element={<Devices />} />
+          <Route path="/PasswordReset" element={<PasswordReset />} /> {/* ResetPassword */}
           <Route path="/login" element={<Login />} /> {/* Strona logowania */}
         </Routes>
       </BrowserRouter>
