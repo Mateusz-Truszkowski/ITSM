@@ -35,6 +35,7 @@ function PasswordReset() {
 
   const handleUsernameChange = (event) => {
     setLogin(event.target.value);
+    if (success !== 2) setSuccess(0);
   };
 
   return (
