@@ -30,6 +30,12 @@ namespace ITSM.Services
             return _mapper.Map<TicketDto>(ticket);
         }
 
+        public List<TicketDto> GetTicketsByUser(UserDto user)
+        {
+            var tickets = _context.Tickets.Where(t => t.RequesterId == user.Id);
+            return tickets.Select(t => _mapper.Map<TicketDto>(t)).ToList();
+        }
+
         public TicketDto CreateTicket(TicketDto ticketDto)
         {
             var ticket = _mapper.Map<Ticket>(ticketDto);

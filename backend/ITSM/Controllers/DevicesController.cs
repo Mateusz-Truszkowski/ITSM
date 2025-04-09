@@ -10,11 +10,13 @@ namespace ITSM.Controllers
     public class DevicesController : ControllerBase
     {
         private readonly DevicesService _service;
+        private readonly UsersService _usersService;
         private readonly ILogger<DevicesController> _logger;
 
-        public DevicesController (DevicesService service, ILogger<DevicesController> logger)
+        public DevicesController (DevicesService service, UsersService usersService, ILogger<DevicesController> logger)
         {
             _service = service;
+            _usersService = usersService;
             _logger = logger;
         }
 
@@ -22,6 +24,15 @@ namespace ITSM.Controllers
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<List<DeviceDto>> Get()
         {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var user = _usersService.GetUserFromToken(token);
+
+            if (user == null)
+                return Forbid();
+
+            if (user.Group == "User")
+                return Ok(_service.GetDevicesByUser(user));
+
             return Ok(_service.GetDevices());
         }
 
@@ -29,9 +40,23 @@ namespace ITSM.Controllers
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<DeviceDto> Get(int id)
         {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var user = _usersService.GetUserFromToken(token);
+
+            if (user == null)
+                return Forbid();
+
             var foundDevice = _service.GetDeviceById(id);
 
             if (foundDevice == null) return NotFound();
+
+            if (user.Group == "User")
+            {
+                if (foundDevice.UserId == user.Id)
+                    return Ok(foundDevice);
+                else
+                    return Forbid();
+            }
 
             return Ok(foundDevice);
         }

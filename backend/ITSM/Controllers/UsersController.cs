@@ -19,24 +19,53 @@ namespace ITSM.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Operator")]
+        [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<List<UserDto>> Get()
         {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var user = _usersService.GetUserFromToken(token);
+
+            if (user == null)
+                return Forbid();
+
+            if (user.Group == "User")
+            {
+                var foundUser = _usersService.GetUserById(user.Id);
+                if (foundUser == null)
+                    return Ok(new List<UserDto>());
+                return Ok(new List<UserDto> { foundUser });
+            }
+
             return Ok(_usersService.GetUsers());
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Operator")]
+        [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<UserDto> Get(int id)
         {
-            var user = _usersService.GetUserById(id);
-            if (user == null) return NotFound();
-            return Ok(user);
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var user = _usersService.GetUserFromToken(token);
+
+            if (user == null)
+                return Forbid();
+
+            var foundUser = _usersService.GetUserById(id);
+            if (foundUser == null) return NotFound();
+
+            if (user.Group == "User")
+            {
+                if (foundUser.Id == user.Id)
+                    return Ok(foundUser);
+                else
+                    return Forbid();
+            }
+
+            return Ok(foundUser);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult<UserDto> Post(CreateUserDto user)
+        public ActionResult<UserDto> Post([FromBody] CreateUserDto user)
         {
             var createdUser = _usersService.CreateUser(user);
             return CreatedAtAction(nameof(Get), new {id = createdUser.Id}, createdUser);

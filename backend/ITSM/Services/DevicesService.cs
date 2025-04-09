@@ -2,6 +2,7 @@
 using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ITSM.Services
@@ -29,6 +30,12 @@ namespace ITSM.Services
                 return null;
 
             return _mapper.Map<DeviceDto>(device);
+        }
+
+        public List<DeviceDto> GetDevicesByUser(UserDto user)
+        {
+            var devices = _context.Devices.Where(d => d.UserId == user.Id);
+            return devices.Select(d => _mapper.Map<DeviceDto>(d)).ToList();
         }
 
         public DeviceDto CreateDevice(DeviceDto deviceDto)

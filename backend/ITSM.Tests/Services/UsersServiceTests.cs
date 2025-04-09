@@ -21,7 +21,7 @@ namespace ITSM.Tests.Services
             if (!empty)
             {
                 context.Users.AddRange(
-                    TestUtil.TestData.CreateTestUser()
+                    TestUtil.TestData.CreateTestUser1()
                 );
 
                 context.SaveChanges();
@@ -64,7 +64,7 @@ namespace ITSM.Tests.Services
 
             var result = service.GetUserById(1);
 
-            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser())), JsonConvert.SerializeObject(result));
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser1())), JsonConvert.SerializeObject(result));
         }
 
         [Fact]
@@ -88,7 +88,7 @@ namespace ITSM.Tests.Services
 
             var result = service.GetUserByLogin("jdoe");
 
-            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser())), JsonConvert.SerializeObject(result));
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser1())), JsonConvert.SerializeObject(result));
         }
 
         [Fact]
@@ -146,13 +146,13 @@ namespace ITSM.Tests.Services
             var mapper = GetMapper();
             var service = new UsersService(context, mapper);
 
-            var result = service.CreateUser(mapper.Map<CreateUserDto>(TestUtil.TestData.CreateTestUser()));
+            var result = service.CreateUser(mapper.Map<CreateUserDto>(TestUtil.TestData.CreateTestUser1()));
 
-            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser())), JsonConvert.SerializeObject(result));
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser1())), JsonConvert.SerializeObject(result));
 
             var createdUser = context.Users.FirstOrDefault(u => u.Id == 1);
             Assert.NotNull(createdUser);
-            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser())), JsonConvert.SerializeObject(mapper.Map<UserDto>(createdUser)));
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser1())), JsonConvert.SerializeObject(mapper.Map<UserDto>(createdUser)));
         }
 
         [Fact]
@@ -162,7 +162,7 @@ namespace ITSM.Tests.Services
             var mapper = GetMapper();
             var service = new UsersService(context, mapper);
 
-            var user = mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser());
+            var user = mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser1());
             user.Login = "updated";
 
             var result = service.UpdateUser(user);
@@ -180,7 +180,7 @@ namespace ITSM.Tests.Services
             var mapper = GetMapper();
             var service = new UsersService(context, mapper);
 
-            var user = mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser());
+            var user = mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser1());
             user.Login = "updated";
 
             var result = service.UpdateUser(user);
@@ -199,6 +199,32 @@ namespace ITSM.Tests.Services
 
             var deletedUser = context.Users.FirstOrDefault(u => u.Id == 1);
             Assert.Null(deletedUser);
+        }
+
+        [Fact]
+        public void GetUserFromToken_ReturnsUser_WhenValidTokenProvided()
+        {
+            var context = GetDbContext();
+            var mapper = GetMapper();
+            var service = new UsersService(context, mapper);
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqZG9lIiwianRpIjoiNWQ4MDk5MWEtMDYxMi00ODkxLTk4NTctYjg4ZDJhMjQyODIyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NDQyMjIwMjEsImlzcyI6Ikl0c20iLCJhdWQiOiJJdHNtVXNlcnMifQ.2RpLwf1G2HVdaeXJMKiw5nA9uwYDsdwmwCT-H6XAXWA";
+
+            var result = mapper.Map<UserDto>(service.GetUserFromToken(token));
+
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser1())), JsonConvert.SerializeObject(result));
+        }
+
+        [Fact]
+        public void GetUserFromToken_ReturnsNull_WhenInvalidToken()
+        {
+            var context = GetDbContext();
+            var mapper = GetMapper();
+            var service = new UsersService(context, mapper);
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqZG9lIiwianRpIjoiNWQ4MDk5MWEtDZYxMi00ODkxLTk4NTctYjg4ZDJhMjQyODIyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NDQyMjIwMjEsImlzcyI6Ikl0c20iLCJhdWQiOiJJdHNtVXNlcnMifQ.2RpLwf1G2HVdaeXJMKiw5nA9uwYDsdwmwCT-H6XAXWB";
+
+            var result = mapper.Map<UserDto>(service.GetUserFromToken(token));
+
+            Assert.Null(result);
         }
     }
 }

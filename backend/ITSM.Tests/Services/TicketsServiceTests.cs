@@ -21,7 +21,8 @@ namespace ITSM.Tests.Services
             if (!empty)
             {
                 context.Tickets.AddRange(
-                    TestUtil.TestData.CreateTestTicket()
+                    TestUtil.TestData.CreateTestTicket1(),
+                    TestUtil.TestData.CreateTestTicket2()
                 );
 
                 context.SaveChanges();
@@ -34,8 +35,9 @@ namespace ITSM.Tests.Services
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Ticket, TicketDto>();
+                cfg.CreateMap<Ticket, TicketDto>().ForMember(dest => dest.Requester, opt => opt.Ignore());
                 cfg.CreateMap<TicketDto, Ticket>();
+                cfg.CreateMap<User, UserDto>();
             });
             return config.CreateMapper();
         }
@@ -62,7 +64,7 @@ namespace ITSM.Tests.Services
 
             var result = service.GetTicket(1);
 
-            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket())), JsonConvert.SerializeObject(result));
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket1())), JsonConvert.SerializeObject(result));
         }
 
         [Fact]
@@ -83,13 +85,13 @@ namespace ITSM.Tests.Services
             var context = GetDbContext(true);
             var mapper = GetMapper();
             var service = new TicketsService(context, mapper);
-            var ticketDto = mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket());
+            var ticketDto = mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket1());
 
             var result = service.CreateTicket(ticketDto);
 
-            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket())), JsonConvert.SerializeObject(result));
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket1())), JsonConvert.SerializeObject(result));
             var createdTicket = mapper.Map<TicketDto>(context.Tickets.FirstOrDefault(t =>  t.Id == 1));
-            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket())), JsonConvert.SerializeObject(createdTicket));
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket1())), JsonConvert.SerializeObject(createdTicket));
         }
 
         [Fact]
@@ -98,7 +100,7 @@ namespace ITSM.Tests.Services
             var context = GetDbContext();
             var mapper = GetMapper();
             var service = new TicketsService(context, mapper);
-            var ticketDto = mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket());
+            var ticketDto = mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket1());
             ticketDto.Description = "updated";
 
             var result = service.UpdateTicket(ticketDto);
@@ -114,7 +116,7 @@ namespace ITSM.Tests.Services
             var context = GetDbContext(true);
             var mapper = GetMapper();
             var service = new TicketsService(context, mapper);
-            var ticketDto = mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket());
+            var ticketDto = mapper.Map<TicketDto>(TestUtil.TestData.CreateTestTicket1());
 
             var result = service.UpdateTicket(ticketDto);
 
@@ -132,6 +134,31 @@ namespace ITSM.Tests.Services
 
             var deletedTicket = context.Tickets.FirstOrDefault(t => t.Id == 1);
             Assert.Null(deletedTicket);
+        }
+
+        [Fact]
+        public void GetTicketsByUser_ReturnsListOfTickets_WhenUserHaveTickets()
+        {
+            var context = GetDbContext();
+            var mapper = GetMapper();
+            var service = new TicketsService(context, mapper);
+
+            var result = service.GetTicketsByUser(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser1()));
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+        }
+
+        [Fact]
+        public void GetTicketsByUser_ReturnsEmptyList_WhenUserDoesNotHaveTickets()
+        {
+            var context = GetDbContext();
+            var mapper = GetMapper();
+            var service = new TicketsService(context, mapper);
+
+            var result = service.GetTicketsByUser(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser2()));
+
+            Assert.Empty(result);
         }
     }
 }

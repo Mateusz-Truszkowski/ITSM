@@ -2,6 +2,7 @@
 using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ITSM.Services
 {
@@ -99,6 +100,26 @@ namespace ITSM.Services
             {
                 _context.Users.Remove(toDelete);
                 _context.SaveChanges();
+            }
+        }
+
+        public UserDto? GetUserFromToken(string token)
+        {
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
+
+                var login = jsonToken?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+
+                if (login == null)
+                    return null;
+
+                return GetUserByLogin(login);
+            } 
+            catch
+            {
+                return null;
             }
         }
     }

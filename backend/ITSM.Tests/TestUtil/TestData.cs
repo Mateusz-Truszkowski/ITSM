@@ -9,7 +9,7 @@ namespace ITSM.Tests.TestUtil
 {
     public class TestData
     {
-        public static User CreateTestUser()
+        public static User CreateTestUser1()
         {
             return new User
             {
@@ -26,7 +26,24 @@ namespace ITSM.Tests.TestUtil
             };
         }
 
-        public static Ticket CreateTestTicket()
+        public static User CreateTestUser2()
+        {
+            return new User
+            {
+                Id = 2,
+                Login = "asmith",
+                Name = "Alice",
+                Surname = "Smith",
+                Email = "asmith@example.com",
+                Password = "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni",
+                CreationDate = new DateTime(2022, 12, 15),
+                Group = "User",
+                Occupation = "Product Manager",
+                Status = "Active"
+            };
+        }
+
+        public static Ticket CreateTestTicket1()
         {
             return new Ticket
             {
@@ -45,7 +62,26 @@ namespace ITSM.Tests.TestUtil
             };
         }
 
-        public static Device CreateTestDevice()
+        public static Ticket CreateTestTicket2()
+        {
+            return new Ticket
+            {
+                Id = 2,
+                Name = "System performance issue",
+                Description = "The application is lagging when loading the dashboard.",
+                CreationDate = new DateTime(2025, 4, 1),
+                SolutionDate = null,
+                SolutionDescription = null,
+                Priority = 1,
+                Type = "Performance",
+                Status = "In Progress",
+                ServiceId = 2,
+                RequesterId = 3,
+                AssigneeId = 3,
+            };
+        }
+
+        public static Device CreateTestDevice1()
         {
             return new Device
             {
@@ -55,6 +91,20 @@ namespace ITSM.Tests.TestUtil
                 AcquisitionDate = new DateTime(2023, 1, 15),
                 DepreciationDate = new DateTime(2025, 1, 15),
                 UserId = 1,
+                Status = "Active"
+            };
+        }
+
+        public static Device CreateTestDevice2()
+        {
+            return new Device
+            {
+                Id = 2,
+                Name = "Smartphone Samsung Galaxy S21",
+                Description = "Smartphone z ekranem 6.2 cala, 8GB RAM",
+                AcquisitionDate = new DateTime(2023, 3, 10),
+                DepreciationDate = new DateTime(2025, 3, 10),
+                UserId = 3,
                 Status = "Active"
             };
         }

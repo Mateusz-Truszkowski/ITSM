@@ -10,11 +10,13 @@ namespace ITSM.Controllers
     public class TicketsController : ControllerBase
     {
         private readonly TicketsService _service;
+        private readonly UsersService _usersService;
         private readonly ILogger<TicketsController> _logger;
 
-        public TicketsController(TicketsService service, ILogger<TicketsController> logger)
+        public TicketsController(TicketsService service, UsersService usersService, ILogger<TicketsController> logger)
         {
             _service = service;
+            _usersService = usersService;
             _logger = logger;
         }
 
@@ -22,6 +24,15 @@ namespace ITSM.Controllers
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<List<TicketDto>> Get()
         {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var user = _usersService.GetUserFromToken(token);
+
+            if (user == null)
+                return Forbid();
+
+            if (user.Group == "User")
+                return Ok(_service.GetTicketsByUser(user));
+
             return Ok(_service.GetTickets());
         }
 
@@ -29,9 +40,23 @@ namespace ITSM.Controllers
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<TicketDto> Get(int id)
         {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var user = _usersService.GetUserFromToken(token);
+
+            if (user == null)
+                return Forbid();
+
             var foundTicket = _service.GetTicket(id);
 
             if (foundTicket == null) return NotFound();
+
+            if (user.Group == "User")
+            {
+                if (foundTicket.RequesterId == user.Id)
+                    return Ok(foundTicket);
+                else
+                    return Forbid();
+            }
 
             return Ok(foundTicket);
         }

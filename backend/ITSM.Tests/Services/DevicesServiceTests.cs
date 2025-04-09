@@ -21,7 +21,8 @@ namespace ITSM.Tests.Services
             if (!empty)
             {
                 context.Devices.AddRange(
-                    TestUtil.TestData.CreateTestDevice()
+                    TestUtil.TestData.CreateTestDevice1(),
+                    TestUtil.TestData.CreateTestDevice2()
                 );
 
                 context.SaveChanges();
@@ -36,6 +37,7 @@ namespace ITSM.Tests.Services
             {
                 cfg.CreateMap<Device, DeviceDto>();
                 cfg.CreateMap<DeviceDto, Device>();
+                cfg.CreateMap<User, UserDto>();
             });
             return config.CreateMapper();
         }
@@ -62,7 +64,7 @@ namespace ITSM.Tests.Services
 
             var result = service.GetDeviceById(1);
 
-            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<DeviceDto>(TestUtil.TestData.CreateTestDevice())), JsonConvert.SerializeObject(result));
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<DeviceDto>(TestUtil.TestData.CreateTestDevice1())), JsonConvert.SerializeObject(result));
         }
 
         [Fact]
@@ -83,7 +85,7 @@ namespace ITSM.Tests.Services
             var context = GetDbContext(true);
             var mapper = GetMapper();
             var service = new DevicesService(context, mapper);
-            var device = mapper.Map<DeviceDto>(TestUtil.TestData.CreateTestDevice());
+            var device = mapper.Map<DeviceDto>(TestUtil.TestData.CreateTestDevice1());
 
             var result = service.CreateDevice(device);
 
@@ -98,7 +100,7 @@ namespace ITSM.Tests.Services
             var context = GetDbContext();
             var mapper = GetMapper();
             var service = new DevicesService(context, mapper);
-            var device = mapper.Map<DeviceDto>(TestUtil.TestData.CreateTestDevice());
+            var device = mapper.Map<DeviceDto>(TestUtil.TestData.CreateTestDevice1());
             device.Description = "updated";
 
             var result = service.UpdateDevice(device);
@@ -114,7 +116,7 @@ namespace ITSM.Tests.Services
             var context = GetDbContext(true);
             var mapper = GetMapper();
             var service = new DevicesService(context, mapper);
-            var device = mapper.Map<DeviceDto>(TestUtil.TestData.CreateTestDevice());
+            var device = mapper.Map<DeviceDto>(TestUtil.TestData.CreateTestDevice1());
 
             var result = service.UpdateDevice(device);
 
@@ -132,6 +134,31 @@ namespace ITSM.Tests.Services
 
             var deletedDevice = context.Devices.FirstOrDefault(d => d.Id == 1);
             Assert.Null(deletedDevice);
+        }
+
+        [Fact]
+        public void GetDevicesByUser_ReturnsListOfDevices_WhenUserHaveDevices()
+        {
+            var context = GetDbContext();
+            var mapper = GetMapper();
+            var service = new DevicesService(context, mapper);
+
+            var result = service.GetDevicesByUser(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser1()));
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+        }
+
+        [Fact]
+        public void GetDevicesByUser_ReturnsEmptyList_WhenUserDoesNotHaveDevices()
+        {
+            var context = GetDbContext();
+            var mapper = GetMapper();
+            var service = new DevicesService(context, mapper);
+
+            var result = service.GetDevicesByUser(mapper.Map<UserDto>(TestUtil.TestData.CreateTestUser2()));
+
+            Assert.Empty(result);
         }
     }
 }
