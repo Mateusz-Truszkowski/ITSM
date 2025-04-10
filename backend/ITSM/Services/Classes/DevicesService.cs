@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ITSM.Services
 {
-    public class DevicesService
+    public class DevicesService : IDevicesService
     {
         private readonly ITSMContext _context;
         private readonly IMapper _mapper;

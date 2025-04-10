@@ -38,8 +38,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IUsersService, UsersService>();
-builder.Services.AddScoped<ServicesService>();
-builder.Services.AddScoped<DevicesService>();
+builder.Services.AddScoped<IServicesService, ServicesService>();
+builder.Services.AddScoped<IDevicesService, DevicesService>();
 builder.Services.AddScoped<ITicketsService, TicketsService>();
 builder.Services.AddScoped<JwtTokenService>();
 builder.Services.AddControllers();

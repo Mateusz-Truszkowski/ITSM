@@ -11,9 +11,9 @@ namespace ITSM.Controllers
     public class AuthController : ControllerBase
     {
         private readonly JwtTokenService _jwtTokenService;
-        private readonly UsersService _usersService;
+        private readonly IUsersService _usersService;
 
-        public AuthController(JwtTokenService jwtTokenService, UsersService usersService)
+        public AuthController(JwtTokenService jwtTokenService, IUsersService usersService)
         {
             _jwtTokenService = jwtTokenService;
             _usersService = usersService;
