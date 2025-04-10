@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "../assets/GeneralLP.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import "../assets/MainPanel.css";
@@ -7,7 +8,11 @@ function Dashboard() {
   return (
     <>
       <NavigationLP />
-      <MainPanel />
+      <MainPanel>
+        {({ data, openRecord, isLoading }) => (
+          <div>{/*nic tu nie ma co sie gapisz*/}</div>
+        )}
+      </MainPanel>
     </>
   );
 }
