@@ -20,10 +20,12 @@ function LandingPage() {
             business functions.
           </div>
         </div>
-        <Link to="/devices"><div className="itsm-card">
-          <div className="itsm-number">02</div>
-          <div className="itsm-title">Service Request Management</div>
-        </div></Link>
+        <Link to="/devices">
+          <div className="itsm-card">
+            <div className="itsm-number">02</div>
+            <div className="itsm-title">Service Request Management</div>
+          </div>
+        </Link>
         <div className="itsm-card">
           <div className="itsm-number">03</div>
           <div className="itsm-title">Problem Management</div>

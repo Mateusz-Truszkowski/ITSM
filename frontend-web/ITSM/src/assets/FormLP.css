@@ -12,6 +12,7 @@
   backdrop-filter: blur(5px) brightness(110%);
   box-shadow: 0 0 7px white;
 }
+
 .resetpass-container {
   width: 500px;
   margin: 200px auto;
@@ -26,6 +27,7 @@
   backdrop-filter: blur(5px) brightness(110%);
   box-shadow: 0 0 7px white;
 }
+
 a {
   text-decoration: none;
 }
@@ -143,6 +145,7 @@ input::placeholder {
 .login-button button:hover {
   background-color: #fe8100;
   color: white;
+  cursor: pointer;
 }
 
 .confirmation-message,

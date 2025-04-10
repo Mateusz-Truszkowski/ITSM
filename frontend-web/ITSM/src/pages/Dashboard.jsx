@@ -3,7 +3,7 @@ import NavigationLP from "../components/NavigationLP.jsx";
 import "../assets/MainPanel.css";
 import MainPanel from "../components/MainPanel.jsx";
 
-function Devices() {
+function Dashboard() {
   return (
     <>
       <NavigationLP />
@@ -12,4 +12,4 @@ function Devices() {
   );
 }
 
-export default Devices;
+export default Dashboard;
