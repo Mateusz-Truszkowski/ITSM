@@ -31,11 +31,13 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("authToken", data.token);
+        localStorage.setItem("name", data.user.name);
         console.log("Zalogowano pomyślnie:", data.user.login);
-        //window.location.href = "/dashboard"; przy prawidowym logowaniu przekierowanie na docelową stronę
+        window.location.href = "/dashboard";
       } else {
         console.log("Błąd logowania:", response.status);
         setSuccess(1);
+        localStorage.removeItem("authToken");
       }
     } catch (error) {
       console.error("Wystąpił błąd:", error);

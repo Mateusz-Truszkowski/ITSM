@@ -55,7 +55,7 @@ function PasswordReset() {
             </div>
           </div>
           <div className="login-button">
-            <button type="submit">Ok</button>
+            <button type="submit">Send recovery email</button>
           </div>
           {success === 2 && (
             <div className="confirmation-message">

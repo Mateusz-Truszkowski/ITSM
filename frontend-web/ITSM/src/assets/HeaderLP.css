@@ -27,7 +27,8 @@
   justify-content: right;
 }
 
-.navigation-item {
+.navigation-item,
+.userName-div {
   margin-right: 30px;
   margin-left: 30px;
   font-size: 17px;
@@ -49,4 +50,18 @@
 
 .navigation-item a {
   display: inline;
+}
+
+.userName {
+  color: #fe8100;
+  font-weight: 500;
+}
+
+.navigation-item:hover .userName {
+  color: black;
+}
+
+.logout {
+  cursor: pointer;
+  padding: 10px 15px 10px 15px;
 }
