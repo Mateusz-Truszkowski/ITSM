@@ -3,13 +3,15 @@ import "../assets/FormLP.css";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import person from "../assets/icons/user-icon.png";
-import lock from "../assets/icons/password-icon.png";
+import locked from "../assets/icons/locked-icon.png";
+import unlocked from "../assets/icons/unlocked-icon.png";
 import NavigationLP from "../components/NavigationLP";
 
 function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(0); // 0 - not tried, 1 - failed
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +56,10 @@ function Login() {
     setSuccess(0);
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <NavigationLP />
@@ -73,9 +79,14 @@ function Login() {
               <input
                 onChange={handlePasswordChange}
                 placeholder="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
               />
-              <img src={lock} alt="" />
+              <img
+                src={showPassword ? unlocked : locked}
+                alt="toggle password visibility"
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              />
             </div>
           </div>
           <div className="remember-me">
