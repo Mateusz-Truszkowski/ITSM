@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ITSM.Tests.TestUtil
@@ -57,6 +58,23 @@ namespace ITSM.Tests.TestUtil
                 Group = "Admin",
                 Occupation = "QA Engineer",
                 Status = "Inactive"
+            };
+        }
+
+        public static User CreateTestUser4()
+        {
+            return new User
+            {
+                Id = 4,
+                Login = "klane",
+                Name = "Kate",
+                Surname = "Lane",
+                Email = "klane@example.com",
+                Password = "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni",
+                CreationDate = new DateTime(2022, 8, 1),
+                Group = "User",
+                Occupation = "UX Designer",
+                Status = "Active"
             };
         }
 

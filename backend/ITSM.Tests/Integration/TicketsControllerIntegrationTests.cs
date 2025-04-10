@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 namespace ITSM.Tests.Integration
 {
+    [Collection("IntegrationTests")]
     public class TicketsControllerIntegrationTests : IClassFixture<MyWebApplicationFactory>
     {
         private readonly HttpClient _client;
@@ -309,11 +310,6 @@ namespace ITSM.Tests.Integration
                 TestData.CreateTestTicket2()
             );
             _context.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            ResetDb();
         }
     }
 }

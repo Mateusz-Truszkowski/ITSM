@@ -82,7 +82,7 @@ namespace ITSM.Controllers
             return Ok(updatedUser);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
