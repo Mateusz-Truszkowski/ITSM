@@ -98,6 +98,25 @@ namespace ITSM.Tests.TestUtil
             };
         }
 
+        public static Ticket CreateTestTicket3()
+        {
+            return new Ticket
+            {
+                Id = 3,
+                Name = "Password reset request",
+                Description = "User has forgotten their password and needs a reset.",
+                CreationDate = new DateTime(2025, 4, 1),
+                SolutionDate = new DateTime(2025, 4, 2),
+                SolutionDescription = "Password was successfully reset and communicated to the user.",
+                Priority = 3,
+                Type = "Support",
+                Status = "Closed",
+                ServiceId = 3,
+                RequesterId = 3,
+                AssigneeId = 1,
+            };
+        }
+
         public static Device CreateTestDevice1()
         {
             return new Device

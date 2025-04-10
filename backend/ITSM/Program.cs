@@ -44,24 +44,30 @@ builder.Services.AddScoped<ITicketsService, TicketsService>();
 builder.Services.AddScoped<JwtTokenService>();
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<ITSMContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ITSM_DbCS")));
+if (builder.Environment.EnvironmentName == "Development")
+{
+    builder.Services.AddDbContext<ITSMContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ITSM_DbCS")));
+}
 
 var app = builder.Build();
 
 app.UseCors("AllowAllOrigins");
 
-using (var scope = app.Services.CreateScope())
+if (app.Environment.EnvironmentName == "Development")
 {
-    var services = scope.ServiceProvider;
-    try
+    using (var scope = app.Services.CreateScope())
     {
-        var context = services.GetRequiredService<ITSMContext>();
-        await context.Database.MigrateAsync();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"An error has occured while migrating the database: {ex.Message}");
+        var services = scope.ServiceProvider;
+        try
+        {
+            var context = services.GetRequiredService<ITSMContext>();
+            await context.Database.MigrateAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error has occured while migrating the database: {ex.Message}");
+        }
     }
 }
 
@@ -73,3 +79,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
