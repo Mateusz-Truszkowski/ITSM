@@ -8,9 +8,7 @@ function Dashboard() {
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, openRecord, isLoading }) => (
-          <div>{/* Twoja logika wyświetlania danych */}</div>
-        )}
+        {({ data, openRecord, isLoading }) => <div>{/* co sie paczysz */}</div>}
       </MainPanel>
     </>
   );
