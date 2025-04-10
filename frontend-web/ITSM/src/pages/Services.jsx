@@ -11,7 +11,7 @@ function Services() {
 
   const openService = async (serviceId) => {
     console.log("Otwarto serwis: " + serviceId);
-    navigate(`/users/${serviceId}`);
+    navigate(`/services/${serviceId}`);
   };
 
   return (

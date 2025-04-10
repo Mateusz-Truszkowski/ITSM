@@ -4,8 +4,11 @@ import LandingPage from "./pages/LandingPage.jsx";
 import Tickets from "./pages/Tickets.jsx";
 import TicketDetails from "./pages/TicketDetails.jsx";
 import Users from "./pages/Users.jsx";
+import UserDetails from "./pages/UserDetails.jsx";
 import Services from "./pages/Services.jsx";
+import ServiceDetails from "./pages/ServiceDetails.jsx";
 import Devices from "./pages/Devices.jsx";
+import DeviceDetails from "./pages/DeviceDetails.jsx";
 import Login from "./pages/Login.jsx";
 import PasswordReset from "./pages/PasswordReset.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
@@ -19,8 +22,11 @@ function App() {
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/tickets/:ticketId" element={<TicketDetails />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/users/:userId" element={<UserDetails />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:serviceId" element={<ServiceDetails />} />
           <Route path="/devices" element={<Devices />} />
+          <Route path="/devices/:deviceId" element={<DeviceDetails />} />
           <Route path="/PasswordReset" element={<PasswordReset />} />
           {/* ResetPassword */}
           <Route path="/login" element={<Login />} /> {/* Strona logowania */}

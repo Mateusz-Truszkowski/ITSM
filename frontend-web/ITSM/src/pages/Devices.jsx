@@ -9,9 +9,9 @@ import MainPanel from "../components/MainPanel";
 function Devices() {
   const navigate = useNavigate();
 
-  const openDevice = async (serviceId) => {
-    console.log("Otwarto serwis: " + serviceId);
-    navigate(`/users/${serviceId}`);
+  const openDevice = async (deviceId) => {
+    console.log("Otwarto urządzenie: " + deviceId);
+    navigate(`/devices/${deviceId}`);
   };
 
   return (
@@ -38,16 +38,16 @@ function Devices() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((service) => (
-                    <tr onClick={() => openDevice(service.id)} key={service.id}>
-                      <td>{service.id}</td>
-                      <td>{service.name}</td>
-                      <td>{service.description}</td>
+                  {data.map((device) => (
+                    <tr onClick={() => openDevice(device.id)} key={device.id}>
+                      <td>{device.id}</td>
+                      <td>{device.name}</td>
+                      <td>{device.description}</td>
                       <td>
-                        {new Date(service.contractingdate).toLocaleDateString()}
+                        {new Date(device.contractingdate).toLocaleDateString()}
                       </td>
-                      <td>{service.status}</td>
-                      <td>{service.sla}</td>
+                      <td>{device.status}</td>
+                      <td>{device.sla}</td>
                     </tr>
                   ))}
                 </tbody>
