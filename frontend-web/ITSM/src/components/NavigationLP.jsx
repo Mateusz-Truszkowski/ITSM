@@ -42,7 +42,7 @@ function NavigationLP() {
           <>
             <div className="userName-div">
               Hello,{" "}
-              <span class="userName">{localStorage.getItem("name")}</span>
+              <span className="userName">{localStorage.getItem("name")}</span>
             </div>
             <button onClick={Logout} className="navigation-item logout">
               Logout

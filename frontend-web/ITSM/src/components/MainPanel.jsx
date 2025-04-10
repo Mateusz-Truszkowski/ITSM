@@ -1,6 +1,8 @@
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
 import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchTickets } from "../hooks/tickets.js"
 import rocket from "../assets/images/rocket.png";
 import ticket from "../assets/icons/ticket-icon.png";
 import person from "../assets/icons/user-icon.png";
@@ -10,6 +12,19 @@ import laptop from "../assets/icons/laptop-icon.png";
 function MainPanel() {
   const location = useLocation();
   const token = localStorage.getItem("authToken");
+
+  const [tickets, setTickets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      const loadTickets = async () => {
+        const data = await fetchTickets();
+        setTickets(data);
+        setLoading(false);
+      };
+  
+      loadTickets();
+    }, []);
 
   return (
     <>
@@ -80,7 +95,14 @@ function MainPanel() {
               </Link>
             </div>
           </div>
-          <div className="content"></div>
+          <div className="content">
+            {location.pathname === "/tickets" ? 
+            <div>
+              {tickets.map(ticket => (
+                <div key={ticket.id}>{ticket.name}</div>
+              ))}
+            </div>: <></>}
+          </div>
         </div>
       ) : (
         <div class="unathorized">
