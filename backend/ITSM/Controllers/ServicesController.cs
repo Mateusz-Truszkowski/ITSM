@@ -10,9 +10,9 @@ namespace ITSM.Controllers
     public class ServicesController : ControllerBase
     {
         private readonly ILogger<ServicesController> _logger;
-        private readonly ServicesService _service;
+        private readonly IServicesService _service;
 
-        public ServicesController (ILogger<ServicesController> logger, ServicesService service)
+        public ServicesController (ILogger<ServicesController> logger, IServicesService service)
         {
             _logger = logger;
             _service = service;

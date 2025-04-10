@@ -9,11 +9,11 @@ namespace ITSM.Controllers
     [Route("[controller]")]
     public class DevicesController : ControllerBase
     {
-        private readonly DevicesService _service;
-        private readonly UsersService _usersService;
+        private readonly IDevicesService _service;
+        private readonly IUsersService _usersService;
         private readonly ILogger<DevicesController> _logger;
 
-        public DevicesController (DevicesService service, UsersService usersService, ILogger<DevicesController> logger)
+        public DevicesController (IDevicesService service, IUsersService usersService, ILogger<DevicesController> logger)
         {
             _service = service;
             _usersService = usersService;
