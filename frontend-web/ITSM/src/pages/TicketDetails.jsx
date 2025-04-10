@@ -2,68 +2,186 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
+import "../assets/RecordDetails.css";
+import { Link } from "react-router-dom";
 
 function TicketDetails() {
   const { ticketId } = useParams();
-  const [ticket, setTicket] = useState(null);
-  const token = localStorage.getItem("authToken");
 
-  useEffect(() => {
-    const fetchTicketDetails = async () => {
-      try {
-        const response = await fetch(
-          `https://localhost:63728/tickets/${ticketId}`,
-          {
-            method: "GET",
+  const [tickets, setTickets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const displayTickets = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+
+      const response = await fetch(
+        `https://localhost:63728/tickets/${ticketId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.log("Błąd podczas pobierania ticketa", response.status);
+        return;
+      }
+
+      const ticketsData = await response.json();
+
+      // Pobierz unikalne ID użytkowników
+      const userIds = [
+        ...new Set(
+          ticketsData
+            .flatMap((t) => [t.requesterId, t.assigneeId])
+            .filter((id) => id !== null)
+        ),
+      ];
+
+      // Pobierz dane użytkowników
+      const userResponses = await Promise.all(
+        userIds.map((id) =>
+          fetch(`https://localhost:63728/users/${id}`, {
             headers: {
-              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-          }
-        );
+          })
+        )
+      );
 
-        if (response.ok) {
-          const data = await response.json();
-          setTicket(data);
-        } else {
-          console.log("Błąd pobierania szczegółów ticketu");
-        }
-      } catch (error) {
-        console.error("Błąd:", error);
-      }
-    };
+      const userData = await Promise.all(
+        userResponses.map((res) => res.json())
+      );
 
-    fetchTicketDetails();
-  }, [ticketId, token]);
+      // Tworzymy mapę użytkowników
+      const userMap = {};
+      userData.forEach((user) => {
+        userMap[user.id] = `${user.name} ${user.surname}`; // Możesz dodać nazwisko, jeśli jest dostępne
+      });
+
+      // Wzbogacenie ticketów
+      const enrichedTickets = ticketsData.map((ticket) => ({
+        ...ticket,
+        requesterName: userMap[ticket.requesterId] ?? "—", // Jeśli nie ma użytkownika, to wyświetlimy "—"
+        assigneeName: userMap[ticket.assigneeId] ?? "—", // To samo dla assignee
+      }));
+
+      setTickets(enrichedTickets); // Ustawienie wzbogaconych ticketów do stanu
+      setIsLoading(false); // Ustawienie stanu ładowania na false po załadowaniu danych
+    } catch (error) {
+      console.error("Wystąpił błąd:", error);
+      setIsLoading(false); // Zatrzymanie ładowania, jeśli wystąpił błąd
+    }
+  };
+
+  useEffect(() => {
+    displayTickets();
+  }, []);
 
   return (
     <>
       <NavigationLP />
       <MainPanel>
         {({ data, openRecord, isLoading }) => (
-          <div>{
-            <div>
-              <h1>Ticket Details</h1>
-              <p>
-                <strong>ID:</strong> {ticket ? ticket.id : "Loading..."}
-              </p>
-              <p>
-                <strong>Name:</strong> {ticket ? ticket.name : "Loading..."}
-              </p>
-              <p>
-                <strong>Description:</strong> {ticket ? ticket.description : "Loading..."}
-              </p>
-              <p>
-                <strong>Status:</strong> {ticket ? ticket.status : "Loading..."}
-              </p>
-              <p>
-                <strong>Assignee:</strong> {ticket ? ticket.assigneeName : "Loading..."}
-              </p>
-              <p>
-                <strong>Requester:</strong> {ticket ? ticket.requesterName : "Loading..."}
-              </p>
+          <div className="record-details-wrapper">
+            <div className="record-details-container">
+              <h1 className="record-details-header">Ticket Details</h1>
+              <div className="record-fields">
+                <div className="record-field">
+                  <span className="record-label">ID:</span>
+                  <span className="record-value">
+                    {data ? data.id : "Loading..."}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Name:</span>
+                  <span className="record-value">
+                    {data ? data.name : "Loading..."}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Description:</span>
+                  <span className="record-value">
+                    {data ? data.description : "Loading..."}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Created:</span>
+                  <span className="record-value">
+                    {data && data.creationDate
+                      ? new Date(data.creationDate).toLocaleDateString()
+                      : ""}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Solution Date:</span>
+                  <span className="record-value">
+                    {data && data.solutiondate
+                      ? new Date(data.solutiondate).toLocaleDateString()
+                      : ""}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Solution Description:</span>
+                  <span className="record-value">
+                    {data ? data.solutiondescription : "Loading..."}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Priority:</span>
+                  <span className="record-value">
+                    {data ? data.priority : "Loading..."}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Type:</span>
+                  <span className="record-value">
+                    {data ? data.type : "Loading..."}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Status:</span>
+                  <span className="record-value">
+                    {data ? data.status : "Loading..."}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Service ID:</span>
+                  <span className="record-value">
+                    {data ? data.serviceId : "Loading..."}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Assignee:</span>
+                  <span className="record-value">
+                    {data ? (
+                      <Link to={`/users/${data.assigneeId}`}>
+                        {data.assigneeId}
+                      </Link>
+                    ) : (
+                      "Loading..."
+                    )}
+                  </span>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Requester:</span>
+                  <span className="record-value">
+                    {data ? (
+                      <Link to={`/users/${data.requesterId}`}>
+                        {data.requesterId}
+                      </Link>
+                    ) : (
+                      "Loading..."
+                    )}
+                  </span>
+                </div>
+              </div>
             </div>
-          }</div>
+          </div>
         )}
       </MainPanel>
     </>

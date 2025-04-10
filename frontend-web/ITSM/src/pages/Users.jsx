@@ -33,7 +33,7 @@ function Users() {
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Email</th>
-                    <th>Creation Date</th>
+                    <th>Created</th>
                     <th>Group</th>
                     <th>Occupation</th>
                     <th>Status</th>
