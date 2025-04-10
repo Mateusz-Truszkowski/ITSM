@@ -1,23 +1,16 @@
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
-<<<<<<< HEAD
-import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { fetchTickets } from "../hooks/tickets.js"
-=======
 import React, { useState, useEffect, useCallback } from "react"; // useCallback z react
-import { useLocation, useNavigate, Link } from "react-router-dom"; // Pozostałe importy z react-router-dom
->>>>>>> origin/BugFixes
+import { useLocation, Link } from "react-router-dom"; // Pozostałe importy z react-router-dom
 import rocket from "../assets/images/rocket.png";
 import ticket from "../assets/icons/ticket-icon.png";
 import person from "../assets/icons/user-icon.png";
 import cog from "../assets/icons/cog-icon.png";
 import laptop from "../assets/icons/laptop-icon.png";
 
-function MainPanel({ children }) {
+function MainPanelDetails({ children }) {
   const location = useLocation();
   const token = localStorage.getItem("authToken");
-  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,6 +19,7 @@ function MainPanel({ children }) {
       setIsLoading(true);
       try {
         const response = await fetch(`https://localhost:63728/${table}`, {
+          // Poprawiony endpoint bez `/${}`
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -49,34 +43,14 @@ function MainPanel({ children }) {
     [token]
   );
 
-  const openRecord = async (recordId) => {
-    console.log("Otwarto rekord o numerze: " + recordId);
-    navigate(`${location.pathname}/${recordId}`);
-  };
-
   useEffect(() => {
-    // Jeśli ścieżka to /dashboard, nie pobieramy danych i ustawiamy isLoading na false
     if (location.pathname === "/dashboard") {
-      setIsLoading(false); // Ustawiamy na false, żeby nie wyświetlać spinnera
+      setIsLoading(false);
       return;
     }
 
-    // Jeśli to inna ścieżka, pobieramy dane
-    fetchDataFromBackend(location.pathname.substring(1));
+    fetchDataFromBackend(location.pathname.substring(1)); // Fetching data based on path
   }, [location.pathname, fetchDataFromBackend]);
-
-  const [tickets, setTickets] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
-      const loadTickets = async () => {
-        const data = await fetchTickets();
-        setTickets(data);
-        setLoading(false);
-      };
-  
-      loadTickets();
-    }, []);
 
   return (
     <>
@@ -142,22 +116,14 @@ function MainPanel({ children }) {
             </div>
           </div>
           <div className="content">
-<<<<<<< HEAD
-            {location.pathname === "/tickets" ? 
-            <div>
-              {tickets.map(ticket => (
-                <div key={ticket.id}>{ticket.name}</div>
-              ))}
-            </div>: <></>}
-=======
             {isLoading ? (
               <div className="loading-spinner">
                 <div className="spinner"></div>
               </div>
             ) : (
-              children({ data, openRecord, isLoading })
+              // Przekazanie children jako funkcji renderującej
+              children({ data, isLoading })
             )}
->>>>>>> origin/BugFixes
           </div>
         </div>
       ) : (
@@ -175,4 +141,4 @@ function MainPanel({ children }) {
   );
 }
 
-export default MainPanel;
+export default MainPanelDetails;

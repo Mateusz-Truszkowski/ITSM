@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./assets/App.css";
 import LandingPage from "./pages/LandingPage.jsx";
 import Tickets from "./pages/Tickets.jsx";
+import TicketDetails from "./pages/TicketDetails.jsx";
 import Users from "./pages/Users.jsx";
 import Services from "./pages/Services.jsx";
 import Devices from "./pages/Devices.jsx";
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} /> {/* Strona główna */}
           <Route path="/tickets" element={<Tickets />} />
+          <Route path="/tickets/:ticketId" element={<TicketDetails />} />
           <Route path="/users" element={<Users />} />
           <Route path="/services" element={<Services />} />
           <Route path="/devices" element={<Devices />} />
