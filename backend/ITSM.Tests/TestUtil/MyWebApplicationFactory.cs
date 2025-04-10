@@ -32,7 +32,7 @@ namespace ITSM.Tests.TestUtil
                     context.Tickets.RemoveRange(context.Tickets);
 
                     context.Services.AddRange(
-                        TestData.CreateTestService()
+                        TestData.CreateTestService1()
                     );
 
                     context.Users.AddRange(

@@ -21,7 +21,7 @@ namespace ITSM.Tests.Services
             if (!empty)
             {
                 context.Services.AddRange(
-                    TestUtil.TestData.CreateTestService()
+                    TestUtil.TestData.CreateTestService1()
                 );
 
                 context.SaveChanges();
@@ -62,7 +62,7 @@ namespace ITSM.Tests.Services
 
             var result = service.GetService(1);
 
-            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService())), JsonConvert.SerializeObject(result));
+            Assert.Equal(JsonConvert.SerializeObject(mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService1())), JsonConvert.SerializeObject(result));
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace ITSM.Tests.Services
             var context = GetDbContext(true);
             var mapper = GetMapper();
             var service = new ServicesService(context, mapper);
-            var serviceDto = mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService());
+            var serviceDto = mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService1());
 
             var result = service.CreateService(serviceDto);
 
@@ -98,7 +98,7 @@ namespace ITSM.Tests.Services
             var context = GetDbContext();
             var mapper = GetMapper();
             var service = new ServicesService(context, mapper);
-            var serviceDto = mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService());
+            var serviceDto = mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService1());
             serviceDto.Name = "updated";
 
             var result = service.UpdateService(serviceDto);
@@ -114,7 +114,7 @@ namespace ITSM.Tests.Services
             var context = GetDbContext(true);
             var mapper = GetMapper();
             var service = new ServicesService(context, mapper);
-            var serviceDto = mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService());
+            var serviceDto = mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService1());
 
             var result = service.UpdateService(serviceDto);
 

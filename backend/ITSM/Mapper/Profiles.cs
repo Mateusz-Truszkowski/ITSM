@@ -15,7 +15,8 @@ namespace ITSM.Mapper
             CreateMap<Service, ServiceDto>();
             CreateMap<ServiceDto, Service>();
 
-            CreateMap<Device, DeviceDto>();
+            CreateMap<Device, DeviceDto>()
+                .ForMember(dest => dest.User, opt => opt.Ignore());
             CreateMap<DeviceDto, Device>();
 
             CreateMap<Ticket, TicketDto>()

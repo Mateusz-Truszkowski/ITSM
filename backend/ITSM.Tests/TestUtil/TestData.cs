@@ -163,7 +163,21 @@ namespace ITSM.Tests.TestUtil
             };
         }
 
-        public static Service CreateTestService()
+        public static Device CreateTestDevice3()
+        {
+            return new Device
+            {
+                Id = 3,
+                Name = "Monitor LG 27",
+                Description = "Monitor 27 cali, 4K",
+                AcquisitionDate = new DateTime(2022, 6, 30),
+                DepreciationDate = new DateTime(2024, 6, 30),
+                UserId = 1,
+                Status = "Active"
+            };
+        }
+
+        public static Service CreateTestService1()
         {
             return new Service
             {
@@ -173,6 +187,32 @@ namespace ITSM.Tests.TestUtil
                 ContractingDate = new DateTime(2023, 9, 1),
                 Status = "Active",
                 SLA = 99
+            };
+        }
+
+        public static Service CreateTestService2()
+        {
+            return new Service
+            {
+                Id = 2,
+                Name = "Cloud Storage",
+                Description = "Scalable cloud storage solutions for businesses of all sizes.",
+                ContractingDate = new DateTime(2022, 12, 15),
+                Status = "Active",
+                SLA = 99
+            };
+        }
+
+        public static Service CreateTestService3()
+        {
+            return new Service
+            {
+                Id = 3,
+                Name = "Email Marketing",
+                Description = "Email marketing campaigns, automation, and reporting.",
+                ContractingDate = new DateTime(2023, 5, 10),
+                Status = "Inactive",
+                SLA = 98
             };
         }
     }

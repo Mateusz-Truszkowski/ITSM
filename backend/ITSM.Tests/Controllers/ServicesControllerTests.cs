@@ -26,7 +26,7 @@ namespace ITSM.Tests.Controllers
             _loggerMock = new Mock<ILogger<ServicesController>>();
             _controller = new ServicesController(_loggerMock.Object, _servicesServiceMock.Object);
 
-            testService = _mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService());
+            testService = _mapper.Map<ServiceDto>(TestUtil.TestData.CreateTestService1());
         }
 
         private IMapper GetMapper()
