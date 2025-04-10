@@ -1,13 +1,8 @@
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
-<<<<<<< HEAD
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchTickets } from "../hooks/tickets.js"
-=======
-import React, { useState, useEffect, useCallback } from "react"; // useCallback z react
-import { useLocation, useNavigate, Link } from "react-router-dom"; // Pozostałe importy z react-router-dom
->>>>>>> origin/BugFixes
+import { fetchTickets } from "../hooks/tickets.js";
 import rocket from "../assets/images/rocket.png";
 import ticket from "../assets/icons/ticket-icon.png";
 import person from "../assets/icons/user-icon.png";
@@ -67,16 +62,16 @@ function MainPanel({ children }) {
 
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
-      const loadTickets = async () => {
-        const data = await fetchTickets();
-        setTickets(data);
-        setLoading(false);
-      };
-  
-      loadTickets();
-    }, []);
+
+  useEffect(() => {
+    const loadTickets = async () => {
+      const data = await fetchTickets();
+      setTickets(data);
+      setLoading(false);
+    };
+
+    loadTickets();
+  }, []);
 
   return (
     <>
@@ -142,22 +137,15 @@ function MainPanel({ children }) {
             </div>
           </div>
           <div className="content">
-<<<<<<< HEAD
-            {location.pathname === "/tickets" ? 
-            <div>
-              {tickets.map(ticket => (
-                <div key={ticket.id}>{ticket.name}</div>
-              ))}
-            </div>: <></>}
-=======
-            {isLoading ? (
-              <div className="loading-spinner">
-                <div className="spinner"></div>
+            {location.pathname === "/tickets" ? (
+              <div>
+                {tickets.map((ticket) => (
+                  <div key={ticket.id}>{ticket.name}</div>
+                ))}
               </div>
             ) : (
-              children({ data, openRecord, isLoading })
+              <></>
             )}
->>>>>>> origin/BugFixes
           </div>
         </div>
       ) : (
