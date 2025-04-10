@@ -127,3 +127,14 @@
   box-shadow: 0 0 10px rgba(255, 130, 0, 0.8);
   transition: all 0.3s ease;
 }
+
+.unauthorized-message,
+.unauthorized-login {
+  font-size: 80px;
+  color: white;
+  text-align: center;
+}
+
+.message-login {
+  color: #fe8100;
+}
