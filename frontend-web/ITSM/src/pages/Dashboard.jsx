@@ -9,13 +9,9 @@ function Dashboard() {
     <>
       <NavigationLP />
       <MainPanel>
-<<<<<<< HEAD
         {({ data, openRecord, isLoading }) => (
           <div>{/*nic tu nie ma co sie gapisz*/}</div>
         )}
-=======
-        {({ data, openRecord, isLoading }) => <div>{/* co sie paczysz */}</div>}
->>>>>>> BugFixes
       </MainPanel>
     </>
   );
