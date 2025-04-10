@@ -32,7 +32,7 @@ function Devices() {
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Contracting Date</th>
+                    <th>Acquisition Date</th>
                     <th>Status</th>
                     <th>SLA</th>
                   </tr>
@@ -44,7 +44,7 @@ function Devices() {
                       <td>{device.name}</td>
                       <td>{device.description}</td>
                       <td>
-                        {new Date(device.contractingdate).toLocaleDateString()}
+                        {new Date(device.acquisitionDate).toLocaleDateString()}
                       </td>
                       <td>{device.status}</td>
                       <td>{device.sla}</td>

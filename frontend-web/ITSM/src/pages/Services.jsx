@@ -47,7 +47,7 @@ function Services() {
                       <td>{service.name}</td>
                       <td>{service.description}</td>
                       <td>
-                        {new Date(service.contractingdate).toLocaleDateString()}
+                        {new Date(service.contractingDate).toLocaleDateString()}
                       </td>
                       <td>{service.status}</td>
                       <td>{service.sla}</td>

@@ -33,7 +33,7 @@ function UserDetails() {
                   </span>
                 </div>
                 <div className="record-field">
-                  <span className="record-label">Creation Date:</span>
+                  <span className="record-label">Created:</span>
                   <span className="record-value">
                     {data
                       ? new Date(data.creationDate).toLocaleDateString()
