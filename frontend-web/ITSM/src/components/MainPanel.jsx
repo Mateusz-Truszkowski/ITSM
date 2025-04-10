@@ -1,8 +1,7 @@
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
-import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { fetchTickets } from "../hooks/tickets.js";
+import React, { useState, useEffect, useCallback } from "react"; // useCallback z react
+import { useLocation, useNavigate, Link } from "react-router-dom"; // Pozostałe importy z react-router-dom
 import rocket from "../assets/images/rocket.png";
 import ticket from "../assets/icons/ticket-icon.png";
 import person from "../assets/icons/user-icon.png";
@@ -59,19 +58,6 @@ function MainPanel({ children }) {
     // Jeśli to inna ścieżka, pobieramy dane
     fetchDataFromBackend(location.pathname.substring(1));
   }, [location.pathname, fetchDataFromBackend]);
-
-  const [tickets, setTickets] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadTickets = async () => {
-      const data = await fetchTickets();
-      setTickets(data);
-      setLoading(false);
-    };
-
-    loadTickets();
-  }, []);
 
   return (
     <>
@@ -137,14 +123,12 @@ function MainPanel({ children }) {
             </div>
           </div>
           <div className="content">
-            {location.pathname === "/tickets" ? (
-              <div>
-                {tickets.map((ticket) => (
-                  <div key={ticket.id}>{ticket.name}</div>
-                ))}
+            {isLoading ? (
+              <div className="loading-spinner">
+                <div className="spinner"></div>
               </div>
             ) : (
-              <></>
+              children({ data, openRecord, isLoading })
             )}
           </div>
         </div>
