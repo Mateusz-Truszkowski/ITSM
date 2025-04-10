@@ -5,7 +5,7 @@ using ITSM.Entity;
 
 namespace ITSM.Services
 {
-    public class TicketsService
+    public class TicketsService : ITicketsService
     {
         private readonly ITSMContext _context;
         private readonly IMapper _mapper;

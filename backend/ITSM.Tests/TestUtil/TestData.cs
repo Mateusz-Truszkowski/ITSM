@@ -20,7 +20,7 @@ namespace ITSM.Tests.TestUtil
                 Email = "j.doe@example.com",
                 Password = BCrypt.Net.BCrypt.HashPassword("password123"),
                 CreationDate = DateTime.Parse("09.04.2025 14:30:00"),
-                Group = "IT",
+                Group = "User",
                 Occupation = "Developer",
                 Status = "Active"
             };
@@ -40,6 +40,23 @@ namespace ITSM.Tests.TestUtil
                 Group = "User",
                 Occupation = "Product Manager",
                 Status = "Active"
+            };
+        }
+
+        public static User CreateTestUser3()
+        {
+            return new User
+            {
+                Id = 3,
+                Login = "bjohnson",
+                Name = "Bob",
+                Surname = "Johnson",
+                Email = "bjohnson@example.com",
+                Password = "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni",
+                CreationDate = new DateTime(2023, 5, 10),
+                Group = "Admin",
+                Occupation = "QA Engineer",
+                Status = "Inactive"
             };
         }
 
