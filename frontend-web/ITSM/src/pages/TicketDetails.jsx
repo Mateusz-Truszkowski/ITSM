@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavigationLP from "../components/NavigationLP";
-import MainPanelDetails from "../components/MainPanelDetails";
+import MainPanel from "../components/MainPanel";
 
 function TicketDetails() {
   const { ticketId } = useParams();
@@ -39,30 +39,33 @@ function TicketDetails() {
   return (
     <>
       <NavigationLP />
-      <MainPanelDetails>
-        <div>
-          <h1>Ticket Details</h1>
-          <p>
-            <strong>ID:</strong> {ticket.id}
-          </p>
-          <p>
-            <strong>Name:</strong> {ticket.name}
-          </p>
-          <p>
-            <strong>Description:</strong> {ticket.description}
-          </p>
-          <p>
-            <strong>Status:</strong> {ticket.status}
-          </p>
-          <p>
-            <strong>Assignee:</strong> {ticket.assigneeName}
-          </p>
-          <p>
-            <strong>Requester:</strong> {ticket.requesterName}
-          </p>
-          {/* Możesz dodać więcej informacji w zależności od struktury ticketu */}
-        </div>
-      </MainPanelDetails>
+      <MainPanel>
+        {({ data, openRecord, isLoading }) => (
+          <div>{
+            <div>
+              <h1>Ticket Details</h1>
+              <p>
+                <strong>ID:</strong> {ticket ? ticket.id : "Loading..."}
+              </p>
+              <p>
+                <strong>Name:</strong> {ticket ? ticket.name : "Loading..."}
+              </p>
+              <p>
+                <strong>Description:</strong> {ticket ? ticket.description : "Loading..."}
+              </p>
+              <p>
+                <strong>Status:</strong> {ticket ? ticket.status : "Loading..."}
+              </p>
+              <p>
+                <strong>Assignee:</strong> {ticket ? ticket.assigneeName : "Loading..."}
+              </p>
+              <p>
+                <strong>Requester:</strong> {ticket ? ticket.requesterName : "Loading..."}
+              </p>
+            </div>
+          }</div>
+        )}
+      </MainPanel>
     </>
   );
 }

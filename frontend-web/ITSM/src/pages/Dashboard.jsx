@@ -7,7 +7,11 @@ function Dashboard() {
   return (
     <>
       <NavigationLP />
-      <MainPanel />
+      <MainPanel>
+        {({ data, openRecord, isLoading }) => (
+          <div>{/* Twoja logika wyświetlania danych */}</div>
+        )}
+      </MainPanel>
     </>
   );
 }
