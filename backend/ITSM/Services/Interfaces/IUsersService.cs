@@ -12,6 +12,7 @@ namespace ITSM.Services
         public bool Authenticate(string login, string password);
         public UserDto CreateUser(CreateUserDto userDto);
         public UserDto? UpdateUser(UserDto userDto);
+        public void UpdateUserPassword(int id, String Password);
         public void DeleteUser(int id);
         public UserDto? GetUserFromToken(string token);
     }

@@ -27,6 +27,7 @@ namespace ITSM.Data
                     Occupation = "Software Engineer",
                     Status = "Active"
                 },
+
                 new User
                 {
                     Id = 2,
@@ -78,6 +79,19 @@ namespace ITSM.Data
                     Group = "Admin",
                     Occupation = "CTO",
                     Status = "Suspended"
+                },
+                new User
+                {
+                    Id = 6,
+                    Login = "Daniel",
+                    Name = "Daniel",
+                    Surname = "Suski",
+                    Email = "karolpajako@gmail.com",
+                    Password = "$2a$11$OQyawnrLQU51AiOHU95o5eQxsrVxEhh/LuBUJfUDEq48VQTQaG6ni", // 1234
+                    CreationDate = new DateTime(2023, 9, 1),
+                    Group = "Admin",
+                    Occupation = "Software Engineer",
+                    Status = "Active"
                 }
             );
             modelBuilder.Entity<Service>().HasData(

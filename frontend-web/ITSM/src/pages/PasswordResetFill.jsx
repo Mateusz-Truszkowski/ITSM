@@ -1,0 +1,142 @@
+import "../assets/GeneralLP.css";
+import "../assets/FormLP.css";
+import React, { useState, useEffect } from "react";
+import person from "../assets/icons/user-icon.png";
+import NavigationLP from "../components/NavigationLP";
+import { useLocation } from "react-router-dom";
+
+function PasswordResetFill() {
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState(""); // Nowe hasło
+  const [confirmPassword, setConfirmPassword] = useState(""); // Potwierdzenie hasła
+  const [errorMessage, setErrorMessage] = useState(""); // Stan na komunikat błędu
+  const [token, setToken] = useState("");
+  const [success, setSuccess] = useState(0); // 0 - not tried, 1 - failed, 2 - success
+  const location = useLocation();
+
+  // Pobranie tokenu z URL
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get("token");
+    setToken(token);
+  }, [location]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!token) {
+      console.error("Brak tokenu!");
+      return;
+    }
+
+    // Sprawdzanie, czy hasła są takie same
+    if (password !== confirmPassword) {
+      setErrorMessage("The passwords do not match!");
+      return;
+    } else if (password == null || confirmPassword == null){
+      setErrorMessage("Fill new password");
+      return;
+    }else {
+      setErrorMessage(""); // Wyczyść komunikat o błędzie, jeśli hasła są takie same
+    }
+    const NewPassRequest = {
+      Token: token,
+      NewPassword: password,
+    };
+    console.log(NewPassRequest.Token); // Zmieniamy 'token' na 'Token'
+    console.log(NewPassRequest.NewPassword);
+    // Jeśli wszystkie warunki są spełnione, wysyłamy żądanie
+    try {
+      
+      let response = await fetch("https://localhost:63728/auth/setnewpass", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(NewPassRequest),
+      });
+
+      if (response.ok) {
+        const data = await response.text();
+        console.log("Ustawiono nowe hasło dla użytkownika: ", data);
+        setSuccess(2);
+      } else {
+        console.log("Błąd podczas ustawiania hasła:", response.status);
+        setSuccess(1);
+      }
+    } catch (error) {
+      console.error("Wystąpił błąd:", error);
+    }
+  };
+
+  // Funkcja obsługująca zmianę loginu
+  const handleLoginChange = (event) => {
+    setLogin(event.target.value);
+    if (success !== 2) setSuccess(0);
+  };
+
+  // Funkcja obsługująca zmianę hasła
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    if (success !== 2) setSuccess(0);
+  };
+
+  // Funkcja obsługująca zmianę potwierdzenia hasła
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+    if (success !== 2) setSuccess(0);
+  };
+
+  return (
+    <>
+      <NavigationLP />
+      <div className="resetpass-container">
+        <form onSubmit={handleSubmit} className="form">
+          <p className="SetNewPass">Set new password</p>
+          <div className="inputs">
+            <div className="NewPassword">
+              <input
+                onChange={handlePasswordChange}
+                placeholder="New password"
+                type="password"
+              />
+              <img src={person} alt="" />
+            </div>
+            <div className="Confirmpassword">
+              <input
+                onChange={handleConfirmPasswordChange}
+                placeholder="Confirm password"
+                type="password"
+              />
+              <img src={person} alt="" />
+            </div>
+          </div>
+          <div className="login-button">
+            <button type="submit">Set new password</button>
+          </div>
+
+          {errorMessage && (
+            <div className="error-message">
+              <p>{errorMessage}</p> 
+            </div>
+          )}
+
+          {success === 2 && (
+            <div className="confirmation-message">
+              <p>&#x2713;</p> {/*checkmark */}
+              <span>Password reset successful!</span>
+            </div>
+          )}
+          {success === 1 && (
+            <div className="failed-message">
+              <p>!</p>
+              <span>Incorrect login or password reset failed</span>
+            </div>
+          )}
+        </form>
+      </div>
+    </>
+  );
+}
+
+export default PasswordResetFill;

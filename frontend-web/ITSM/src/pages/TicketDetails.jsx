@@ -94,34 +94,34 @@ function TicketDetails() {
                 <div className="record-field">
                   <span className="record-label">ID:</span>
                   <span className="record-value">
-                    {data ? data.id : "Loading..."}
+                    {tickets ? tickets.id : "Loading..."}
                   </span>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Name:</span>
                   <span className="record-value">
-                    {data ? data.name : "Loading..."}
+                    {tickets ? tickets.name : "Loading..."}
                   </span>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Description:</span>
                   <span className="record-value">
-                    {data ? data.description : "Loading..."}
+                    {tickets ? tickets.description : "Loading..."}
                   </span>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Created:</span>
                   <span className="record-value">
-                    {data && data.creationDate
-                      ? new Date(data.creationDate).toLocaleDateString()
+                    {tickets && tickets.creationDate
+                      ? new Date(tickets.creationDate).toLocaleDateString()
                       : ""}
                   </span>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Solution Date:</span>
                   <span className="record-value">
-                    {data && data.solutiondate
-                      ? new Date(data.solutiondate).toLocaleDateString()
+                    {tickets && tickets.solutiondate
+                      ? new Date(tickets.solutiondate).toLocaleDateString()
                       : ""}
                   </span>
                 </div>
