@@ -20,11 +20,12 @@ body {
 
 body {
   background-image: url("../assets/images/main-page.jpg");
-  background-size: auto;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   margin: 0;
   padding: 0;
+  background-color: black;
 }
 
 .slogan {
