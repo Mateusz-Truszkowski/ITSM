@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
 import "../assets/Users.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
+import { fetchUsers } from "../hooks/users.js";
 
 function Users() {
   const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
 
   const openUser = async (userId) => {
     console.log("Otwarto użytkownika " + userId);
     navigate(`/users/${userId}`);
   };
+
+  const displayUsers = async () => {
+    const usersData = await fetchUsers();
+
+    setUsers(usersData);
+  };
+
+  useEffect(() => {
+    displayUsers();
+  }, []);
 
   return (
     <>
@@ -25,7 +37,7 @@ function Users() {
               <div className="loading-spinner">
                 <div className="spinner"></div>
               </div>
-            ) : data && data.length > 0 ? (
+            ) : users && users.length > 0 ? (
               <table className="records-table">
                 <thead>
                   <tr>
@@ -40,7 +52,7 @@ function Users() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((user) => (
+                  {users.map((user) => (
                     <tr onClick={() => openUser(user.id)} key={user.id}>
                       <td>{user.id}</td>
                       <td>{user.name}</td>
