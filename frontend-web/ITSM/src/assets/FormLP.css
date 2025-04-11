@@ -18,7 +18,7 @@
   margin: 200px auto;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.05);
-  height: 400px;
+  height: 430px;
   border-radius: 8px;
   display: flex;
   align-items: start;
@@ -215,8 +215,8 @@ input::placeholder {
 }
 
 .Confirmpassword {
-  margin-top:15px;
-  margin-bottom:15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .error-message {
@@ -231,4 +231,3 @@ input::placeholder {
   font-size: 17px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
-

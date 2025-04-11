@@ -108,7 +108,7 @@ namespace ITSM.Services
             var user = _context.Users.Where(user => user.Id == id).FirstOrDefault();
             if (user != null)
             {
-                user.Password= Password;
+                user.Password = BCrypt.Net.BCrypt.HashPassword(Password);
                 _context.SaveChanges();
             }
         }

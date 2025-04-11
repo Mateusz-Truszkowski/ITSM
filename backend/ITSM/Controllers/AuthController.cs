@@ -40,14 +40,13 @@ namespace ITSM.Controllers
         public ActionResult<UserDto> Post([FromBody] NewPassRequest request)
         {
             var User = _usersService.GetUserFromToken(request.Token);
-            return Ok(User.Login);
-            // Walidacja
-            if (request.Password == null || User == null)
+
+            if (request.NewPassword == null || User == null)
             {
                 return Forbid();
             }
 
-            _usersService.UpdateUserPassword(User.Id, request.Password);
+            _usersService.UpdateUserPassword(User.Id, request.NewPassword);
 
             return Ok(User.Login);
         }
@@ -71,7 +70,7 @@ namespace ITSM.Controllers
                     return NotFound();
                 }
                 string Token = _jwtTokenService.GenerateToken(foundUser.Login, foundUser.Group);
-                string resetLink = $"http://localhost:63728/passwordResetFill?token={Token}";
+                string resetLink = $"http://localhost:5174/passwordResetFill?token={Token}";
                 var mail = new MailMessage();
 
                 mail.From = new MailAddress("itsmsystempostman@gmail.com", "ITSM System");
@@ -109,7 +108,7 @@ namespace ITSM.Controllers
     public class NewPassRequest
     {
         public required string Token { get; set; }
-        public required string Password { get; set; }
+        public required string NewPassword { get; set; }
     }
     public class Response
     {
