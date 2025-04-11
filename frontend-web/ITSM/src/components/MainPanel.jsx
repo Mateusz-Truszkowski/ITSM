@@ -128,7 +128,7 @@ function MainPanel({ children }) {
                 <div className="spinner"></div>
               </div>
             ) : (
-              children({ data, openRecord, isLoading })
+              children({ data, openRecord })
             )}
           </div>
         </div>

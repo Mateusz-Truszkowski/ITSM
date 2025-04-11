@@ -8,7 +8,7 @@ function DeviceDetails() {
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, openRecord, isLoading }) => (
+        {({ data }) => (
           <div className="record-details-wrapper">
             <div className="record-details-container">
               <h1 className="record-details-header">Service Details</h1>

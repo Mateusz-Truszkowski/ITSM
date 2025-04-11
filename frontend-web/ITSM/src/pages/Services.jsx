@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
 import "../assets/Users.css";
@@ -7,18 +6,11 @@ import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
 
 function Services() {
-  const navigate = useNavigate();
-
-  const openService = async (serviceId) => {
-    console.log("Otwarto serwis: " + serviceId);
-    navigate(`/services/${serviceId}`);
-  };
-
   return (
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, isLoading }) => (
+        {({ data, openRecord, isLoading }) => (
           <div className="records-container">
             <h2 className="records-header">Users</h2>
             {isLoading ? (
@@ -39,10 +31,7 @@ function Services() {
                 </thead>
                 <tbody>
                   {data.map((service) => (
-                    <tr
-                      onClick={() => openService(service.id)}
-                      key={service.id}
-                    >
+                    <tr onClick={() => openRecord(service.id)} key={service.id}>
                       <td>{service.id}</td>
                       <td>{service.name}</td>
                       <td>{service.description}</td>

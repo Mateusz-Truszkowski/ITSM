@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
@@ -9,7 +8,7 @@ function UserDetails() {
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, openRecord, isLoading }) => (
+        {({ data }) => (
           <div className="record-details-wrapper">
             <div className="record-details-container">
               <h1 className="record-details-header">User Details</h1>

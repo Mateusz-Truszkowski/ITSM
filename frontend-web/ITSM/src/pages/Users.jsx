@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
 import "../assets/Users.css";
@@ -8,13 +7,7 @@ import MainPanel from "../components/MainPanel";
 import { fetchUsers } from "../hooks/users.js";
 
 function Users() {
-  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-
-  const openUser = async (userId) => {
-    console.log("Otwarto użytkownika " + userId);
-    navigate(`/users/${userId}`);
-  };
 
   const displayUsers = async () => {
     const usersData = await fetchUsers();
@@ -30,7 +23,7 @@ function Users() {
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, isLoading }) => (
+        {({ data, isLoading, openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Users</h2>
             {isLoading ? (
@@ -53,7 +46,7 @@ function Users() {
                 </thead>
                 <tbody>
                   {users.map((user) => (
-                    <tr onClick={() => openUser(user.id)} key={user.id}>
+                    <tr onClick={() => openRecord(user.id)} key={user.id}>
                       <td>{user.id}</td>
                       <td>{user.name}</td>
                       <td>{user.surname}</td>

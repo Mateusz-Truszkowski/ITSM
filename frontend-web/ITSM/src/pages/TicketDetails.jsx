@@ -9,7 +9,6 @@ function TicketDetails() {
   const { ticketId } = useParams();
 
   const [tickets, setTickets] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const displayTickets = async () => {
     try {
@@ -31,14 +30,14 @@ function TicketDetails() {
         return;
       }
 
-      const ticketsData = await response.json();
+      const ticketData = await response.json();
 
       // Pobierz unikalne ID użytkowników
       const userIds = [
         ...new Set(
-          ticketsData
-            .flatMap((t) => [t.requesterId, t.assigneeId])
-            .filter((id) => id !== null)
+          [ticketData.requesterId, ticketData.assigneeId].filter(
+            (id) => id !== null
+          )
         ),
       ];
 
@@ -57,24 +56,21 @@ function TicketDetails() {
         userResponses.map((res) => res.json())
       );
 
-      // Tworzymy mapę użytkowników
       const userMap = {};
       userData.forEach((user) => {
-        userMap[user.id] = `${user.name} ${user.surname}`; // Możesz dodać nazwisko, jeśli jest dostępne
+        userMap[user.id] = `${user.name} ${user.surname}`;
       });
 
-      // Wzbogacenie ticketów
-      const enrichedTickets = ticketsData.map((ticket) => ({
-        ...ticket,
-        requesterName: userMap[ticket.requesterId] ?? "—", // Jeśli nie ma użytkownika, to wyświetlimy "—"
-        assigneeName: userMap[ticket.assigneeId] ?? "—", // To samo dla assignee
-      }));
+      // Wzbogacenie ticketa
+      const enrichedTicket = {
+        ...ticketData,
+        requesterName: userMap[ticketData.requesterId] ?? "—",
+        assigneeName: userMap[ticketData.assigneeId] ?? "—",
+      };
 
-      setTickets(enrichedTickets); // Ustawienie wzbogaconych ticketów do stanu
-      setIsLoading(false); // Ustawienie stanu ładowania na false po załadowaniu danych
+      setTickets(enrichedTicket); // teraz setTickets ustawia pojedyńczy obiekt
     } catch (error) {
       console.error("Wystąpił błąd:", error);
-      setIsLoading(false); // Zatrzymanie ładowania, jeśli wystąpił błąd
     }
   };
 
@@ -86,7 +82,7 @@ function TicketDetails() {
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, openRecord, isLoading }) => (
+        {({}) => (
           <div className="record-details-wrapper">
             <div className="record-details-container">
               <h1 className="record-details-header">Ticket Details</h1>
@@ -128,39 +124,39 @@ function TicketDetails() {
                 <div className="record-field">
                   <span className="record-label">Solution Description:</span>
                   <span className="record-value">
-                    {data ? data.solutiondescription : "Loading..."}
+                    {tickets ? tickets.solutiondescription : "Loading..."}
                   </span>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Priority:</span>
                   <span className="record-value">
-                    {data ? data.priority : "Loading..."}
+                    {tickets ? tickets.priority : "Loading..."}
                   </span>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Type:</span>
                   <span className="record-value">
-                    {data ? data.type : "Loading..."}
+                    {tickets ? tickets.type : "Loading..."}
                   </span>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Status:</span>
                   <span className="record-value">
-                    {data ? data.status : "Loading..."}
+                    {tickets ? tickets.status : "Loading..."}
                   </span>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Service ID:</span>
                   <span className="record-value">
-                    {data ? data.serviceId : "Loading..."}
+                    {tickets ? tickets.serviceId : "Loading..."}
                   </span>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Assignee:</span>
                   <span className="record-value">
-                    {data ? (
-                      <Link to={`/users/${data.assigneeId}`}>
-                        {data.assigneeId}
+                    {tickets ? (
+                      <Link to={`/users/${tickets.assigneeId}`}>
+                        {tickets.assigneeName}
                       </Link>
                     ) : (
                       "Loading..."
@@ -170,9 +166,9 @@ function TicketDetails() {
                 <div className="record-field">
                   <span className="record-label">Requester:</span>
                   <span className="record-value">
-                    {data ? (
-                      <Link to={`/users/${data.requesterId}`}>
-                        {data.requesterId}
+                    {tickets ? (
+                      <Link to={`/users/${tickets.requesterId}`}>
+                        {tickets.requesterName}
                       </Link>
                     ) : (
                       "Loading..."

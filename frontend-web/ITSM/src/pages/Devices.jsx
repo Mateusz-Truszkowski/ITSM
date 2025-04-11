@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
 import "../assets/Users.css";
@@ -7,18 +6,11 @@ import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
 
 function Devices() {
-  const navigate = useNavigate();
-
-  const openDevice = async (deviceId) => {
-    console.log("Otwarto urządzenie: " + deviceId);
-    navigate(`/devices/${deviceId}`);
-  };
-
   return (
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, isLoading }) => (
+        {({ data, openRecord, isLoading }) => (
           <div className="records-container">
             <h2 className="records-header">Devices</h2>
             {isLoading ? (
@@ -39,7 +31,7 @@ function Devices() {
                 </thead>
                 <tbody>
                   {data.map((device) => (
-                    <tr onClick={() => openDevice(device.id)} key={device.id}>
+                    <tr onClick={() => openRecord(device.id)} key={device.id}>
                       <td>{device.id}</td>
                       <td>{device.name}</td>
                       <td>{device.description}</td>
