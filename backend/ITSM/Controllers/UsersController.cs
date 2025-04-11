@@ -63,12 +63,13 @@ namespace ITSM.Controllers
             return Ok(foundUser);
         }
 
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult<UserDto> Post([FromBody] CreateUserDto user)
         {
             var createdUser = _usersService.CreateUser(user);
-            return CreatedAtAction(nameof(Get), new {id = createdUser.Id}, createdUser);
+            return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
         }
 
         [HttpPatch]

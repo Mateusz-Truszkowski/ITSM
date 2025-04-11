@@ -12,6 +12,7 @@ import DeviceDetails from "./pages/DeviceDetails.jsx";
 import Login from "./pages/Login.jsx";
 import PasswordReset from "./pages/PasswordReset.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import PasswordResetFill from "./pages/PasswordResetFill.jsx";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
           <Route path="/devices" element={<Devices />} />
           <Route path="/devices/:deviceId" element={<DeviceDetails />} />
           <Route path="/PasswordReset" element={<PasswordReset />} />
-          {/* ResetPassword */}
+          <Route path="/PasswordResetFill" element={<PasswordResetFill />} />
           <Route path="/login" element={<Login />} /> {/* Strona logowania */}
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>

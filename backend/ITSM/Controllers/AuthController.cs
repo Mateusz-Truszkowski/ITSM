@@ -3,6 +3,9 @@ using ITSM.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mail;
 using System.Net;
+using System.Text;
+using ITSM.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ITSM.Controllers
 {
@@ -33,6 +36,21 @@ namespace ITSM.Controllers
             else
                 return Unauthorized();
         }
+        [HttpPost("/auth/setnewpass")]
+        public ActionResult<UserDto> Post([FromBody] NewPassRequest request)
+        {
+            var User = _usersService.GetUserFromToken(request.Token);
+            return Ok(User.Login);
+            // Walidacja
+            if (request.Password == null || User == null)
+            {
+                return Forbid();
+            }
+
+            _usersService.UpdateUserPassword(User.Id, request.Password);
+
+            return Ok(User.Login);
+        }
 
         [HttpPost("/auth/reset")]
         public ActionResult Reset([FromBody] string Login)
@@ -42,35 +60,44 @@ namespace ITSM.Controllers
             if (foundUser == null)
                 return NotFound();
 
-            return Ok("Mail został wysłany.");
+           
+            //return Ok("Mail został wysłany.");
             // Jeżeli znaleziono
-            /*#try
+            try
              {
-                 // Składanie wiadomości
-                 var mail = new MailMessage();
-                 mail.From = new MailAddress("twojemail@example.com");
-                 mail.To.Add(foundUser.Email);
-                 mail.Subject = "Reset hasa ITSM";
-                 mail.Body = "Kliknij w link, aby zresetować hasło do systemu ITSM: https://example.com/reset?user=" + foundUser.Id;
-                 mail.IsBodyHtml = false; // lub true, jeśli chcesz HTML
+                // Składanie wiadomości
 
-                 // Konfiguracja SMTP
-                 var smtpClient = new SmtpClient("smtp.example.com")
-                 {
-                     Port = 587,
-                     Credentials = new NetworkCredential("twojemail@example.com", "twojehaslo"),
-                     EnableSsl = true,
-                 };
+                if (!foundUser.Email.Contains("@")){
+                    return NotFound();
+                }
+                string Token = _jwtTokenService.GenerateToken(foundUser.Login, foundUser.Group);
+                string resetLink = $"http://localhost:63728/passwordResetFill?token={Token}";
+                var mail = new MailMessage();
 
-                 smtpClient.Send(mail);
+                mail.From = new MailAddress("itsmsystempostman@gmail.com", "ITSM System");
+                mail.To.Add(new MailAddress(foundUser.Email, foundUser.Name));
+                mail.Subject = "Reset hasa ITSM dla użytkownika " + foundUser.Login;
+                mail.Body = "Kliknij w link, aby zresetować hasło do systemu ITSM: " + resetLink;
+                mail.BodyEncoding = Encoding.UTF8;
+                mail.IsBodyHtml = false; 
 
-                 return Ok("Mail został wysłany.");
+                // Konfiguracja SMTP
+                var smtpClient = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("itsmsystempostman@gmail.com", "qfmx zgoo ebfx hnax"),
+                    EnableSsl = true,
+                };
+
+                smtpClient.Send(mail);
+
+                return Ok("Mail został wysłany do uzytkownika:"+ foundUser.Login);
              }
              catch (Exception ex)
              {
                  // Logowanie błędu (w produkcji loguj to gdzieś!)
-                 return StatusCode(500, "Wystąpił błąd podczas wysyłania maila: " + ex.Message);
-             }*/
+                 return BadRequest("Wystąpił błąd podczas wysyłania maila: " + ex.Message);
+             }
         }
     }
 
@@ -79,7 +106,11 @@ namespace ITSM.Controllers
         public required string Login { get; set; }
         public required string Password { get; set; }
     }
-
+    public class NewPassRequest
+    {
+        public required string Token { get; set; }
+        public required string Password { get; set; }
+    }
     public class Response
     {
         public required UserDto User { get; set; }

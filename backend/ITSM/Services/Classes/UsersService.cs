@@ -102,6 +102,16 @@ namespace ITSM.Services
                 _context.SaveChanges();
             }
         }
+        public void UpdateUserPassword(int id, String Password)
+        {
+            
+            var user = _context.Users.Where(user => user.Id == id).FirstOrDefault();
+            if (user != null)
+            {
+                user.Password= Password;
+                _context.SaveChanges();
+            }
+        }
 
         public UserDto? GetUserFromToken(string token)
         {
