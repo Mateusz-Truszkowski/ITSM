@@ -5,17 +5,32 @@ import "../assets/Users.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
 import { fetchUsers } from "../hooks/users.js";
+import { useCheckTokenValidity } from "../global";
 
 function Users() {
   const [users, setUsers] = useState([]);
+  const checkToken = useCheckTokenValidity();
+  const [isLoading, setIsLoading] = useState(true);
 
   const displayUsers = async () => {
-    const usersData = await fetchUsers();
+    try {
+      const usersData = await fetchUsers();
 
-    setUsers(usersData);
+      if (usersData === null) {
+        throw new Error("error fetching users");
+      }
+      setUsers(usersData);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Error occured: " + error);
+    }
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const isTokenValid = checkToken(token);
+
+    isTokenValid;
     displayUsers();
   }, []);
 
@@ -23,7 +38,7 @@ function Users() {
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, isLoading, openRecord }) => (
+        {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Users</h2>
             {isLoading ? (
@@ -62,7 +77,7 @@ function Users() {
                 </tbody>
               </table>
             ) : null}
-            {data.length === 0 && !isLoading && (
+            {users.length === 0 && !isLoading && (
               <div className="no-records">
                 <p>No tickets available</p>
               </div>

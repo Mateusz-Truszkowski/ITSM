@@ -1,10 +1,10 @@
 import { serverPath } from "../global";
 
-export const fetchUsers = async () => {
+export const fetchDevices = async () => {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch(serverPath + "/users", {
+    const response = await fetch(serverPath + "/devices", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -17,19 +17,18 @@ export const fetchUsers = async () => {
     }
 
     const data = await response.json();
-    console.log("Users:", data);
     return data;
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error fetching devices:", error);
     return null;
   }
 };
 
-export const fetchUser = async (userId) => {
+export const fetchDevice = async (deviceId) => {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch(serverPath + `/users/${userId}`, {
+    const response = await fetch(serverPath + `/devices/${deviceId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +44,7 @@ export const fetchUser = async (userId) => {
     console.log("Users:", data);
     return data;
   } catch (error) {
-    console.error(`Error fetching user ${userId}:`, error);
+    console.error(`Error fetching device ${deviceId}:`, error);
     return null;
   }
 };
