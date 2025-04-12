@@ -1,34 +1,20 @@
 .itsm-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 4rem 2rem;
-  padding-bottom: 0;
-  margin-top: 40vh;
-  align-items: end;
-  bottom: 0;
-}
-
-.itsm-card-1 {
-  flex: 1 1 250px;
-  max-width: 300px;
-  background-color: rgba(255, 255, 255, 0.05);
-  margin: 1rem;
-  padding: 2rem;
-  border-radius: 1rem;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-  height: 300px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem 0 2rem;
+  margin-top: 200px;
+  align-items: start;
 }
 
 .itsm-card {
-  flex: 1 1 250px;
-  max-width: 300px;
   background-color: rgba(255, 255, 255, 0.05);
-  margin: 1rem;
   padding: 2rem;
   border-radius: 1rem;
   transition: transform 0.3s ease, background-color 0.3s ease;
-  height: 170px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
 }
 
 .itsm-card:hover {
@@ -50,7 +36,39 @@
 }
 
 .itsm-description {
-  font-size: 0.95rem;
-  color: #ccc;
-  line-height: 1.4;
+  max-height: 0;
+  color: white;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+}
+
+.itsm-card.active .itsm-description {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+/* Smartfony */
+@media (max-width: 768px) {
+  .itsm-card,
+  .itsm-card-1,
+  .itsm-card-2 {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .itsm-section {
+    margin-top: 100px;
+    padding: 2rem 1rem 0 1rem;
+  }
+}
+
+/* Tablety */
+@media (max-width: 1024px) {
+  .itsm-card,
+  .itsm-card-1,
+  .itsm-card-2 {
+    max-width: 45%;
+  }
 }

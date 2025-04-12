@@ -266,6 +266,7 @@
 
 .records-table {
   width: 100%;
+  table-layout: auto;
   border-collapse: collapse;
 }
 
@@ -276,6 +277,13 @@
   text-align: left;
   font-size: 14px;
   color: white;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  max-width: 180px;
+  position: relative;
 }
 
 .records-table th {
