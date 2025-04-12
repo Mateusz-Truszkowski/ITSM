@@ -70,7 +70,7 @@ namespace ITSM.Controllers
                     return NotFound();
                 }
                 string Token = _jwtTokenService.GenerateToken(foundUser.Login, foundUser.Group);
-                string resetLink = $"http://localhost:5174/passwordResetFill?token={Token}";
+                string resetLink = $"http://localhost:5173/passwordResetFill?token={Token}";
                 var mail = new MailMessage();
 
                 mail.From = new MailAddress("itsmsystempostman@gmail.com", "ITSM System");

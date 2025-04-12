@@ -19,6 +19,7 @@ body {
 }
 
 body {
+  background-color: black;
   background-image: url("../assets/images/main-page.jpg");
   background-size: cover;
   background-position: center;
