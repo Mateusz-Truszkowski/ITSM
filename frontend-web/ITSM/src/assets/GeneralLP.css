@@ -11,29 +11,72 @@ a {
 
 html,
 body {
+  height: auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 0;
-  padding: 0;
-  height: 100%;
+  overflow-x: hidden;
+  scrollbar-width: none;
 }
 
 body {
   background-color: black;
   background-image: url("../assets/images/main-page.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: top;
   background-repeat: no-repeat;
   margin: 0;
   padding: 0;
-  background-color: black;
 }
 
 .slogan {
-  font-size: 70px;
+  font-size: 4vw;
   color: white;
-  width: 700px;
+  width: 90%;
+  max-width: 700px;
   margin: 100px 50px 50px 200px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .slogan {
+    font-size: 6vw;
+    margin: 80px 40px;
+    max-width: 90%;
+  }
+}
+
+/* Smartfony */
+@media (max-width: 768px) {
+  .navigation-bar {
+    flex-direction: column;
+    align-items: center;
+    margin: 10px auto;
+    gap: 10px;
+  }
+
+  .navigation-item {
+    margin: 5px 0;
+    padding: 10px;
+  }
+
+  .slogan {
+    font-size: 7vw;
+    margin: 60px auto;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .header img {
+    margin: 20px auto;
+  }
+
+  html,
+  body {
+    margin: 10px auto;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .buzzword {
