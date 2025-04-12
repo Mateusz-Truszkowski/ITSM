@@ -214,7 +214,7 @@ input::placeholder {
   background-color: #ff2e2e;
 }
 
-.Confirmpassword {
+.confirm-password {
   margin-top: 15px;
   margin-bottom: 15px;
 }
@@ -230,4 +230,8 @@ input::placeholder {
   font-weight: 900;
   font-size: 17px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.new-password, .confirm-password {
+    position: relative;
 }

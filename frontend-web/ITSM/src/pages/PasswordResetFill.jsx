@@ -1,9 +1,10 @@
 import "../assets/GeneralLP.css";
 import "../assets/FormLP.css";
 import React, { useState, useEffect } from "react";
-import person from "../assets/icons/user-icon.png";
 import NavigationLP from "../components/NavigationLP";
 import { useLocation, useNavigate } from "react-router-dom";
+import locked from "../assets/icons/locked-icon.png";
+import unlocked from "../assets/icons/unlocked-icon.png";
 
 function PasswordResetFill() {
   const [password, setPassword] = useState(""); // Nowe hasło
@@ -11,6 +12,7 @@ function PasswordResetFill() {
   const [errorMessage, setErrorMessage] = useState(""); // Stan na komunikat błędu
   const [token, setToken] = useState("");
   const [success, setSuccess] = useState(0); // 0 - not tried, 1 - failed, 2 - success
+  const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -87,6 +89,10 @@ function PasswordResetFill() {
     if (success !== 2) setSuccess(0);
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <NavigationLP />
@@ -94,21 +100,31 @@ function PasswordResetFill() {
         <form onSubmit={handleSubmit} className="form">
           <p className="SetNewPass">Set new password</p>
           <div className="inputs">
-            <div className="NewPassword">
+            <div className="new-password">
               <input
                 onChange={handlePasswordChange}
                 placeholder="New password"
-                type="password"
+                type={showPassword ? "text" : "password"}
               />
-              <img src={person} alt="" />
+              <img
+                src={showPassword ? unlocked : locked}
+                alt="toggle password visibility"
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              />
             </div>
-            <div className="Confirmpassword">
+            <div className="confirm-password">
               <input
                 onChange={handleConfirmPasswordChange}
                 placeholder="Confirm password"
-                type="password"
+                type={showPassword ? "text" : "password"}
               />
-              <img src={person} alt="" />
+              <img
+                src={showPassword ? unlocked : locked}
+                alt="toggle password visibility"
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              />
             </div>
           </div>
           <div className="login-button">
