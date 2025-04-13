@@ -3,22 +3,27 @@ import "../assets/HeaderLP.css";
 import logo from "../assets/images/logo.png";
 import { useState, useEffect } from "react";
 
+export function Logout() {
+  localStorage.clear();
+  window.location.href = "/logged-out";
+}
+
+export function LogoutManual() {
+  localStorage.clear();
+  window.location.href = "/";
+}
+
 function NavigationLP() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     const checkLoginStatus = () => {
       const token = localStorage.getItem("authToken");
-      setLoggedIn(!!token); // If token exists, set loggedIn to true
+      setLoggedIn(!!token);
     };
 
-    checkLoginStatus(); // Run the check on initial load
+    checkLoginStatus();
   }, []);
-
-  function Logout() {
-    localStorage.clear();
-    window.location.href = "/";
-  }
 
   return (
     <section className="header">
@@ -44,7 +49,7 @@ function NavigationLP() {
               Hello,{" "}
               <span className="userName">{localStorage.getItem("name")}</span>
             </div>
-            <button onClick={Logout} className="navigation-item logout">
+            <button onClick={LogoutManual} className="navigation-item logout">
               Logout
             </button>
           </>

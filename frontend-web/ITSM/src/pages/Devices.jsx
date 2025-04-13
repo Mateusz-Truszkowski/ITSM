@@ -1,23 +1,52 @@
 import React from "react";
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
-import "../assets/Users.css";
+import "../assets/Devices.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
+import { useEffect, useState } from "react";
+import { fetchDevices } from "../hooks/devices.js";
+import { useCheckTokenValidity } from "../global";
 
 function Devices() {
+  const [devices, setDevices] = useState([]);
+  const checkToken = useCheckTokenValidity();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const displayDevices = async () => {
+    try {
+      const devicesData = await fetchDevices();
+
+      if (devicesData === null) {
+        throw new Error("error fetching devices");
+      }
+      setDevices(devicesData);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Error occured: " + error);
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const isTokenValid = checkToken(token);
+
+    isTokenValid;
+    displayDevices();
+  }, [checkToken]);
+
   return (
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, openRecord, isLoading }) => (
+        {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Devices</h2>
             {isLoading ? (
               <div className="loading-spinner">
                 <div className="spinner"></div>
               </div>
-            ) : data && data.length > 0 ? (
+            ) : devices && devices.length > 0 ? (
               <table className="records-table">
                 <thead>
                   <tr>
@@ -30,7 +59,7 @@ function Devices() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((device) => (
+                  {devices.map((device) => (
                     <tr onClick={() => openRecord(device.id)} key={device.id}>
                       <td>{device.id}</td>
                       <td>{device.name}</td>
@@ -45,9 +74,9 @@ function Devices() {
                 </tbody>
               </table>
             ) : null}
-            {data.length === 0 && !isLoading && (
+            {devices.length === 0 && !isLoading && (
               <div className="no-records">
-                <p>No services available</p>
+                <p>No devices available</p>
               </div>
             )}
           </div>

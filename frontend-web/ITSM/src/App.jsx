@@ -13,6 +13,7 @@ import Login from "./pages/Login.jsx";
 import PasswordReset from "./pages/PasswordReset.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import PasswordResetFill from "./pages/PasswordResetFill.jsx";
+import LoggedOut from "./pages/LoggedOut.jsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/PasswordResetFill" element={<PasswordResetFill />} />
           <Route path="/login" element={<Login />} /> {/* Strona logowania */}
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/logged-out" element={<LoggedOut />} />
         </Routes>
       </BrowserRouter>
     </main>

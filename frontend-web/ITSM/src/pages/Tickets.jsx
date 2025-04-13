@@ -5,54 +5,47 @@ import MainPanel from "../components/MainPanel";
 import NavigationLP from "../components/NavigationLP";
 import React, { useEffect, useState } from "react";
 import { fetchTickets } from "../hooks/tickets.js";
-import { fetchUser } from "../hooks/users.js";
+import { useCheckTokenValidity } from "../global";
 
 function Tickets() {
   const [tickets, setTickets] = useState([]);
+  const checkToken = useCheckTokenValidity();
+  const [isLoading, setIsLoading] = useState(true);
 
   const displayTickets = async () => {
-    const ticketsData = await fetchTickets();
+    try {
+      const ticketsData = await fetchTickets();
 
-    const userIds = [
-      ...new Set(
-        ticketsData
-          .flatMap((t) => [t.requesterId, t.assigneeId])
-          .filter((id) => id !== null)
-      ),
-    ];
-
-    const userData = await Promise.all(userIds.map((id) => fetchUser(id)));
-
-    const userMap = {};
-    userData.forEach((user) => {
-      userMap[user.id] = `${user.name} ${user.surname}`;
-    });
-
-    const ticketsWithNames = ticketsData.map((ticket) => ({
-      ...ticket,
-      requesterName: userMap[ticket.requesterId] ?? "—",
-      assigneeName: userMap[ticket.assigneeId] ?? "—",
-    }));
-
-    setTickets(ticketsWithNames);
+      if (ticketsData === null) {
+        throw new Error("error fetching devices");
+      }
+      setTickets(ticketsData);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Error occured: " + error);
+    }
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const isTokenValid = checkToken(token);
+
+    isTokenValid;
     displayTickets();
-  }, []);
+  }, [isLoading]);
 
   return (
     <>
       <NavigationLP />
       <MainPanel>
-        {({ data, isLoading, openRecord }) => (
+        {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Tickets</h2>
             {isLoading ? (
               <div className="loading-spinner">
                 <div className="spinner"></div>
               </div>
-            ) : data && data.length > 0 ? (
+            ) : tickets && tickets.length > 0 ? (
               <table className="records-table">
                 <thead>
                   <tr>
@@ -62,8 +55,8 @@ function Tickets() {
                     <th>Status</th>
                     <th>Priority</th>
                     <th>Created</th>
-                    <th>Requester</th>
-                    <th>Assignee</th>
+                    {/*<th>Requester</th>
+                    <th>Assignee</th>*/}
                   </tr>
                 </thead>
                 <tbody>
@@ -77,20 +70,20 @@ function Tickets() {
                       <td>
                         {new Date(ticket.creationDate).toLocaleDateString()}
                       </td>
-                      <td className="requester-td">
+                      {/*<td className="requester-td">
                         <span className="requester">
                           {ticket.requesterName}
                         </span>
                       </td>
                       <td className="assignee-td">
                         <span className="assignee">{ticket.assigneeName}</span>
-                      </td>
+                      </td>*/}
                     </tr>
                   ))}
                 </tbody>
               </table>
             ) : null}
-            {data.length === 0 && !isLoading && (
+            {tickets.length === 0 && !isLoading && (
               <div className="no-records">
                 <p>No tickets available</p>
               </div>
