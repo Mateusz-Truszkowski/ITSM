@@ -66,7 +66,7 @@ namespace ITSM.Controllers
              {
                 // Składanie wiadomości
 
-                if (!foundUser.Email.Contains("@")){
+                if (!(foundUser.Email.Contains("@"))){
                     return NotFound();
                 }
                 string Token = _jwtTokenService.GenerateToken(foundUser.Login, foundUser.Group);
