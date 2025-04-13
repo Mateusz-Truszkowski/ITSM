@@ -53,7 +53,7 @@ export const saveDevice = async (deviceData) => {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch(serverPath + `/services`, {
+    const response = await fetch(serverPath + `/devices`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

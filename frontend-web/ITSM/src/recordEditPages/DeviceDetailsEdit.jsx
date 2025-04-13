@@ -110,29 +110,13 @@ function DeviceDetailsEdit() {
       "0"
     )}T00:00:00`;
 
-    console.log(
-      deviceId +
-        "\n" +
-        name +
-        "\n" +
-        description +
-        "\n" +
-        acqDateFormatted +
-        "\n" +
-        depDateFormatted +
-        "\n" +
-        user +
-        "\n" +
-        status
-    );
-
     const deviceData = {
       id: deviceId,
       name: name,
       description: description,
       acquisitionDate: acqDateFormatted,
       depreciationDate: depDateFormatted,
-      user: user,
+      UserId: user,
       status: status,
     };
     const success = await saveDevice(deviceData);
