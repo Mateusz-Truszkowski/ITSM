@@ -48,3 +48,26 @@ export const fetchDevice = async (deviceId) => {
     return null;
   }
 };
+
+export const saveDevice = async (deviceData) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + `/services`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(deviceData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error(`Error saving device: `, error);
+    return false;
+  }
+};

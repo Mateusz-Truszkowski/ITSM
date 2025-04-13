@@ -7,7 +7,7 @@ import ticket from "../assets/icons/ticket-icon.png";
 import person from "../assets/icons/user-icon.png";
 import cog from "../assets/icons/cog-icon.png";
 import laptop from "../assets/icons/laptop-icon.png";
-import Notification from "../pages/Notification";
+import Notification from "../generalPages/Notification";
 
 function MainPanel({ children }) {
   const location = useLocation();

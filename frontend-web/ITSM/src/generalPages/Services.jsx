@@ -3,10 +3,10 @@ import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
 import "../assets/Users.css";
 import NavigationLP from "../components/NavigationLP.jsx";
-import MainPanel from "../components/MainPanel";
+import MainPanel from "../components/MainPanel.jsx";
 import { useEffect, useState } from "react";
 import { fetchServices } from "../hooks/services.js";
-import { useCheckTokenValidity } from "../global";
+import { useCheckTokenValidity } from "../global.js";
 
 function Services() {
   const [services, setServices] = useState([]);

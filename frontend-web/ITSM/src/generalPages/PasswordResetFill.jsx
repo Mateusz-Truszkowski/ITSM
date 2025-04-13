@@ -1,5 +1,6 @@
 import "../assets/GeneralLP.css";
 import "../assets/FormLP.css";
+import "../assets/HeaderLP.css";
 import React, { useState, useEffect } from "react";
 import NavigationLP from "../components/NavigationLP";
 import { useLocation, useNavigate } from "react-router-dom";

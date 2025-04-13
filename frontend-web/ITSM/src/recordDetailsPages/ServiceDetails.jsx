@@ -3,7 +3,7 @@ import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { fetchService } from "../hooks/services";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCheckTokenValidity } from "../global";
 
 function ServiceDetails() {
@@ -11,6 +11,7 @@ function ServiceDetails() {
   const { serviceId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const checkToken = useCheckTokenValidity();
+  const navigate = useNavigate();
 
   const displayService = async () => {
     try {
@@ -35,6 +36,10 @@ function ServiceDetails() {
     displayService();
   }, []);
 
+  const editRecord = () => {
+    navigate(`/services/${service.id}/edit`);
+  };
+
   return (
     <>
       <NavigationLP />
@@ -42,7 +47,12 @@ function ServiceDetails() {
         {({}) => (
           <div className="record-details-wrapper">
             <div className="record-details-container">
-              <h1 className="record-details-header">Service Details</h1>
+              <div className="record-details-header">
+                <h1>Service Details</h1>
+                <button className="edit-button" onClick={editRecord}>
+                  Edit
+                </button>
+              </div>
               <div className="record-fields">
                 {isLoading ? (
                   <div className="loading-spinner">

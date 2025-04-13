@@ -1,19 +1,23 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./assets/App.css";
-import LandingPage from "./pages/LandingPage.jsx";
-import Tickets from "./pages/Tickets.jsx";
-import TicketDetails from "./pages/TicketDetails.jsx";
-import Users from "./pages/Users.jsx";
-import UserDetails from "./pages/UserDetails.jsx";
-import Services from "./pages/Services.jsx";
-import ServiceDetails from "./pages/ServiceDetails.jsx";
-import Devices from "./pages/Devices.jsx";
-import DeviceDetails from "./pages/DeviceDetails.jsx";
-import Login from "./pages/Login.jsx";
-import PasswordReset from "./pages/PasswordReset.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
-import PasswordResetFill from "./pages/PasswordResetFill.jsx";
-import LoggedOut from "./pages/LoggedOut.jsx";
+import LandingPage from "./generalPages/LandingPage.jsx";
+import Tickets from "./generalPages/Tickets.jsx";
+import TicketDetails from "./recordDetailsPages/TicketDetails.jsx";
+import Users from "./generalPages/Users.jsx";
+import UserDetails from "./recordDetailsPages/UserDetails.jsx";
+import Services from "./generalPages/Services.jsx";
+import ServiceDetails from "./recordDetailsPages/ServiceDetails.jsx";
+import Devices from "./generalPages/Devices.jsx";
+import DeviceDetails from "./recordDetailsPages/DeviceDetails.jsx";
+import Login from "./generalPages/Login.jsx";
+import PasswordReset from "./generalPages/PasswordReset.jsx";
+import Dashboard from "./generalPages/Dashboard.jsx";
+import PasswordResetFill from "./generalPages/PasswordResetFill.jsx";
+import LoggedOut from "./generalPages/LoggedOut.jsx";
+import DeviceDetailsEdit from "./recordEditPages/DeviceDetailsEdit.jsx";
+import ServiceDetailsEdit from "./recordEditPages/ServiceDetailsEdit.jsx";
+import TicketDetailsEdit from "./recordEditPages/TicketDetailsEdit.jsx";
+import UserDetailsEdit from "./recordEditPages/UserDetailsEdit.jsx";
 
 function App() {
   return (
@@ -34,6 +38,19 @@ function App() {
           <Route path="/login" element={<Login />} /> {/* Strona logowania */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/logged-out" element={<LoggedOut />} />
+          <Route
+            path="/devices/:deviceId/edit"
+            element={<DeviceDetailsEdit />}
+          />
+          <Route
+            path="/services/:serviceId/edit"
+            element={<ServiceDetailsEdit />}
+          />
+          <Route
+            path="/tickets/:ticketId/edit"
+            element={<TicketDetailsEdit />}
+          />
+          <Route path="/users/:userId/edit" element={<UserDetailsEdit />} />
         </Routes>
       </BrowserRouter>
     </main>

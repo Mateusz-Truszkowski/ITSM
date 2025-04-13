@@ -1,7 +1,7 @@
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchDevice } from "../hooks/devices";
 import { useCheckTokenValidity } from "../global";
@@ -12,6 +12,7 @@ function DeviceDetails() {
   const { deviceId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const checkToken = useCheckTokenValidity();
+  const navigate = useNavigate();
 
   const displayDevice = async () => {
     try {
@@ -53,6 +54,10 @@ function DeviceDetails() {
     displayDevice();
   }, []);
 
+  const editRecord = () => {
+    navigate(`/devices/${device.id}/edit`);
+  };
+
   return (
     <>
       <NavigationLP />
@@ -60,7 +65,12 @@ function DeviceDetails() {
         {({}) => (
           <div className="record-details-wrapper">
             <div className="record-details-container">
-              <h1 className="record-details-header">Device Details</h1>
+              <div className="record-details-header">
+                <h1>Device Details</h1>
+                <button className="edit-button" onClick={editRecord}>
+                  Edit
+                </button>
+              </div>
               <div className="record-fields">
                 {isLoading ? (
                   <div className="loading-spinner">
@@ -98,7 +108,7 @@ function DeviceDetails() {
                     </div>
                     {
                       <div className="record-field">
-                        <span className="record-label">User Id:</span>
+                        <span className="record-label">Owner:</span>
                         <span className="record-value">
                           {
                             <Link to={`/users/${device.userId}`}>

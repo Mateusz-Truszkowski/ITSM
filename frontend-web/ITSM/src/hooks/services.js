@@ -48,3 +48,26 @@ export const fetchService = async (serviceId) => {
     return null;
   }
 };
+
+export const saveService = async (serviceData) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + `/services`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(serviceData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error(`Error saving service: `, error);
+    return false;
+  }
+};
