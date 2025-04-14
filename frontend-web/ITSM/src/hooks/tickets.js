@@ -1,5 +1,5 @@
 import { serverPath } from "../global";
-import { saveAs } from 'file-saver';
+import { saveAs } from "file-saver";
 
 export const fetchTickets = async () => {
   const token = localStorage.getItem("authToken");
@@ -66,9 +66,7 @@ export const fetchTicketReport = async () => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.blob();
-    saveAs(data, 'TicketsReport.xlsx');
-    
-
+    saveAs(data, "TicketsReport.xlsx");
   } catch (error) {
     console.error("Error fetching tickets:", error);
     return null;

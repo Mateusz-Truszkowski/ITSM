@@ -6,11 +6,13 @@ import NavigationLP from "../components/NavigationLP";
 import React, { useEffect, useState } from "react";
 import { fetchTickets, fetchTicketReport } from "../hooks/tickets.js";
 import { useCheckTokenValidity } from "../global";
+import { useNavigate } from "react-router-dom";
 
 function Tickets() {
   const [tickets, setTickets] = useState([]);
   const checkToken = useCheckTokenValidity();
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const displayTickets = async () => {
     try {
@@ -25,6 +27,7 @@ function Tickets() {
       console.log("Error occured: " + error);
     }
   };
+
   const MakeReport = async () => {
     try {
       const Data = await fetchTicketReport();
@@ -36,14 +39,18 @@ function Tickets() {
       console.log("Error occured: " + error);
     }
   };
-  
+
+  const CreateTicket = () => {
+    navigate(`/tickets/create`);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const isTokenValid = checkToken(token);
 
     isTokenValid;
     displayTickets();
-  }, [isLoading]);
+  }, []);
 
   return (
     <>
@@ -52,7 +59,12 @@ function Tickets() {
         {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Tickets</h2>
-            <button className="report-button" onClick={MakeReport}>Pobierz raport</button>
+            <button className="report-button" onClick={CreateTicket}>
+              New
+            </button>
+            <button className="report-button" onClick={MakeReport}>
+              Download report
+            </button>
             {isLoading ? (
               <div className="loading-spinner">
                 <div className="spinner"></div>

@@ -33,7 +33,7 @@ function Services() {
 
     isTokenValid;
     displayServices();
-  }, [checkToken]);
+  }, []);
 
   return (
     <>

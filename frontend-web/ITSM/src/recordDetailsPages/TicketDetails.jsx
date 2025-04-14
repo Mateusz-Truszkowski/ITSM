@@ -79,10 +79,6 @@ function TicketDetails() {
                 ) : (
                   <>
                     <div className="record-field">
-                      <span className="record-label">ID:</span>
-                      <span className="record-value">{ticket.id}</span>
-                    </div>
-                    <div className="record-field">
                       <span className="record-label">Name:</span>
                       <span className="record-value">{ticket.name}</span>
                     </div>

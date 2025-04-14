@@ -33,7 +33,7 @@ function Devices() {
 
     isTokenValid;
     displayDevices();
-  }, [checkToken]);
+  }, []);
 
   return (
     <>

@@ -18,6 +18,7 @@ import DeviceDetailsEdit from "./recordEditPages/DeviceDetailsEdit.jsx";
 import ServiceDetailsEdit from "./recordEditPages/ServiceDetailsEdit.jsx";
 import TicketDetailsEdit from "./recordEditPages/TicketDetailsEdit.jsx";
 import UserDetailsEdit from "./recordEditPages/UserDetailsEdit.jsx";
+import TicketCreate from "./createNewPages/TicketCreate.jsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<LandingPage />} /> {/* Strona główna */}
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/tickets/:ticketId" element={<TicketDetails />} />
+          <Route path="/tickets/create" element={<TicketCreate />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:userId" element={<UserDetails />} />
           <Route path="/services" element={<Services />} />

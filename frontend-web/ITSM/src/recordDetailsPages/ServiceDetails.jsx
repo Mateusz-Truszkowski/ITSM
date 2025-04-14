@@ -22,6 +22,7 @@ function ServiceDetails() {
       }
 
       setService(serviceData);
+      console.log(serviceData);
       setIsLoading(false);
     } catch (error) {
       console.error("Wystąpił błąd:", error);

@@ -1,5 +1,3 @@
-// TO FIX
-
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
