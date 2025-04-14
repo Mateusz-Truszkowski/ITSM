@@ -1,4 +1,5 @@
 ﻿using ITSM.Dto;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ITSM.Services
 {
@@ -10,5 +11,7 @@ namespace ITSM.Services
         public TicketDto CreateTicket(TicketDto ticketDto);
         public TicketDto? UpdateTicket(TicketDto ticketDto);
         public void DeleteTicket(int id);
+        public byte[] AllTicketsReport();
+        public byte[] TicketsReportForUser(UserDto user);
     }
 }

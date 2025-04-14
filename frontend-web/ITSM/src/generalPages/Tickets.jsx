@@ -4,7 +4,7 @@ import "../assets/Tickets.css";
 import MainPanel from "../components/MainPanel";
 import NavigationLP from "../components/NavigationLP";
 import React, { useEffect, useState } from "react";
-import { fetchTickets } from "../hooks/tickets.js";
+import { fetchTickets, fetchTicketReport } from "../hooks/tickets.js";
 import { useCheckTokenValidity } from "../global";
 
 function Tickets() {
@@ -25,7 +25,18 @@ function Tickets() {
       console.log("Error occured: " + error);
     }
   };
+  const MakeReport = async () => {
+    try {
+      const Data = await fetchTicketReport();
 
+      if (Data === null) {
+        throw new Error("Report creating error");
+      }
+    } catch (error) {
+      console.log("Error occured: " + error);
+    }
+  };
+  
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const isTokenValid = checkToken(token);
@@ -41,6 +52,7 @@ function Tickets() {
         {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Tickets</h2>
+            <button className="report-button" onClick={MakeReport}>Pobierz raport</button>
             {isLoading ? (
               <div className="loading-spinner">
                 <div className="spinner"></div>

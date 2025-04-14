@@ -2,6 +2,11 @@
 using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
+using Microsoft.AspNetCore.Mvc;
+using ClosedXML.Excel;
+using System.Linq;
+using System.ComponentModel;
+
 
 namespace ITSM.Services
 {
@@ -9,6 +14,7 @@ namespace ITSM.Services
     {
         private readonly ITSMContext _context;
         private readonly IMapper _mapper;
+
 
         public TicketsService(ITSMContext context, IMapper mapper)
         {
@@ -97,6 +103,97 @@ namespace ITSM.Services
 
             _context.Tickets.Remove(ticket);
             _context.SaveChanges();
+        }
+
+        public byte[] AllTicketsReport()
+        {
+            var tickets = _context.Tickets.ToList();
+            var dtoList = tickets.Select(t => _mapper.Map<TicketDto>(t)).ToList();
+
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Tickets");
+
+            // Nagłówki
+            worksheet.Cell(1, 1).Value = "ID";
+            worksheet.Cell(1, 2).Value = "Name";
+            worksheet.Cell(1, 3).Value = "Description";
+            worksheet.Cell(1, 4).Value = "CreationDate";
+            worksheet.Cell(1, 5).Value = "SolutionDate";
+            worksheet.Cell(1, 6).Value = "SolutionDescription";
+            worksheet.Cell(1, 7).Value = "Priority";
+            worksheet.Cell(1, 8).Value = "Type";
+            worksheet.Cell(1, 9).Value = "Status";
+          //  worksheet.Cell(1, 10).Value = "Service";
+           // worksheet.Cell(1, 11).Value = "Requester";
+           // worksheet.Cell(1, 12).Value = "Assignee";
+
+            // Dodanie danych
+            for (int i = 0; i < dtoList.Count; i++)
+            {
+                var ticket = dtoList[i];
+                worksheet.Cell(i + 2, 1).Value = ticket.Id;
+                worksheet.Cell(i + 2, 2).Value = ticket.Name;
+                worksheet.Cell(i + 2, 3).Value = ticket.Description;
+                worksheet.Cell(i + 2, 4).Value = ticket.CreationDate;
+                worksheet.Cell(i + 2, 5).Value = ticket.SolutionDate;
+                worksheet.Cell(i + 2, 6).Value = ticket.SolutionDescription;
+                worksheet.Cell(i + 2, 7).Value = ticket.Priority;
+                worksheet.Cell(i + 2, 8).Value = ticket.Type;
+                worksheet.Cell(i + 2, 9).Value = ticket.Status;
+                //worksheet.Cell(i + 2, 10).Value = ticket.Service.Name;
+               // worksheet.Cell(i + 2, 11).Value = ticket.Requester.Name;
+               // worksheet.Cell(i + 2, 12).Value = ticket.Assignee.Email;
+            }
+
+            
+            using var stream = new System.IO.MemoryStream();
+            workbook.SaveAs(stream);
+            return stream.ToArray();
+        }
+        public byte[] TicketsReportForUser(UserDto user)
+        {
+            var tickets = _context.Tickets.Where(t => t.RequesterId == user.Id);
+            var dtoList = tickets.Select(t => _mapper.Map<TicketDto>(t)).ToList();
+
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Tickets");
+
+            worksheet.Cell(1, 1).Value = "ID";
+            worksheet.Cell(1, 2).Value = "Name";
+            worksheet.Cell(1, 3).Value = "Description";
+            worksheet.Cell(1, 4).Value = "CreationDate";
+            worksheet.Cell(1, 5).Value = "SolutionDate";
+            worksheet.Cell(1, 6).Value = "SolutionDescription";
+            worksheet.Cell(1, 7).Value = "Priority";
+            worksheet.Cell(1, 8).Value = "Type";
+            worksheet.Cell(1, 9).Value = "Status";
+            worksheet.Cell(1, 10).Value = "Service";
+            worksheet.Cell(1, 11).Value = "Requester";
+            worksheet.Cell(1, 12).Value = "Assignee";
+
+            for (int i = 0; i < dtoList.Count; i++)
+            {
+                var ticket = dtoList[i];
+                worksheet.Cell(i + 2, 1).Value = ticket.Id;
+                worksheet.Cell(i + 2, 2).Value = ticket.Name;
+                worksheet.Cell(i + 2, 3).Value = ticket.Description;
+                worksheet.Cell(i + 2, 4).Value = ticket.CreationDate;
+                worksheet.Cell(i + 2, 5).Value = ticket.SolutionDate;
+                worksheet.Cell(i + 2, 6).Value = ticket.SolutionDescription;
+                worksheet.Cell(i + 2, 7).Value = ticket.Priority;
+                worksheet.Cell(i + 2, 8).Value = ticket.Type;
+                worksheet.Cell(i + 2, 9).Value = ticket.Status;
+                worksheet.Cell(i + 2, 10).Value = ticket.Service.Name;
+                worksheet.Cell(i + 2, 11).Value = ticket.Requester.Name;
+                worksheet.Cell(i + 2, 12).Value = ticket.Assignee.Email;
+            }
+
+            
+            using (var memoryStream = new MemoryStream())
+            {
+                workbook.SaveAs(memoryStream);
+                return memoryStream.ToArray();
+            }
         }
     }
 }
