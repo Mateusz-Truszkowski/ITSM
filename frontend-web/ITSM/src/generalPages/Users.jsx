@@ -4,7 +4,7 @@ import "../assets/MainPanel.css";
 import "../assets/Users.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
-import { fetchUsers } from "../hooks/users.js";
+import { fetchUsers,fetchUsersReport } from "../hooks/users.js";
 import { useCheckTokenValidity } from "../global";
 
 function Users() {
@@ -25,7 +25,17 @@ function Users() {
       console.log("Error occured: " + error);
     }
   };
+  const MakeReport = async () => {
+    try {
+      const Data = await fetchUsersReport();
 
+      if (Data === null) {
+        throw new Error("Report creating error");
+      }
+    } catch (error) {
+      console.log("Error occured: " + error);
+    }
+  };
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const isTokenValid = checkToken(token);
@@ -41,6 +51,9 @@ function Users() {
         {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Users</h2>
+            <button className="report-button" onClick={MakeReport}>
+              Download report
+            </button>
             {isLoading ? (
               <div className="loading-spinner">
                 <div className="spinner"></div>

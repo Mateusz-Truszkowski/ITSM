@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ClosedXML.Excel;
 using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
@@ -131,6 +132,45 @@ namespace ITSM.Services
             {
                 return null;
             }
+        }
+        public byte[] AllUsersReport()
+        {
+            var users = GetUsers();
+            
+
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Users");
+
+            // Nagłówki
+            worksheet.Cell(1, 1).Value = "Id";
+            worksheet.Cell(1, 2).Value = "Login";
+            worksheet.Cell(1, 3).Value = "Name";
+            worksheet.Cell(1, 4).Value = "Surname";
+            worksheet.Cell(1, 5).Value = "Email";
+            worksheet.Cell(1, 6).Value = "CreationDate";
+            worksheet.Cell(1, 7).Value = "Group";
+            worksheet.Cell(1, 8).Value = "Occupation";
+            worksheet.Cell(1, 9).Value = "Status";
+
+            // Dodanie danych
+            for (int i = 0; i < users.Count; i++)
+            {
+                var ticket = users[i];
+                worksheet.Cell(i + 2, 1).Value = ticket.Id;
+                worksheet.Cell(i + 2, 2).Value = ticket.Login;
+                worksheet.Cell(i + 2, 3).Value = ticket.Name;
+                worksheet.Cell(i + 2, 4).Value = ticket.Surname;
+                worksheet.Cell(i + 2, 5).Value = ticket.Email;
+                worksheet.Cell(i + 2, 6).Value = ticket.CreationDate;
+                worksheet.Cell(i + 2, 7).Value = ticket.Group;
+                worksheet.Cell(i + 2, 8).Value = ticket.Occupation;
+                worksheet.Cell(i + 2, 9).Value = ticket.Status;
+            }
+
+
+            using var stream = new System.IO.MemoryStream();
+            workbook.SaveAs(stream);
+            return stream.ToArray();
         }
     }
 }

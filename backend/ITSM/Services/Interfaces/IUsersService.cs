@@ -15,5 +15,6 @@ namespace ITSM.Services
         public void UpdateUserPassword(int id, String Password);
         public void DeleteUser(int id);
         public UserDto? GetUserFromToken(string token);
+        public byte[] AllUsersReport();
     }
 }
