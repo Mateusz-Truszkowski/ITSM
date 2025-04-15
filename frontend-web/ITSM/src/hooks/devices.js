@@ -71,3 +71,25 @@ export const saveDevice = async (deviceData) => {
     return false;
   }
 };
+export const fetchDevicesReport = async () => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + "/devices/report", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.blob();
+    saveAs(data, "DevicesReport.xlsx");
+  } catch (error) {
+    console.error("Error fetching devices:", error);
+    return null;
+  }
+};

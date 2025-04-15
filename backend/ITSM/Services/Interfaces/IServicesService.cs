@@ -9,5 +9,6 @@ namespace ITSM.Services
         public ServiceDto CreateService(ServiceDto serviceDto);
         public ServiceDto? UpdateService(ServiceDto serviceDto);
         public void DeleteService(int id);
+        public byte[] AllServicesReport();
     }
 }

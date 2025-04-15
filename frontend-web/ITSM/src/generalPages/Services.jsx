@@ -5,7 +5,7 @@ import "../assets/Users.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel.jsx";
 import { useEffect, useState } from "react";
-import { fetchServices } from "../hooks/services.js";
+import { fetchServices,fetchServicesReport } from "../hooks/services.js";
 import { useCheckTokenValidity } from "../global.js";
 
 function Services() {
@@ -26,7 +26,17 @@ function Services() {
       console.log("Error occured: " + error);
     }
   };
+  const MakeReport = async () => {
+    try {
+      const Data = await fetchServicesReport();
 
+      if (Data === null) {
+        throw new Error("Report creating error");
+      }
+    } catch (error) {
+      console.log("Error occured: " + error);
+    }
+  };
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const isTokenValid = checkToken(token);
@@ -42,6 +52,9 @@ function Services() {
         {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Services</h2>
+            <button className="report-button" onClick={MakeReport}>
+              Download report
+            </button>
             {isLoading ? (
               <div className="loading-spinner">
                 <div className="spinner"></div>

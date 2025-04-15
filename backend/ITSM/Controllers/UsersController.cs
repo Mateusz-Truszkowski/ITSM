@@ -42,7 +42,7 @@ namespace ITSM.Controllers
         }
         [HttpGet("report")]
         [Authorize(Roles = "Admin,Operator")]
-        public ActionResult<List<UserDto>> MakeUsersReport()
+        public ActionResult MakeUsersReport()
         {
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             var user = _usersService.GetUserFromToken(token);
@@ -50,7 +50,7 @@ namespace ITSM.Controllers
                 return Forbid();
 
             var file_data = _usersService.AllUsersReport();
-            var file_name = $"Report_My_Tickets_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx";
+            var file_name = $"Report_Users_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx";
 
             return File(file_data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", file_name); ;
         }

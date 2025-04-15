@@ -35,6 +35,36 @@ namespace ITSM.Controllers
 
             return Ok(_service.GetDevices());
         }
+        [HttpGet("report")]
+        [Authorize(Roles = "Admin,Operator,User")]
+        public ActionResult MakeDevicesReport()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var user = _usersService.GetUserFromToken(token);
+
+            byte[] file_data;
+            string file_name;
+
+
+            if (user == null)
+                return Forbid();
+
+            if (user.Group == "User")
+            {
+                file_data = _service.UserDevicesReport(user);
+                file_name = $"Report_My_Devices_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx";
+            }
+            else
+            {
+                file_data = _service.AllDevicesReport();
+                file_name = $"Report_All_Devices_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx";
+            }
+
+            if (file_data == null || file_data.Length == 0)
+                return StatusCode(500, "Błąd podczas generowania raportu (plik jest pusty).");
+
+            return File(file_data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", file_name);
+        }
 
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin,Operator,User")]

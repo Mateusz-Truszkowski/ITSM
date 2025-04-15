@@ -5,7 +5,7 @@ import "../assets/Devices.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
 import { useEffect, useState } from "react";
-import { fetchDevices } from "../hooks/devices.js";
+import { fetchDevices,fetchDevicesReport } from "../hooks/devices.js";
 import { useCheckTokenValidity } from "../global";
 
 function Devices() {
@@ -26,7 +26,17 @@ function Devices() {
       console.log("Error occured: " + error);
     }
   };
+  const MakeReport = async () => {
+    try {
+      const Data = await fetchDevicesReport();
 
+      if (Data === null) {
+        throw new Error("Report creating error");
+      }
+    } catch (error) {
+      console.log("Error occured: " + error);
+    }
+  };
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const isTokenValid = checkToken(token);
@@ -42,6 +52,9 @@ function Devices() {
         {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Devices</h2>
+            <button className="report-button" onClick={MakeReport}>
+              Download report
+            </button>
             {isLoading ? (
               <div className="loading-spinner">
                 <div className="spinner"></div>

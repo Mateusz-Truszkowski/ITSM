@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using ITSM.Data;
 using ITSM.Dto;
 using ITSM.Entity;
@@ -86,6 +88,75 @@ namespace ITSM.Services
 
             _context.Devices.Remove(device);
             _context.SaveChanges();
+        }
+        public byte[] AllDevicesReport()
+        {
+            var Devices = GetDevices();
+
+
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Devices");
+
+            // Nagłówki
+            worksheet.Cell(1, 1).Value = "Id";
+            worksheet.Cell(1, 2).Value = "Name";
+            worksheet.Cell(1, 3).Value = "Description";
+            worksheet.Cell(1, 4).Value = "AcquisitionDate";
+            worksheet.Cell(1, 5).Value = "DepreciationDate";
+            worksheet.Cell(1, 6).Value = "Status";
+            worksheet.Cell(1, 7).Value = "User";
+
+            // Dodanie danych
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                var Device = Devices[i];
+                worksheet.Cell(i + 2, 1).Value = Device.Id;
+                worksheet.Cell(i + 2, 2).Value = Device.Name;
+                worksheet.Cell(i + 2, 3).Value = Device.Description;
+                worksheet.Cell(i + 2, 4).Value = Device.AcquisitionDate;
+                worksheet.Cell(i + 2, 5).Value = Device.DepreciationDate;
+                worksheet.Cell(i + 2, 6).Value = Device.Status;
+                worksheet.Cell(i + 2, 7).Value = Device.UserId;
+            }
+
+
+            using var stream = new System.IO.MemoryStream();
+            workbook.SaveAs(stream);
+            return stream.ToArray();
+        }
+
+        public byte[] UserDevicesReport(UserDto user)
+        {
+            var Devices = GetDevicesByUser(user);
+
+
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("MyDevices");
+
+            // Nagłówki
+            worksheet.Cell(1, 1).Value = "Id";
+            worksheet.Cell(1, 2).Value = "Name";
+            worksheet.Cell(1, 3).Value = "Description";
+            worksheet.Cell(1, 4).Value = "AcquisitionDate";
+            worksheet.Cell(1, 5).Value = "DepreciationDate";
+            worksheet.Cell(1, 6).Value = "Status";
+
+            // Dodanie danych
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                var Device = Devices[i];
+                worksheet.Cell(i + 2, 1).Value = Device.Id;
+                worksheet.Cell(i + 2, 2).Value = Device.Name;
+                worksheet.Cell(i + 2, 3).Value = Device.Description;
+                worksheet.Cell(i + 2, 4).Value = Device.AcquisitionDate;
+                worksheet.Cell(i + 2, 5).Value = Device.DepreciationDate;
+                worksheet.Cell(i + 2, 6).Value = Device.Status;
+            }
+
+
+            using var stream = new System.IO.MemoryStream();
+            workbook.SaveAs(stream);
+            return stream.ToArray();
         }
     }
 }
