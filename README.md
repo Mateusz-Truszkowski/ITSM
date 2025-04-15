@@ -10,6 +10,7 @@
 
 3. Zainstaluj zależności  
     npm install
+   
     npm install file-saver
 
 5. Uruchom projekt  
