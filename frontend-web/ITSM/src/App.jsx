@@ -19,6 +19,7 @@ import ServiceDetailsEdit from "./recordEditPages/ServiceDetailsEdit.jsx";
 import TicketDetailsEdit from "./recordEditPages/TicketDetailsEdit.jsx";
 import UserDetailsEdit from "./recordEditPages/UserDetailsEdit.jsx";
 import TicketCreate from "./createNewPages/TicketCreate.jsx";
+import ServiceCreate from "./createNewPages/ServiceCreate.jsx";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/users/:userId" element={<UserDetails />} />
           <Route path="/services" element={<Services />} />
           <Route path="/services/:serviceId" element={<ServiceDetails />} />
+          <Route path="/services/create" element={<ServiceCreate />} />
           <Route path="/devices" element={<Devices />} />
           <Route path="/devices/:deviceId" element={<DeviceDetails />} />
           <Route path="/PasswordReset" element={<PasswordReset />} />

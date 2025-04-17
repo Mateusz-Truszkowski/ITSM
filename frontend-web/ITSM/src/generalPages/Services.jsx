@@ -5,13 +5,15 @@ import "../assets/Users.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel.jsx";
 import { useEffect, useState } from "react";
-import { fetchServices,fetchServicesReport } from "../hooks/services.js";
+import { fetchServices, fetchServicesReport } from "../hooks/services.js";
 import { useCheckTokenValidity } from "../global.js";
+import { useNavigate } from "react-router-dom";
 
 function Services() {
   const [services, setServices] = useState([]);
   const checkToken = useCheckTokenValidity();
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const displayServices = async () => {
     try {
@@ -26,6 +28,7 @@ function Services() {
       console.log("Error occured: " + error);
     }
   };
+
   const MakeReport = async () => {
     try {
       const Data = await fetchServicesReport();
@@ -37,6 +40,11 @@ function Services() {
       console.log("Error occured: " + error);
     }
   };
+
+  const createService = () => {
+    navigate("/services/create");
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const isTokenValid = checkToken(token);
@@ -52,6 +60,9 @@ function Services() {
         {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Services</h2>
+            <button className="report-button" onClick={createService}>
+              New
+            </button>
             <button className="report-button" onClick={MakeReport}>
               Download report
             </button>
