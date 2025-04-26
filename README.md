@@ -10,10 +10,8 @@
 
 3. Zainstaluj zależności  
     npm install
-   
-    npm install file-saver
 
-5. Uruchom projekt  
+4. Uruchom projekt  
     npm run dev
 
 ### Backend
