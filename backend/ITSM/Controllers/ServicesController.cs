@@ -12,6 +12,7 @@ namespace ITSM.Controllers
         private readonly ILogger<ServicesController> _logger;
         private readonly IServicesService _service;
 
+
         public ServicesController (ILogger<ServicesController> logger, IServicesService service)
         {
             _logger = logger;
@@ -24,7 +25,16 @@ namespace ITSM.Controllers
         {
             return Ok(_service.GetServices());
         }
+        [HttpGet("report")]
+        [Authorize(Roles = "Admin,Operator,User")]
+        public ActionResult MakeServicesReport()
+        {
 
+            var file_data = _service.AllServicesReport();
+            var file_name = $"Report_Services_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx";
+
+            return File(file_data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", file_name); ;
+        }
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<ServiceDto> Get(int id)

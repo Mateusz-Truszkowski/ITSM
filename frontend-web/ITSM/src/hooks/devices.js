@@ -1,11 +1,34 @@
 import { serverPath } from "../global";
-import { saveAs } from "file-saver";
 
-export const fetchUsers = async () => {
+export const fetchDevices = async () => {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch(serverPath + "/users", {
+    const response = await fetch(serverPath + "/devices", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching devices:", error);
+    return null;
+  }
+};
+
+export const fetchDevice = async (deviceId) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + `/devices/${deviceId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -21,40 +44,38 @@ export const fetchUsers = async () => {
     console.log("Users:", data);
     return data;
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error(`Error fetching device ${deviceId}:`, error);
     return null;
   }
 };
 
-export const fetchUser = async (userId) => {
+export const saveDevice = async (deviceData) => {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch(serverPath + `/users/${userId}`, {
-      method: "GET",
+    const response = await fetch(serverPath + `/devices`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(deviceData),
     });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
-    const data = await response.json();
-    console.log("Users:", data);
-    return data;
+    return true;
   } catch (error) {
-    console.error(`Error fetching user ${userId}:`, error);
-    return null;
+    console.error(`Error saving device: `, error);
+    return false;
   }
 };
-export const fetchUsersReport = async () => {
+export const fetchDevicesReport = async () => {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch(serverPath + "/users/report", {
+    const response = await fetch(serverPath + "/devices/report", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -66,9 +87,9 @@ export const fetchUsersReport = async () => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.blob();
-    saveAs(data, "userssReport.xlsx");
+    saveAs(data, "DevicesReport.xlsx");
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error fetching devices:", error);
     return null;
   }
 };

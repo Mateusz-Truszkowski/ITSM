@@ -13,6 +13,7 @@ namespace ITSM.Controllers
         private readonly IUsersService _usersService;
         private readonly ILogger<TicketsController> _logger;
 
+
         public TicketsController(ITicketsService service, IUsersService usersService, ILogger<TicketsController> logger)
         {
             _service = service;
@@ -36,6 +37,36 @@ namespace ITSM.Controllers
             return Ok(_service.GetTickets());
         }
 
+        [HttpGet("report")]
+        [Authorize(Roles = "Admin,Operator,User")]
+        public ActionResult MakeTicketsReport()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var user = _usersService.GetUserFromToken(token);
+            byte[] file_data;
+            string file_name;
+
+
+            if (user == null)
+                return Forbid();
+
+            if (user.Group == "User")
+            {
+                file_data = _service.TicketsReportForUser(user);
+                file_name = $"Report_My_Tickets_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx";
+            }
+            else
+            {
+                file_data = _service.AllTicketsReport();
+                file_name = $"Report_All_Tickets_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx";
+            }
+
+            if (file_data == null || file_data.Length == 0)
+                return StatusCode(500, "Błąd podczas generowania raportu (plik jest pusty).");
+
+            return File(file_data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", file_name);
+
+        }
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<TicketDto> Get(int id)
@@ -60,6 +91,7 @@ namespace ITSM.Controllers
 
             return Ok(foundTicket);
         }
+      
 
         [HttpPost]
         [Authorize(Roles = "Admin,Operator,User")]
@@ -87,5 +119,6 @@ namespace ITSM.Controllers
             _service.DeleteTicket(id);
             return NoContent();
         }
+
     }
 }

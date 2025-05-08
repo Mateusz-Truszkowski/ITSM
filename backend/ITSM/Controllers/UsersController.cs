@@ -1,4 +1,6 @@
+using DocumentFormat.OpenXml.Wordprocessing;
 using ITSM.Dto;
+using ITSM.Entity;
 using ITSM.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +40,20 @@ namespace ITSM.Controllers
 
             return Ok(_usersService.GetUsers());
         }
+        [HttpGet("report")]
+        [Authorize(Roles = "Admin,Operator")]
+        public ActionResult MakeUsersReport()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var user = _usersService.GetUserFromToken(token);
+            if (user == null)
+                return Forbid();
 
+            var file_data = _usersService.AllUsersReport();
+            var file_name = $"Report_Users_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx";
+
+            return File(file_data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", file_name); ;
+        }
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin,Operator,User")]
         public ActionResult<UserDto> Get(int id)

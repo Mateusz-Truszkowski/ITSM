@@ -204,3 +204,25 @@ input::placeholder {
 .failed-message p {
   background-color: #ff2e2e;
 }
+
+.confirm-password {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.error-message {
+  text-align: center;
+  color: white;
+  background-color: rgb(250, 0, 0);
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 15px;
+  border-radius: 100px;
+  font-weight: 900;
+  font-size: 17px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.new-password, .confirm-password {
+    position: relative;
+}

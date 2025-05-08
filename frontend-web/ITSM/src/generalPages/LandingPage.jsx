@@ -4,6 +4,7 @@ import "../assets/GeneralLP.css";
 import "../assets/FormLP.css";
 import "../assets/Navigation.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import logo from "../assets/images/logo.png";
 
 const cardData = [
@@ -16,26 +17,41 @@ const cardData = [
   {
     id: 2,
     title: "Service Request Management",
+    description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 3,
     title: "Problem Management",
+    description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 4,
     title: "Change Management",
+    description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 5,
     title: "Knowledge Management",
+    description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 6,
     title: "Asset & Configuration Management",
+    description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
 ];
 
 function LandingPage() {
+  const [activeCard, setActiveCard] = useState(null);
+
+  const toggleCard = (id) => {
+    setActiveCard((prev) => (prev === id ? null : id));
+  };
 
   return (
       <>
@@ -59,19 +75,17 @@ function LandingPage() {
         </div>
 
         <section className="itsm-section">
-        {cardData.map((card) => (
-          <div
-            key={card.id}
-            className={`itsm-card ${card.id === 1 ? "expanded" : ""}`}
-          >
-            <div className="itsm-number">{String(card.id).padStart(2, "0")}</div>
-            <div className="itsm-title">{card.title}</div>
-            {card.description && (
-              <div className="itsm-description">{card.description}</div>
-            )}
-          </div>
-        ))}
-
+          {cardData.map((card) => (
+              <div
+                  key={card.id}
+                  className={`itsm-card ${activeCard === card.id ? "active" : ""}`}
+                  onClick={() => toggleCard(card.id)}
+              >
+                <div className="itsm-number">{String(card.id).padStart(2, "0")}</div>
+                <div className="itsm-title">{card.title}</div>
+                <div className="itsm-description">{card.description}</div>
+              </div>
+          ))}
         </section>
       </>
   );

@@ -10,5 +10,7 @@ namespace ITSM.Services
         public DeviceDto CreateDevice(DeviceDto deviceDto);
         public DeviceDto? UpdateDevice(DeviceDto deviceDto);
         public void DeleteDevice(int id);
+        public byte[] AllDevicesReport();
+        public byte[] UserDevicesReport(UserDto user);
     }
 }

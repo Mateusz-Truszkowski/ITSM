@@ -226,5 +226,29 @@ namespace ITSM.Tests.Services
 
             Assert.Null(result);
         }
+
+        [Fact]
+        public void UpdateUserPassword_ChangesPassword_WhenUserExsist()
+        {
+            var context = GetDbContext();
+            var mapper = GetMapper();
+            var service = new UsersService(context, mapper);
+            var old_password = context.Users.FirstOrDefault(u => u.Id == 1).Password;
+
+            service.UpdateUserPassword(1, "Test");
+
+            var new_password = context.Users.FirstOrDefault(u => u.Id == 1).Password;
+            Assert.NotEqual(old_password, new_password);
+        }
+        [Fact]
+        public void UpdateUserPassword_DoesNothing_WhenUserDoesntExsist()
+        {
+            var context = GetDbContext();
+            var mapper = GetMapper();
+            var service = new UsersService(context, mapper);
+
+            service.UpdateUserPassword(2, "Test");
+            //Should not throw exception
+        }
     }
 }
