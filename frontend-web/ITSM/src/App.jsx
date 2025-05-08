@@ -20,6 +20,7 @@ import TicketDetailsEdit from "./recordEditPages/TicketDetailsEdit.jsx";
 import UserDetailsEdit from "./recordEditPages/UserDetailsEdit.jsx";
 import TicketCreate from "./createNewPages/TicketCreate.jsx";
 import ServiceCreate from "./createNewPages/ServiceCreate.jsx";
+import DeviceCreate from "./createNewPages/DeviceCreate.jsx";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/login" element={<Login />} /> {/* Strona logowania */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/logged-out" element={<LoggedOut />} />
+          <Route path="/devices/create" element={<DeviceCreate />} />
           <Route
             path="/devices/:deviceId/edit"
             element={<DeviceDetailsEdit />}

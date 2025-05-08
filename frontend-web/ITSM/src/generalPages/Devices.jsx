@@ -7,6 +7,7 @@ import MainPanel from "../components/MainPanel";
 import { useEffect, useState } from "react";
 import { fetchDevices,fetchDevicesReport } from "../hooks/devices.js";
 import { useCheckTokenValidity } from "../global";
+import { useNavigate } from "react-router-dom";
 
 function Devices() {
   const [devices, setDevices] = useState([]);
@@ -45,6 +46,11 @@ function Devices() {
     displayDevices();
   }, []);
 
+const navigate = useNavigate();
+const CreateDevice = () => {
+  navigate("/devices/create");
+};
+
   return (
     <>
       <NavigationLP />
@@ -52,6 +58,9 @@ function Devices() {
         {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Devices</h2>
+            <button className="report-button" onClick={CreateDevice}>
+              New
+            </button>
             <button className="report-button" onClick={MakeReport}>
               Download report
             </button>

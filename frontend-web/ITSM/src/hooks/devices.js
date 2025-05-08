@@ -93,3 +93,26 @@ export const fetchDevicesReport = async () => {
     return null;
   }
 };
+export const createDevice = async (deviceData) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + "/devices", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(deviceData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error creating device:", error);
+    return false;
+  }
+};
