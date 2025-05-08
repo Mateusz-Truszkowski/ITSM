@@ -17,41 +17,26 @@ const cardData = [
   {
     id: 2,
     title: "Service Request Management",
-    description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 3,
     title: "Problem Management",
-    description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 4,
     title: "Change Management",
-    description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 5,
     title: "Knowledge Management",
-    description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 6,
     title: "Asset & Configuration Management",
-    description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
 ];
 
 function LandingPage() {
-  const [activeCard, setActiveCard] = useState(null);
-
-  const toggleCard = (id) => {
-    setActiveCard((prev) => (prev === id ? null : id));
-  };
 
   return (
       <>
@@ -78,8 +63,7 @@ function LandingPage() {
           {cardData.map((card) => (
               <div
                   key={card.id}
-                  className={`itsm-card ${activeCard === card.id ? "active" : ""}`}
-                  onClick={() => toggleCard(card.id)}
+                  className="itsm-card"
               >
                 <div className="itsm-number">{String(card.id).padStart(2, "0")}</div>
                 <div className="itsm-title">{card.title}</div>
