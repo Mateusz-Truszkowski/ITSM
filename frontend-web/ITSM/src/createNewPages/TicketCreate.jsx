@@ -3,25 +3,25 @@ import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { useCheckTokenValidity } from "../global";
+import { createTicket } from "../hooks/tickets";
 import { fetchUsers } from "../hooks/users";
 import { useNavigate } from "react-router-dom";
-import { createTicket } from "../hooks/tickets"; // jeśli masz ten hook
 
 function TicketCreate() {
   const checkToken = useCheckTokenValidity();
   const navigate = useNavigate();
 
-  const [requesterId, setRequesterId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [created, setCreated] = useState("");
+  const [creationDate, setCreationDate] = useState("");
   const [solutionDate, setSolutionDate] = useState("");
   const [solutionDescription, setSolutionDescription] = useState("");
-  const [priority, setPriority] = useState(1);
+  const [priority, setPriority] = useState("");
   const [type, setType] = useState("Bug");
   const [status, setStatus] = useState("Open");
   const [serviceId, setServiceId] = useState("");
   const [assigneeId, setAssigneeId] = useState("");
+  const [requesterId, setRequesterId] = useState("");
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(false);
 
@@ -33,15 +33,22 @@ function TicketCreate() {
       const data = await fetchUsers();
       setUsers(data);
     };
+
     loadUsers();
   }, []);
 
   const saveRecord = async () => {
+    // Walidacja minimalna
+    if (!name || !description || !creationDate || !priority || !type || !status || !serviceId || !assigneeId || !requesterId) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
     const ticketData = {
       name,
       description,
-      creationDate: new Date(created).toISOString(),
-      solutionDate: new Date(solutionDate).toISOString(),
+      creationDate: new Date(creationDate).toISOString(),
+      solutionDate: solutionDate ? new Date(solutionDate).toISOString() : null,
       solutionDescription,
       priority: parseInt(priority),
       type,
@@ -84,7 +91,7 @@ function TicketCreate() {
                 </div>
                 <div className="record-field">
                   <span className="record-label">Created:</span>
-                  <input className="record-value-edit" type="date" value={created} onChange={(e) => setCreated(e.target.value)} />
+                  <input className="record-value-edit" type="date" value={creationDate} onChange={(e) => setCreationDate(e.target.value)} />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Solution Date:</span>
@@ -126,7 +133,7 @@ function TicketCreate() {
                 <div className="record-field">
                   <span className="record-label">Requester:</span>
                   <select className="record-value-edit" value={requesterId} onChange={(e) => setRequesterId(e.target.value)}>
-                    <option value="">Select user</option>
+                    <option value="">Select requester</option>
                     {users.map((u) => (
                       <option key={u.id} value={u.id}>
                         {u.name} {u.surname}
