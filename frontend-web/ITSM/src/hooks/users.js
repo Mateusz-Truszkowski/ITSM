@@ -91,3 +91,15 @@ export const createUser = async (userData) => {
     return false;
   }
 };
+export const updateUser = async (id, user) => {
+  const response = await fetch(`https://localhost:63728/users`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+    body: JSON.stringify({ ...user, id }),
+  });
+
+  return response.ok;
+};

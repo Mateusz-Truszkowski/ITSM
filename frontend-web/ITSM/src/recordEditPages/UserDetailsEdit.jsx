@@ -1,90 +1,128 @@
-// TO DO
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { fetchUser } from "../hooks/users";
+import { useParams, useNavigate } from "react-router-dom";
+import { fetchUser, updateUser } from "../hooks/users";
 import { useCheckTokenValidity } from "../global";
 
 function UserDetailsEdit() {
-  const [user, setUser] = useState();
   const { userId } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   const checkToken = useCheckTokenValidity();
 
-  const displayUser = async () => {
-    try {
-      const userData = await fetchUser(userId);
-
-      if (userData === null) {
-        throw new Error("error fetching user");
-      }
-
-      setUser(userData);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Wystąpił błąd:", error);
-    }
-  };
+  const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
-    displayUser();
+    const loadUser = async () => {
+      const data = await fetchUser(userId);
+      if (!data) {
+        setError(true);
+      } else {
+        setUser(data);
+      }
+      setIsLoading(false);
+    };
+
+    loadUser();
   }, []);
+
+  const handleChange = (field, value) => {
+    setUser((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const saveChanges = async () => {
+    const success = await updateUser(userId, user);
+    if (success) {
+      navigate(`/users/${userId}`);
+    } else {
+      setError(true);
+    }
+  };
 
   return (
     <>
       <NavigationLP />
       <MainPanel>
-        {({}) => (
+        {() => (
           <div className="record-details-wrapper">
             <div className="record-details-container">
-              <h1 className="record-details-header">User Details</h1>
+              <div className="record-details-header">
+                <h1>Edit User</h1>
+                <button className="edit-button" onClick={saveChanges}>
+                  Save
+                </button>
+              </div>
               {isLoading ? (
                 <div className="loading-spinner">
                   <div className="spinner"></div>
                 </div>
               ) : (
-                <>
-                  <div className="record-fields">
-                    <div className="record-field">
-                      <span className="record-label">Name:</span>
-                      <span className="record-value">{user.name}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Surname:</span>
-                      <span className="record-value">{user.surname}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Email:</span>
-                      <span className="record-value">{user.email}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Created:</span>
-                      <span className="record-value">
-                        {new Date(user.creationDate).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Group:</span>
-                      <span className="record-value">{user.group}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Occupation:</span>
-                      <span className="record-value">{user.occupation}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Status:</span>
-                      <span className="record-value">{user.status}</span>
-                    </div>
+                <div className="record-fields">
+                  <div className="record-field">
+                    <span className="record-label">Name:</span>
+                    <input
+                      className="record-value-edit"
+                      value={user.name || ""}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                    />
                   </div>
-                </>
+                  <div className="record-field">
+                    <span className="record-label">Surname:</span>
+                    <input
+                      className="record-value-edit"
+                      value={user.surname || ""}
+                      onChange={(e) => handleChange("surname", e.target.value)}
+                    />
+                  </div>
+                  <div className="record-field">
+                    <span className="record-label">Email:</span>
+                    <input
+                      className="record-value-edit"
+                      type="email"
+                      value={user.email || ""}
+                      onChange={(e) => handleChange("email", e.target.value)}
+                    />
+                  </div>
+                  <div className="record-field">
+                    <span className="record-label">Group:</span>
+                    <input
+                      className="record-value-edit"
+                      value={user.group || ""}
+                      onChange={(e) => handleChange("group", e.target.value)}
+                    />
+                  </div>
+                  <div className="record-field">
+                    <span className="record-label">Occupation:</span>
+                    <input
+                      className="record-value-edit"
+                      value={user.occupation || ""}
+                      onChange={(e) => handleChange("occupation", e.target.value)}
+                    />
+                  </div>
+                  <div className="record-field">
+                    <span className="record-label">Status:</span>
+                    <select
+                      className="record-value-edit"
+                      value={user.status || ""}
+                      onChange={(e) => handleChange("status", e.target.value)}
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+              {error && (
+                <div className="failed-message">
+                  <p>!</p>
+                  <span>Error saving user</span>
+                </div>
               )}
             </div>
           </div>
