@@ -72,3 +72,15 @@ export const fetchTicketReport = async () => {
     return null;
   }
 };
+export const createTicket = async (ticketData) => {
+  const response = await fetch("https://localhost:63728/tickets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+    body: JSON.stringify(ticketData),
+  });
+
+  return response.ok;
+};
