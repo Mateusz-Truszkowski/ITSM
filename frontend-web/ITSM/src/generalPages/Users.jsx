@@ -6,6 +6,7 @@ import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
 import { fetchUsers,fetchUsersReport } from "../hooks/users.js";
 import { useCheckTokenValidity } from "../global";
+import { useNavigate } from "react-router-dom";
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -44,6 +45,12 @@ function Users() {
     displayUsers();
   }, []);
 
+  const navigate = useNavigate();
+  const CreateUser = () => {
+  navigate("/users/create");
+};
+
+
   return (
     <>
       <NavigationLP />
@@ -51,6 +58,9 @@ function Users() {
         {({ openRecord }) => (
           <div className="records-container">
             <h2 className="records-header">Users</h2>
+            <button className="report-button" onClick={CreateUser}>
+             New
+            </button>
             <button className="report-button" onClick={MakeReport}>
               Download report
             </button>

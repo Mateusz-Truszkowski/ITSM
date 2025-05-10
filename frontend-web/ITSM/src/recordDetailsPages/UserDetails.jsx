@@ -14,19 +14,20 @@ function UserDetails() {
   const checkToken = useCheckTokenValidity();
 
   const displayUser = async () => {
-    try {
-      const userData = await fetchUser(userId);
+  try {
+    const userData = await fetchUser(userId);
 
-      if (userData === null) {
-        throw new Error("error fetching user");
-      }
-
-      setUser(userData);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Wystąpił błąd:", error);
+    if (!userData) {
+      throw new Error("Brak danych użytkownika");
     }
-  };
+
+    setUser(userData);
+  } catch (error) {
+    console.error("Wystąpił błąd:", error);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");

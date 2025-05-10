@@ -72,3 +72,22 @@ export const fetchUsersReport = async () => {
     return null;
   }
 };
+export const createUser = async (userData) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + "/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    return response.ok;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return false;
+  }
+};

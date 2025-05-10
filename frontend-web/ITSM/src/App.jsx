@@ -21,6 +21,7 @@ import UserDetailsEdit from "./recordEditPages/UserDetailsEdit.jsx";
 import TicketCreate from "./createNewPages/TicketCreate.jsx";
 import ServiceCreate from "./createNewPages/ServiceCreate.jsx";
 import DeviceCreate from "./createNewPages/DeviceCreate.jsx";
+import UserCreate from "./createNewPages/UserCreate.jsx";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/logged-out" element={<LoggedOut />} />
           <Route path="/devices/create" element={<DeviceCreate />} />
+          <Route path="/users/create" element={<UserCreate />} />
           <Route
             path="/devices/:deviceId/edit"
             element={<DeviceDetailsEdit />}
