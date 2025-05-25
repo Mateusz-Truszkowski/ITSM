@@ -2,11 +2,11 @@ import React from "react";
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
 import "../assets/Users.css";
-import NavigationLP from "../components/NavigationLP.jsx";
-import MainPanel from "../components/MainPanel.jsx";
+import NavigationLP from "../../components/NavigationLP.jsx";
+import MainPanel from "../../components/MainPanel.jsx";
 import { useEffect, useState } from "react";
-import { fetchServices, fetchServicesReport } from "../hooks/services.js";
-import { useCheckTokenValidity } from "../global.js";
+import { fetchServices, fetchServicesReport } from "../../hooks/services.js";
+import { useCheckTokenValidity } from "../../global.js";
 import { useNavigate } from "react-router-dom";
 
 function Services() {

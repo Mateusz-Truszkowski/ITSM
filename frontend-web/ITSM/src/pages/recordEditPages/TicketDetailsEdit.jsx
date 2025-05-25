@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import NavigationLP from "../components/NavigationLP";
-import MainPanel from "../components/MainPanel";
+import NavigationLP from "../../components/NavigationLP";
+import MainPanel from "../../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { Link } from "react-router-dom";
-import { fetchTicket } from "../hooks/tickets";
-import { fetchUser } from "../hooks/users";
-import { useCheckTokenValidity } from "../global";
+import { fetchTicket } from "../../hooks/tickets";
+import { fetchUser } from "../../hooks/users";
+import { useCheckTokenValidity } from "../../global";
 
 function TicketDetailsEdit() {
   const { ticketId } = useParams();
@@ -73,9 +73,6 @@ function TicketDetailsEdit() {
           <div className="record-details-wrapper">
             <div className="record-details-container">
               <h1 className="record-details-header">Ticket Details</h1>
-              <button className="edit-button" onClick={saveRecord}>
-                  Save
-                </button>
               <div className="record-fields">
                 {isLoading ? (
                   <div className="loading-spinner">

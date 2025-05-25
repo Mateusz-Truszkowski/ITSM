@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import person from "../assets/icons/user-icon.png";
 import locked from "../assets/icons/locked-icon.png";
 import unlocked from "../assets/icons/unlocked-icon.png";
-import NavigationLP from "../components/NavigationLP";
+import NavigationLP from "../../components/NavigationLP";
 
 function Login() {
   const [login, setLogin] = useState("");
