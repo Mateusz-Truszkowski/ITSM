@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
@@ -13,6 +13,7 @@ function TicketDetails() {
   const checkToken = useCheckTokenValidity();
   const [isLoading, setIsLoading] = useState(true);
   const [ticket, setTicket] = useState();
+    const navigate = useNavigate();
 
   const displayTickets = async () => {
     try {
@@ -63,6 +64,10 @@ function TicketDetails() {
     displayTickets();
   }, []);
 
+  const editRecord = () => {
+    navigate(`/tickets/${ticket.id}/edit`);
+  };
+
   return (
     <>
       <NavigationLP />
@@ -71,6 +76,9 @@ function TicketDetails() {
           <div className="record-details-wrapper">
             <div className="record-details-container">
               <h1 className="record-details-header">Ticket Details</h1>
+              <button className="edit-button" onClick={editRecord}>
+                  Edit
+                </button>
               <div className="record-fields">
                 {isLoading ? (
                   <div className="loading-spinner">
