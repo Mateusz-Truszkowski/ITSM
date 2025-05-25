@@ -1,11 +1,11 @@
 import "../assets/GeneralLP.css";
 import "../assets/MainPanel.css";
 import "../assets/Tickets.css";
-import MainPanel from "../../components/MainPanel.jsx";
-import NavigationLP from "../../components/NavigationLP.jsx";
+import MainPanel from "../components/MainPanel";
+import NavigationLP from "../components/NavigationLP";
 import React, { useEffect, useState } from "react";
-import { fetchTickets, fetchTicketReport } from "../../hooks/tickets.js";
-import { useCheckTokenValidity } from "../../global.js";
+import { fetchTickets, fetchTicketReport } from "../hooks/tickets.js";
+import { useCheckTokenValidity } from "../global";
 import { useNavigate } from "react-router-dom";
 
 function Tickets() {

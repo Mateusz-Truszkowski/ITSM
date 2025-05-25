@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import NavigationLP from "../../components/NavigationLP";
-import MainPanel from "../../components/MainPanel";
+import NavigationLP from "../components/NavigationLP";
+import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
-import { useCheckTokenValidity } from "../../global";
-import { createTicket } from "../../hooks/tickets";
-import { fetchUsers } from "../../hooks/users";
+import { useCheckTokenValidity } from "../global";
+import { createTicket } from "../hooks/tickets";
+import { fetchUsers } from "../hooks/users";
 import { useNavigate } from "react-router-dom";
 
 function TicketCreate() {
