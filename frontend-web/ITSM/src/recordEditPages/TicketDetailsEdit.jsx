@@ -6,7 +6,7 @@ import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { Link } from "react-router-dom";
-import { fetchTicket } from "../hooks/tickets";
+import { saveTicket,fetchTicket } from "../hooks/tickets";
 import { fetchUser } from "../hooks/users";
 import { useCheckTokenValidity } from "../global";
 
@@ -15,6 +15,20 @@ function TicketDetailsEdit() {
   const checkToken = useCheckTokenValidity();
   const [isLoading, setIsLoading] = useState(true);
   const [ticket, setTicket] = useState();
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [creationDate, setCreationDate] = useState("");
+  const [solutionDate, setSolutionDate] = useState("");
+  const [solutionDescription, setSolutionDescription] = useState("");
+  const [priority, setPriority] = useState("");
+  const [type, setType] = useState("Bug");
+  const [status, setStatus] = useState("Open");
+  const [serviceId, setServiceId] = useState("");
+  const [assigneeId, setAssigneeId] = useState("");
+  const [requesterId, setRequesterId] = useState("");
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(false);
 
   const displayTickets = async () => {
     try {
@@ -36,7 +50,17 @@ function TicketDetailsEdit() {
       const userResponses = await Promise.all(
         userIds.map((id) => fetchUser(id))
       );
-
+      setName(ticketData.name);
+      setDescription(ticketData.description);
+      setCreationDate(ticketData.creationDate);
+      setSolutionDate(ticketData.solutionDate);
+      setSolutionDescription(ticketData.solutiondescription);
+      setPriority(ticketData.priority);
+      setType(ticketData.type);
+      setStatus(ticketData.status);
+      setServiceId(ticketData.serviceId);
+      setAssigneeId(ticketData.assigneeId);
+      setRequesterId(ticketData.requesterId);
       const userData = await Promise.all(userResponses.map((res) => res));
 
       const userMap = {};
@@ -52,8 +76,73 @@ function TicketDetailsEdit() {
 
       setTicket(enrichedTicket);
       setIsLoading(false);
+
+      
     } catch (error) {
       console.error("Wystąpił błąd:", error);
+    }
+    
+  };
+
+ const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleSolutionDescriptionChange = (event) => {
+    setSolutionDescription(event.target.value);
+  };
+
+  const handlePriorityChange = (event) => {
+    setPriority(event.target.value);
+  };
+
+  const handleTypeChange = (event) => {
+    setType(event.target.value);
+  };
+
+  const handleStatusChange = (event) => {
+    setStatus(event.target.value);
+  };
+
+  const handleServiceIdChange = (event) => {
+    setServiceId(event.target.value);
+  };
+  const handleSolutionDateChange = (event) => {
+    setSolutionDate(event.target.value);
+  };
+  const handleCreationDateChange = (event) => {
+    setCreationDate(event.target.value);
+  };
+  const handleAsigneeChange = (event) => {
+    setAssigneeId(event.target.value);
+  };
+  const handleRequesterChange = (event) => {
+    setRequesterId(event.target.value);
+  };
+  const saveRecord = async () => {
+    const serviceData = {
+      name: name,
+      description: description,
+      creationDate: creationDate,
+      solutionDate: solutionDate,
+      solutionDescription: solutionDescription,
+      priority: priority,
+      type: type,
+      status: status,
+      serviceId: serviceId,
+      assigneeId: assigneeId,
+      requesterId: requesterId,
+    };
+    const success = await saveTicket(serviceData);
+    if (success) {
+      setError(false);
+      navigate(`/tickets/${ticketId}`);
+    } else {
+      setError(true);
     }
   };
 
@@ -69,93 +158,109 @@ function TicketDetailsEdit() {
     <>
       <NavigationLP />
       <MainPanel>
-        {({}) => (
+        {() => (
           <div className="record-details-wrapper">
             <div className="record-details-container">
-              <h1 className="record-details-header">Ticket Details</h1>
-              <button className="edit-button" onClick={saveRecord}>
+              <div className="record-details-header">
+                <h1>Edit ticket</h1>
+                <button className="edit-button" onClick={saveRecord}>
                   Save
                 </button>
-              <div className="record-fields">
-                {isLoading ? (
-                  <div className="loading-spinner">
-                    <div className="spinner"></div>
-                  </div>
-                ) : (
-                  <>
-                    <div className="record-field">
-                      <span className="record-label">ID:</span>
-                      <span className="record-value">{ticket.id}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Name:</span>
-                      <span className="record-value">{ticket.name}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Description:</span>
-                      <span className="record-value">{ticket.description}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Created:</span>
-                      <span className="record-value">
-                        {new Date(ticket.creationDate).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Solution Date:</span>
-                      <span className="record-value">
-                        {ticket.solutiondate
-                          ? new Date(ticket.solutiondate).toLocaleDateString()
-                          : ""}
-                      </span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">
-                        Solution Description:
-                      </span>
-                      <span className="record-value">
-                        {ticket.solutiondescription}
-                      </span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Priority:</span>
-                      <span className="record-value">{ticket.priority}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Type:</span>
-                      <span className="record-value">{ticket.type}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Status:</span>
-                      <span className="record-value">{ticket.status}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Service ID:</span>
-                      <span className="record-value">{ticket.serviceId}</span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Assignee:</span>
-                      <span className="record-value">
-                        {
-                          <Link to={`/users/${ticket.assigneeId}`}>
-                            {ticket.assigneeName}
-                          </Link>
-                        }
-                      </span>
-                    </div>
-                    <div className="record-field">
-                      <span className="record-label">Requester:</span>
-                      <span className="record-value">
-                        {
-                          <Link to={`/users/${ticket.requesterId}`}>
-                            {ticket.requesterName}
-                          </Link>
-                        }
-                      </span>
-                    </div>
-                  </>
-                )}
               </div>
+              <div className="record-fields">
+                <div className="record-field">
+                  <span className="record-label">Name:</span>
+                  <input className="record-value-edit" 
+                  value={name} 
+                  onChange={handleNameChange} />
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Description:</span>
+                  <textarea className="record-value-edit" 
+                  value={description} 
+                  onChange={handleDescriptionChange} />
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Created:</span>
+                  <input className="record-value-edit" 
+                  type="date" value={creationDate} 
+                 onChange={handleCreationDateChange}/>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Solution Date:</span>
+                  <input className="record-value-edit" 
+                  type="date" 
+                  value={solutionDate} 
+                  onChange={handleSolutionDateChange}/>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Solution Description:</span>
+                  <textarea className="record-value-edit" 
+                  value={solutionDescription} 
+                  onChange={handleSolutionDescriptionChange}/>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Priority:</span>
+                  <input className="record-value-edit"
+                   type="number" 
+                   value={priority} 
+                  onChange={handlePriorityChange} />
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Type:</span>
+                  <select className="record-value-edit" 
+                  value={type} 
+                  onChange={handleTypeChange}>
+                    <option value="Bug">Bug</option>
+                    <option value="Performance">Performance</option>
+                    <option value="Support">Support</option>
+                    <option value="Feature Request">Feature Request</option>
+                  </select>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Status:</span>
+                  <select className="record-value-edit" 
+                  value={status}
+                  onChange={handleStatusChange}>
+                    <option value="Open">Open</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Service ID:</span>
+                  <input className="record-value-edit" 
+                  type="number" 
+                  value={serviceId} 
+                  onChange={handleServiceIdChange} />
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Assignee:</span>
+                  <input className="record-value-edit" 
+                  type="number"
+                  value={assigneeId} 
+                  onChange={handleAsigneeChange}/>
+                </div>
+                <div className="record-field">
+                  <span className="record-label">Requester:</span>
+                  <select className="record-value-edit" 
+                  value={requesterId} 
+                  onChange={handleRequesterChange}>
+                    <option value="">Select requester</option>
+                    {users.map((u) => (
+                      <option key={u.id} value={u.id}>
+                        {u.name} {u.surname}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              {error && (
+                <div className="failed-message">
+                  <p>!</p>
+                  <span>Error occurred</span>
+                </div>
+              )}
             </div>
           </div>
         )}

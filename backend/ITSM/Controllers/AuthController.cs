@@ -59,12 +59,8 @@ namespace ITSM.Controllers
             if (foundUser == null)
                 return NotFound();
 
-           
-            //return Ok("Mail został wysłany.");
-            // Jeżeli znaleziono
             try
              {
-                // Składanie wiadomości
 
                 if (!(foundUser.Email.Contains("@"))){
                     return NotFound();
@@ -80,7 +76,6 @@ namespace ITSM.Controllers
                 mail.BodyEncoding = Encoding.UTF8;
                 mail.IsBodyHtml = false; 
 
-                // Konfiguracja SMTP
                 var smtpClient = new SmtpClient("smtp.gmail.com")
                 {
                     Port = 587,
@@ -94,7 +89,6 @@ namespace ITSM.Controllers
              }
              catch (Exception ex)
              {
-                 // Logowanie błędu (w produkcji loguj to gdzieś!)
                  return BadRequest("Wystąpił błąd podczas wysyłania maila: " + ex.Message);
              }
         }

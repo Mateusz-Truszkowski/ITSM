@@ -73,7 +73,7 @@ export const fetchTicketReport = async () => {
   }
 };
 export const createTicket = async (ticketData) => {
-  const response = await fetch("https://localhost:63728/tickets", {
+  const response = await fetch(serverPath +"/tickets", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -83,4 +83,26 @@ export const createTicket = async (ticketData) => {
   });
 
   return response.ok;
+};
+export const saveTicket = async (ticketData) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + `/tickets`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(ticketData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error(`Error saving ticket: `, error);
+    return false;
+  }
 };
