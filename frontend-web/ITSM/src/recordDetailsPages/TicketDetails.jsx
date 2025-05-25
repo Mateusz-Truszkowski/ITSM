@@ -75,10 +75,12 @@ function TicketDetails() {
         {({}) => (
           <div className="record-details-wrapper">
             <div className="record-details-container">
-              <h1 className="record-details-header">Ticket Details</h1>
-              <button className="edit-button" onClick={editRecord}>
+              <div className="record-details-header">
+                <h1>Ticket Details</h1>
+                <button className="edit-button" onClick={editRecord}>
                   Edit
                 </button>
+              </div>
               <div className="record-fields">
                 {isLoading ? (
                   <div className="loading-spinner">

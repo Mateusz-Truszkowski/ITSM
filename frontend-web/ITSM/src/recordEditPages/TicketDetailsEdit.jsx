@@ -73,6 +73,9 @@ function TicketDetailsEdit() {
           <div className="record-details-wrapper">
             <div className="record-details-container">
               <h1 className="record-details-header">Ticket Details</h1>
+              <button className="edit-button" onClick={saveRecord}>
+                  Save
+                </button>
               <div className="record-fields">
                 {isLoading ? (
                   <div className="loading-spinner">
