@@ -116,3 +116,26 @@ export const createDevice = async (deviceData) => {
     return false;
   }
 };
+
+export const deletedevice = async (deviceId) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + `/devices/${deviceId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.ok;
+  } catch (error) {
+    console.error(`Error fetching device ${deviceId}:`, error);
+    return null;
+  }
+};

@@ -4,7 +4,7 @@ import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { Link } from "react-router-dom";
-import { fetchTicket } from "../hooks/tickets";
+import { fetchTicket, deleteTicket } from "../hooks/tickets";
 import { fetchUser } from "../hooks/users";
 import { checkToken } from "../global";
 
@@ -66,6 +66,10 @@ function TicketDetails() {
   const editRecord = () => {
     navigate(`/tickets/${ticket.id}/edit`);
   };
+  const deleteRecord = async () => {
+    await deleteTicket(ticket.id);
+    navigate(`/tickets`);
+  };
 
   return (
     <>
@@ -76,9 +80,14 @@ function TicketDetails() {
             <div className="record-details-container">
               <div className="record-details-header">
                 <h1>Ticket Details</h1>
-                <button className="edit-button" onClick={editRecord}>
-                  Edit
-                </button>
+                <div className="Button-container">
+                  <button className="delete-button" onClick={deleteRecord}>
+                    Delete
+                  </button>
+                  <button className="edit-button" onClick={editRecord}>
+                    Edit
+                  </button>
+                </div>
               </div>
               <div className="record-fields">
                 {isLoading ? (

@@ -118,3 +118,26 @@ export const fetchServicesReport = async () => {
     return null;
   }
 };
+
+export const deleteService = async (serviceId) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + `/services/${serviceId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.ok;
+  } catch (error) {
+    console.error(`Error fetching service ${serviceId}:`, error);
+    return null;
+  }
+};

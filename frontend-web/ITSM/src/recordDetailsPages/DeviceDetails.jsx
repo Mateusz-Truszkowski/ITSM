@@ -3,7 +3,7 @@ import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchDevice } from "../hooks/devices";
+import { fetchDevice, deletedevice } from "../hooks/devices";
 import { checkToken } from "../global";
 import { fetchUser } from "../hooks/users";
 
@@ -57,6 +57,10 @@ function DeviceDetails() {
     navigate(`/devices/${device.id}/edit`);
   };
 
+  const deleteRecord = async () => {
+    await deletedevice(device.id);
+    navigate(`/devices`);
+  };
   return (
     <>
       <NavigationLP />
@@ -66,9 +70,14 @@ function DeviceDetails() {
             <div className="record-details-container">
               <div className="record-details-header">
                 <h1>Device Details</h1>
-                <button className="edit-button" onClick={editRecord}>
-                  Edit
-                </button>
+                <div className="Button-container">
+                  <button className="delete-button" onClick={deleteRecord}>
+                    Delete
+                  </button>
+                  <button className="edit-button" onClick={editRecord}>
+                    Edit
+                  </button>
+                </div>
               </div>
               <div className="record-fields">
                 {isLoading ? (

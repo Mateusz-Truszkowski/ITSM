@@ -99,3 +99,22 @@ select {
   height: 50px;
   width: 340px;
 }
+
+.delete-button {
+  border: 2px solid white;
+  background-color: #e23939;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  float: right;
+}
+
+.delete-button:hover {
+  background-color: transparent;
+  cursor: pointer;
+}

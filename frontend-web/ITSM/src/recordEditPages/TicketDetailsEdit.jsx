@@ -1,13 +1,11 @@
-// TO DO
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
-import { Link } from "react-router-dom";
 import { saveTicket, fetchTicket } from "../hooks/tickets";
-import { fetchUser } from "../hooks/users";
+import { fetchUser, fetchUsers } from "../hooks/users";
+import { fetchService, fetchServices } from "../hooks/services";
 import { checkToken } from "../global";
 
 function TicketDetailsEdit() {
@@ -29,6 +27,7 @@ function TicketDetailsEdit() {
   const [assigneeId, setAssigneeId] = useState("");
   const [requesterId, setRequesterId] = useState("");
   const [users, setUsers] = useState([]);
+  const [services, setServices] = useState([]);
   const [error, setError] = useState(false);
 
   const displayTickets = async () => {
@@ -53,8 +52,8 @@ function TicketDetailsEdit() {
       );
       setName(ticketData.name);
       setDescription(ticketData.description);
-      setCreationDate(ticketData.creationDate);
-      setSolutionDate(ticketData.solutionDate);
+      setCreationDate(ticketData.creationDate?.slice(0, 10));
+      setSolutionDate(ticketData.solutionDate?.slice(0, 10));
       setSolutionDescription(ticketData.solutiondescription);
       setPriority(ticketData.priority);
       setType(ticketData.type);
@@ -123,7 +122,6 @@ function TicketDetailsEdit() {
   };
   const saveRecord = async () => {
     const ticketData = {
-      id: ticketId,
       name: name,
       description: description,
       creationDate: creationDate,
@@ -150,6 +148,17 @@ function TicketDetailsEdit() {
     checkToken(token);
 
     displayTickets();
+    const getServices = async () => {
+      const fetchedServices = await fetchServices();
+      setServices(fetchedServices);
+    };
+    getServices();
+
+    const getUsers = async () => {
+      const fetchedUsers = await fetchUsers();
+      setUsers(fetchedUsers);
+    };
+    getUsers();
   }, []);
 
   return (
@@ -250,21 +259,29 @@ function TicketDetailsEdit() {
                     value={serviceId}
                     onChange={handleServiceIdChange}
                   />
+                  <span className="record-label">Service:</span>
+                  <select
+                    className="record-value-edit"
+                    value={serviceId}
+                    onChange={handleServiceIdChange}
+                  >
+                    <option value="">Select service</option>
+                    {services.map((service) => (
+                      <option key={service.id} value={service.id}>
+                        {service.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
                 <div className="record-field">
                   <span className="record-label">Assignee:</span>
-                  <select
+                  <input
                     className="record-value-edit"
                     type="number"
                     value={assigneeId}
                     onChange={handleAsigneeChange}
-                  >
-                    {users.map((user) => (
-                      <option key={user.id} value={user.id}>
-                        {user.name + " " + user.surname}
-                      </option>
-                    ))}{" "}
-                  </select>
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Requester:</span>
@@ -274,9 +291,9 @@ function TicketDetailsEdit() {
                     onChange={handleRequesterChange}
                   >
                     <option value="">Select requester</option>
-                    {users.map((u) => (
-                      <option key={u.id} value={u.id}>
-                        {u.name} {u.surname}
+                    {users.map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.name + " " + user.surname}
                       </option>
                     ))}
                   </select>

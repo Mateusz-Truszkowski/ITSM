@@ -92,7 +92,7 @@ export const createUser = async (userData) => {
   }
 };
 export const updateUser = async (id, user) => {
-  const response = await fetch(`https://localhost:63728/users`, {
+  const response = await fetch(serverPath +"/users", {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -102,4 +102,27 @@ export const updateUser = async (id, user) => {
   });
 
   return response.ok;
+};
+
+export const deleteUser = async (userId) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + `/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.ok;
+  } catch (error) {
+    console.error(`Error fetching user ${userId}:`, error);
+    return null;
+  }
 };
