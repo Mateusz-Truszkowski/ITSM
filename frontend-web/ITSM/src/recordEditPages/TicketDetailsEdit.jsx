@@ -1,13 +1,12 @@
-// TO DO
-
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { saveTicket,fetchTicket } from "../hooks/tickets";
-import { fetchUser } from "../hooks/users";
+import { fetchUser,fetchUsers } from "../hooks/users";
+import { fetchService, fetchServices } from "../hooks/services";
 import { useCheckTokenValidity } from "../global";
 
 function TicketDetailsEdit() {
@@ -15,6 +14,7 @@ function TicketDetailsEdit() {
   const checkToken = useCheckTokenValidity();
   const [isLoading, setIsLoading] = useState(true);
   const [ticket, setTicket] = useState();
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -28,6 +28,7 @@ function TicketDetailsEdit() {
   const [assigneeId, setAssigneeId] = useState("");
   const [requesterId, setRequesterId] = useState("");
   const [users, setUsers] = useState([]);
+  const [services, setServices] = useState([]);
   const [error, setError] = useState(false);
 
   const displayTickets = async () => {
@@ -52,8 +53,8 @@ function TicketDetailsEdit() {
       );
       setName(ticketData.name);
       setDescription(ticketData.description);
-      setCreationDate(ticketData.creationDate);
-      setSolutionDate(ticketData.solutionDate);
+      setCreationDate(ticketData.creationDate?.slice(0, 10));
+      setSolutionDate(ticketData.solutionDate?.slice(0, 10));
       setSolutionDescription(ticketData.solutiondescription);
       setPriority(ticketData.priority);
       setType(ticketData.type);
@@ -125,6 +126,7 @@ function TicketDetailsEdit() {
   };
   const saveRecord = async () => {
     const serviceData = {
+      id: ticketId,
       name: name,
       description: description,
       creationDate: creationDate,
@@ -152,6 +154,17 @@ function TicketDetailsEdit() {
 
     isTokenValid;
     displayTickets();
+    const getServices = async () => {
+          const fetchedServices = await fetchServices();
+          setServices(fetchedServices);
+        };
+        getServices();
+
+        const getUsers = async () => {
+          const fetchedUsers = await fetchUsers();
+          setUsers(fetchedUsers);
+        };
+        getUsers();
   }, []);
 
   return (
@@ -228,18 +241,31 @@ function TicketDetailsEdit() {
                   </select>
                 </div>
                 <div className="record-field">
-                  <span className="record-label">Service ID:</span>
-                  <input className="record-value-edit" 
-                  type="number" 
-                  value={serviceId} 
-                  onChange={handleServiceIdChange} />
+                  <span className="record-label">Service:</span>
+                  <select className="record-value-edit" 
+                          value={serviceId} 
+                          onChange={handleServiceIdChange}>
+                    <option value="">Select service</option>
+                    {services.map((service) => (
+                      <option key={service.id} value={service.id}>
+                        {service.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
                 <div className="record-field">
                   <span className="record-label">Assignee:</span>
-                  <input className="record-value-edit" 
-                  type="number"
+                  <select className="record-value-edit" 
                   value={assigneeId} 
-                  onChange={handleAsigneeChange}/>
+                  onChange={handleAsigneeChange}>
+                    <option value="">Select assignee</option>
+                     {users.map((user) => (
+                          <option key={user.id} value={user.id}>
+                          {user.name + " " + user.surname}
+                    </option>
+                      ))}
+                  </select>    
                 </div>
                 <div className="record-field">
                   <span className="record-label">Requester:</span>
@@ -247,11 +273,11 @@ function TicketDetailsEdit() {
                   value={requesterId} 
                   onChange={handleRequesterChange}>
                     <option value="">Select requester</option>
-                    {users.map((u) => (
-                      <option key={u.id} value={u.id}>
-                        {u.name} {u.surname}
-                      </option>
-                    ))}
+                     {users.map((user) => (
+                          <option key={user.id} value={user.id}>
+                            {user.name + " " + user.surname}
+                          </option>
+                        ))}
                   </select>
                 </div>
               </div>
