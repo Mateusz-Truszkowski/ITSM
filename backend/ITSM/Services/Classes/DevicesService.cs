@@ -93,11 +93,9 @@ namespace ITSM.Services
         {
             var Devices = GetDevices();
 
-
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Devices");
 
-            // Nagłówki
             worksheet.Cell(1, 1).Value = "Id";
             worksheet.Cell(1, 2).Value = "Name";
             worksheet.Cell(1, 3).Value = "Description";
@@ -106,7 +104,6 @@ namespace ITSM.Services
             worksheet.Cell(1, 6).Value = "Status";
             worksheet.Cell(1, 7).Value = "User";
 
-            // Dodanie danych
             for (int i = 0; i < Devices.Count; i++)
             {
                 var Device = Devices[i];
@@ -119,7 +116,6 @@ namespace ITSM.Services
                 worksheet.Cell(i + 2, 7).Value = Device.UserId;
             }
 
-
             using var stream = new System.IO.MemoryStream();
             workbook.SaveAs(stream);
             return stream.ToArray();
@@ -129,11 +125,9 @@ namespace ITSM.Services
         {
             var Devices = GetDevicesByUser(user);
 
-
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("MyDevices");
 
-            // Nagłówki
             worksheet.Cell(1, 1).Value = "Id";
             worksheet.Cell(1, 2).Value = "Name";
             worksheet.Cell(1, 3).Value = "Description";
@@ -141,7 +135,6 @@ namespace ITSM.Services
             worksheet.Cell(1, 5).Value = "DepreciationDate";
             worksheet.Cell(1, 6).Value = "Status";
 
-            // Dodanie danych
             for (int i = 0; i < Devices.Count; i++)
             {
                 var Device = Devices[i];
@@ -152,7 +145,6 @@ namespace ITSM.Services
                 worksheet.Cell(i + 2, 5).Value = Device.DepreciationDate;
                 worksheet.Cell(i + 2, 6).Value = Device.Status;
             }
-
 
             using var stream = new System.IO.MemoryStream();
             workbook.SaveAs(stream);

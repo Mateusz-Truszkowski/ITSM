@@ -113,7 +113,6 @@ namespace ITSM.Services
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Tickets");
 
-            // Nagłówki
             worksheet.Cell(1, 1).Value = "ID";
             worksheet.Cell(1, 2).Value = "Name";
             worksheet.Cell(1, 3).Value = "Description";
@@ -123,11 +122,7 @@ namespace ITSM.Services
             worksheet.Cell(1, 7).Value = "Priority";
             worksheet.Cell(1, 8).Value = "Type";
             worksheet.Cell(1, 9).Value = "Status";
-          //  worksheet.Cell(1, 10).Value = "Service";
-           // worksheet.Cell(1, 11).Value = "Requester";
-           // worksheet.Cell(1, 12).Value = "Assignee";
 
-            // Dodanie danych
             for (int i = 0; i < dtoList.Count; i++)
             {
                 var ticket = dtoList[i];
@@ -140,9 +135,6 @@ namespace ITSM.Services
                 worksheet.Cell(i + 2, 7).Value = ticket.Priority;
                 worksheet.Cell(i + 2, 8).Value = ticket.Type;
                 worksheet.Cell(i + 2, 9).Value = ticket.Status;
-                //worksheet.Cell(i + 2, 10).Value = ticket.Service.Name;
-               // worksheet.Cell(i + 2, 11).Value = ticket.Requester.Name;
-               // worksheet.Cell(i + 2, 12).Value = ticket.Assignee.Email;
             }
 
             

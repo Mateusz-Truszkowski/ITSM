@@ -5,7 +5,7 @@ import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { saveTicket, fetchTicket } from "../hooks/tickets";
 import { fetchUser, fetchUsers } from "../hooks/users";
-import { fetchService, fetchServices } from "../hooks/services";
+import { fetchServices } from "../hooks/services";
 import { checkToken } from "../global";
 
 function TicketDetailsEdit() {

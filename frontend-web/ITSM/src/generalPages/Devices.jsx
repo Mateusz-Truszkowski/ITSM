@@ -76,7 +76,6 @@ function Devices() {
                     <th>Description</th>
                     <th>Acquisition Date</th>
                     <th>Status</th>
-                    <th>SLA</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -89,7 +88,6 @@ function Devices() {
                         {new Date(device.acquisitionDate).toLocaleDateString()}
                       </td>
                       <td>{device.status}</td>
-                      <td>{device.sla}</td>
                     </tr>
                   ))}
                 </tbody>

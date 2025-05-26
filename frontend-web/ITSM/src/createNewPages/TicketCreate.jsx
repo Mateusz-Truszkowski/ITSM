@@ -5,6 +5,7 @@ import "../assets/RecordDetails.css";
 import { checkToken } from "../global";
 import { createTicket } from "../hooks/tickets";
 import { fetchUsers } from "../hooks/users";
+import { fetchServices } from "../hooks/services";
 import { useNavigate } from "react-router-dom";
 
 function TicketCreate() {
@@ -22,6 +23,7 @@ function TicketCreate() {
   const [assigneeId, setAssigneeId] = useState("");
   const [requesterId, setRequesterId] = useState("");
   const [users, setUsers] = useState([]);
+  const [services, setServices] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -32,7 +34,12 @@ function TicketCreate() {
       const data = await fetchUsers();
       setUsers(data);
     };
+    const getServices = async () => {
+      const fetchedServices = await fetchServices();
+      setServices(fetchedServices);
+    };
 
+    getServices();
     loadUsers();
   }, []);
 
@@ -168,21 +175,33 @@ function TicketCreate() {
                 </div>
                 <div className="record-field">
                   <span className="record-label">Service ID:</span>
-                  <input
+                  <select
                     className="record-value-edit"
-                    type="number"
                     value={serviceId}
                     onChange={(e) => setServiceId(e.target.value)}
-                  />
+                  >
+                    <option value="">Select service</option>
+                    {services.map((service) => (
+                      <option key={service.id} value={service.id}>
+                        {service.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Assignee:</span>
-                  <input
+                  <select
                     className="record-value-edit"
-                    type="number"
                     value={assigneeId}
                     onChange={(e) => setAssigneeId(e.target.value)}
-                  />
+                  >
+                    <option value="">Select assignee</option>
+                    {users.map((u) => (
+                      <option key={u.id} value={u.id}>
+                        {u.name} {u.surname}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Requester:</span>
