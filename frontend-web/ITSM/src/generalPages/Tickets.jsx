@@ -5,12 +5,12 @@ import MainPanel from "../components/MainPanel";
 import NavigationLP from "../components/NavigationLP";
 import React, { useEffect, useState } from "react";
 import { fetchTickets, fetchTicketReport } from "../hooks/tickets.js";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 import { useNavigate } from "react-router-dom";
 
 function Tickets() {
   const [tickets, setTickets] = useState([]);
-  const checkToken = useCheckTokenValidity();
+
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -46,9 +46,8 @@ function Tickets() {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
     displayTickets();
   }, []);
 

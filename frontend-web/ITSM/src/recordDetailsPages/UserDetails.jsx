@@ -5,13 +5,13 @@ import "../assets/RecordDetails.css";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchUser } from "../hooks/users";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 
 function UserDetails() {
   const [user, setUser] = useState();
   const { userId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const checkToken = useCheckTokenValidity();
+
   const navigate = useNavigate();
 
   const displayUser = async () => {

@@ -1,20 +1,21 @@
 // TO DO
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { Link } from "react-router-dom";
-import { saveTicket,fetchTicket } from "../hooks/tickets";
+import { saveTicket, fetchTicket } from "../hooks/tickets";
 import { fetchUser } from "../hooks/users";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 
 function TicketDetailsEdit() {
   const { ticketId } = useParams();
-  const checkToken = useCheckTokenValidity();
+
   const [isLoading, setIsLoading] = useState(true);
   const [ticket, setTicket] = useState();
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -76,15 +77,12 @@ function TicketDetailsEdit() {
 
       setTicket(enrichedTicket);
       setIsLoading(false);
-
-      
     } catch (error) {
       console.error("Wystąpił błąd:", error);
     }
-    
   };
 
- const handleNameChange = (event) => {
+  const handleNameChange = (event) => {
     setName(event.target.value);
   };
 
@@ -124,7 +122,8 @@ function TicketDetailsEdit() {
     setRequesterId(event.target.value);
   };
   const saveRecord = async () => {
-    const serviceData = {
+    const ticketData = {
+      id: ticketId,
       name: name,
       description: description,
       creationDate: creationDate,
@@ -137,7 +136,7 @@ function TicketDetailsEdit() {
       assigneeId: assigneeId,
       requesterId: requesterId,
     };
-    const success = await saveTicket(serviceData);
+    const success = await saveTicket(ticketData);
     if (success) {
       setError(false);
       navigate(`/tickets/${ticketId}`);
@@ -148,9 +147,8 @@ function TicketDetailsEdit() {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
     displayTickets();
   }, []);
 
@@ -170,47 +168,62 @@ function TicketDetailsEdit() {
               <div className="record-fields">
                 <div className="record-field">
                   <span className="record-label">Name:</span>
-                  <input className="record-value-edit" 
-                  value={name} 
-                  onChange={handleNameChange} />
+                  <input
+                    className="record-value-edit"
+                    value={name}
+                    onChange={handleNameChange}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Description:</span>
-                  <textarea className="record-value-edit" 
-                  value={description} 
-                  onChange={handleDescriptionChange} />
+                  <textarea
+                    className="record-value-edit"
+                    value={description}
+                    onChange={handleDescriptionChange}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Created:</span>
-                  <input className="record-value-edit" 
-                  type="date" value={creationDate} 
-                 onChange={handleCreationDateChange}/>
+                  <input
+                    className="record-value-edit"
+                    type="date"
+                    value={creationDate}
+                    onChange={handleCreationDateChange}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Solution Date:</span>
-                  <input className="record-value-edit" 
-                  type="date" 
-                  value={solutionDate} 
-                  onChange={handleSolutionDateChange}/>
+                  <input
+                    className="record-value-edit"
+                    type="date"
+                    value={solutionDate}
+                    onChange={handleSolutionDateChange}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Solution Description:</span>
-                  <textarea className="record-value-edit" 
-                  value={solutionDescription} 
-                  onChange={handleSolutionDescriptionChange}/>
+                  <textarea
+                    className="record-value-edit"
+                    value={solutionDescription}
+                    onChange={handleSolutionDescriptionChange}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Priority:</span>
-                  <input className="record-value-edit"
-                   type="number" 
-                   value={priority} 
-                  onChange={handlePriorityChange} />
+                  <input
+                    className="record-value-edit"
+                    type="number"
+                    value={priority}
+                    onChange={handlePriorityChange}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Type:</span>
-                  <select className="record-value-edit" 
-                  value={type} 
-                  onChange={handleTypeChange}>
+                  <select
+                    className="record-value-edit"
+                    value={type}
+                    onChange={handleTypeChange}
+                  >
                     <option value="Bug">Bug</option>
                     <option value="Performance">Performance</option>
                     <option value="Support">Support</option>
@@ -219,9 +232,11 @@ function TicketDetailsEdit() {
                 </div>
                 <div className="record-field">
                   <span className="record-label">Status:</span>
-                  <select className="record-value-edit" 
-                  value={status}
-                  onChange={handleStatusChange}>
+                  <select
+                    className="record-value-edit"
+                    value={status}
+                    onChange={handleStatusChange}
+                  >
                     <option value="Open">Open</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Closed">Closed</option>
@@ -229,23 +244,35 @@ function TicketDetailsEdit() {
                 </div>
                 <div className="record-field">
                   <span className="record-label">Service ID:</span>
-                  <input className="record-value-edit" 
-                  type="number" 
-                  value={serviceId} 
-                  onChange={handleServiceIdChange} />
+                  <input
+                    className="record-value-edit"
+                    type="number"
+                    value={serviceId}
+                    onChange={handleServiceIdChange}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Assignee:</span>
-                  <input className="record-value-edit" 
-                  type="number"
-                  value={assigneeId} 
-                  onChange={handleAsigneeChange}/>
+                  <select
+                    className="record-value-edit"
+                    type="number"
+                    value={assigneeId}
+                    onChange={handleAsigneeChange}
+                  >
+                    {users.map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.name + " " + user.surname}
+                      </option>
+                    ))}{" "}
+                  </select>
                 </div>
                 <div className="record-field">
                   <span className="record-label">Requester:</span>
-                  <select className="record-value-edit" 
-                  value={requesterId} 
-                  onChange={handleRequesterChange}>
+                  <select
+                    className="record-value-edit"
+                    value={requesterId}
+                    onChange={handleRequesterChange}
+                  >
                     <option value="">Select requester</option>
                     {users.map((u) => (
                       <option key={u.id} value={u.id}>

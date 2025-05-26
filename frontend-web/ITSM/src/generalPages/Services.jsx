@@ -6,12 +6,11 @@ import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel.jsx";
 import { useEffect, useState } from "react";
 import { fetchServices, fetchServicesReport } from "../hooks/services.js";
-import { useCheckTokenValidity } from "../global.js";
+import { checkToken } from "../global.js";
 import { useNavigate } from "react-router-dom";
 
 function Services() {
   const [services, setServices] = useState([]);
-  const checkToken = useCheckTokenValidity();
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -47,9 +46,8 @@ function Services() {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
     displayServices();
   }, []);
 

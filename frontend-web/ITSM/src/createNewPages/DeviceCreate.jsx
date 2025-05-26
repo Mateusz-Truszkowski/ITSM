@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 import { createDevice } from "../hooks/devices";
 import { fetchUsers } from "../hooks/users";
 import { useNavigate } from "react-router-dom";
 
 function DeviceCreate() {
-  const checkToken = useCheckTokenValidity();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -67,23 +66,45 @@ function DeviceCreate() {
               <div className="record-fields">
                 <div className="record-field">
                   <span className="record-label">Name:</span>
-                  <input className="record-value-edit" value={name} onChange={(e) => setName(e.target.value)} />
+                  <input
+                    className="record-value-edit"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Description:</span>
-                  <textarea className="record-value-edit" value={description} onChange={(e) => setDescription(e.target.value)} />
+                  <textarea
+                    className="record-value-edit"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Acquisition Date:</span>
-                  <input className="record-value-edit" type="date" value={acquisitionDate} onChange={(e) => setAcquisitionDate(e.target.value)} />
+                  <input
+                    className="record-value-edit"
+                    type="date"
+                    value={acquisitionDate}
+                    onChange={(e) => setAcquisitionDate(e.target.value)}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Depreciation Date:</span>
-                  <input className="record-value-edit" type="date" value={depreciationDate} onChange={(e) => setDepreciationDate(e.target.value)} />
+                  <input
+                    className="record-value-edit"
+                    type="date"
+                    value={depreciationDate}
+                    onChange={(e) => setDepreciationDate(e.target.value)}
+                  />
                 </div>
                 <div className="record-field">
                   <span className="record-label">Owner:</span>
-                  <select className="record-value-edit" value={userId} onChange={(e) => setUserId(e.target.value)}>
+                  <select
+                    className="record-value-edit"
+                    value={userId}
+                    onChange={(e) => setUserId(e.target.value)}
+                  >
                     <option value="">Select user</option>
                     {users.map((u) => (
                       <option key={u.id} value={u.id}>
@@ -94,7 +115,11 @@ function DeviceCreate() {
                 </div>
                 <div className="record-field">
                   <span className="record-label">Status:</span>
-                  <select className="record-value-edit" value={status} onChange={(e) => setStatus(e.target.value)}>
+                  <select
+                    className="record-value-edit"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
                   </select>

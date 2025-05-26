@@ -24,9 +24,11 @@ function MainPanel({ children }) {
       {token !== null ? (
         <div className="dashboard">
           <div className="navigation">
-            <div className="nav-logo-div">
-              <img className="nav-logo" src={rocket} alt="Logo" />
-            </div>
+            <Link to="/dashboard">
+              <div className="nav-logo-div">
+                <img className="nav-logo" src={rocket} alt="Logo" />
+              </div>
+            </Link>
             <div className="tabs">
               <Link
                 to="/tickets"

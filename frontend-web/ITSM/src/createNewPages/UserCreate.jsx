@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 import { createUser } from "../hooks/users";
 import { useNavigate } from "react-router-dom";
 
 function UserCreate() {
-  const checkToken = useCheckTokenValidity();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -71,27 +70,53 @@ function UserCreate() {
                 <div className="record-fields">
                   <div className="record-field">
                     <span className="record-label">Login:</span>
-                    <input className="record-value-edit" value={login} onChange={(e) => setLogin(e.target.value)} />
+                    <input
+                      className="record-value-edit"
+                      value={login}
+                      onChange={(e) => setLogin(e.target.value)}
+                    />
                   </div>
                   <div className="record-field">
                     <span className="record-label">Password:</span>
-                    <input className="record-value-edit" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input
+                      className="record-value-edit"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
                   </div>
                   <div className="record-field">
                     <span className="record-label">Name:</span>
-                    <input className="record-value-edit" value={name} onChange={(e) => setName(e.target.value)} />
+                    <input
+                      className="record-value-edit"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
                   </div>
                   <div className="record-field">
                     <span className="record-label">Surname:</span>
-                    <input className="record-value-edit" value={surname} onChange={(e) => setSurname(e.target.value)} />
+                    <input
+                      className="record-value-edit"
+                      value={surname}
+                      onChange={(e) => setSurname(e.target.value)}
+                    />
                   </div>
                   <div className="record-field">
                     <span className="record-label">Email:</span>
-                    <input className="record-value-edit" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input
+                      className="record-value-edit"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
                   <div className="record-field">
                     <span className="record-label">Group:</span>
-                    <select className="record-value-edit" value={group} onChange={(e) => setGroup(e.target.value)}>
+                    <select
+                      className="record-value-edit"
+                      value={group}
+                      onChange={(e) => setGroup(e.target.value)}
+                    >
                       <option value="Admin">Admin</option>
                       <option value="Operator">Operator</option>
                       <option value="User">User</option>
@@ -99,11 +124,19 @@ function UserCreate() {
                   </div>
                   <div className="record-field">
                     <span className="record-label">Occupation:</span>
-                    <input className="record-value-edit" value={occupation} onChange={(e) => setOccupation(e.target.value)} />
+                    <input
+                      className="record-value-edit"
+                      value={occupation}
+                      onChange={(e) => setOccupation(e.target.value)}
+                    />
                   </div>
                   <div className="record-field">
                     <span className="record-label">Status:</span>
-                    <select className="record-value-edit" value={status} onChange={(e) => setStatus(e.target.value)}>
+                    <select
+                      className="record-value-edit"
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
                       <option value="Active">Active</option>
                       <option value="Inactive">Inactive</option>
                     </select>

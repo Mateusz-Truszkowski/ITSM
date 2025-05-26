@@ -4,13 +4,13 @@ import "../assets/RecordDetails.css";
 import { createService } from "../hooks/services";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 
 function ServiceCreate() {
   const [service, setService] = useState();
   const { serviceId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const checkToken = useCheckTokenValidity();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [contractingDate, setContractingDate] = useState("");
@@ -65,9 +65,8 @@ function ServiceCreate() {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
     setIsLoading(false);
   }, []);
 

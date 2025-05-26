@@ -4,12 +4,11 @@ import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchUser, updateUser } from "../hooks/users";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 
 function UserDetailsEdit() {
   const { userId } = useParams();
   const navigate = useNavigate();
-  const checkToken = useCheckTokenValidity();
 
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -102,7 +101,9 @@ function UserDetailsEdit() {
                     <input
                       className="record-value-edit"
                       value={user.occupation || ""}
-                      onChange={(e) => handleChange("occupation", e.target.value)}
+                      onChange={(e) =>
+                        handleChange("occupation", e.target.value)
+                      }
                     />
                   </div>
                   <div className="record-field">

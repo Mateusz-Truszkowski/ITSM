@@ -6,14 +6,14 @@ import "../assets/RecordDetails.css";
 import { Link } from "react-router-dom";
 import { fetchTicket } from "../hooks/tickets";
 import { fetchUser } from "../hooks/users";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 
 function TicketDetails() {
   const { ticketId } = useParams();
-  const checkToken = useCheckTokenValidity();
+
   const [isLoading, setIsLoading] = useState(true);
   const [ticket, setTicket] = useState();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const displayTickets = async () => {
     try {
@@ -58,9 +58,8 @@ function TicketDetails() {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
     displayTickets();
   }, []);
 

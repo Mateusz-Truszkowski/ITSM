@@ -4,15 +4,17 @@ import "../assets/GeneralLP.css";
 import "../assets/FormLP.css";
 import "../assets/Navigation.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
+import { checkToken } from "../global";
 
 const cardData = [
   {
     id: 1,
     title: "Incident Management",
     description:
-        "Quickly restore normal service operations and minimize disruption to business functions.",
+      "Quickly restore normal service operations and minimize disruption to business functions.",
   },
   {
     id: 2,
@@ -37,41 +39,47 @@ const cardData = [
 ];
 
 function LandingPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const isTokenValid = checkToken(token);
+
+    if (isTokenValid) navigate("/dashboard");
+  }, []);
 
   return (
-      <>
-        <section className="header">
-          <img src={logo} alt="ITSM Logo" />
-          <div className="navigation-bar">
-            <div className="navigation-item">
-              <Link to="/">About</Link>
-            </div>
-            <div className="navigation-item">
-              <Link to="/">Contact</Link>
-            </div>
-            <div className="navigation-item">
-              <Link to="/login">Login</Link> | <Link to="/">Register</Link>
-            </div>
+    <>
+      <section className="header">
+        <img src={logo} alt="ITSM Logo" />
+        <div className="navigation-bar">
+          <div className="navigation-item">
+            <Link to="/">About</Link>
           </div>
-        </section>
-
-        <div className="slogan">
-          We are just simply <span className="buzzword">THE BEST</span>
+          <div className="navigation-item">
+            <Link to="/">Contact</Link>
+          </div>
+          <div className="navigation-item">
+            <Link to="/login">Login</Link> | <Link to="/">Register</Link>
+          </div>
         </div>
+      </section>
 
-        <section className="itsm-section">
-          {cardData.map((card) => (
-              <div
-                  key={card.id}
-                  className="itsm-card"
-              >
-                <div className="itsm-number">{String(card.id).padStart(2, "0")}</div>
-                <div className="itsm-title">{card.title}</div>
-                <div className="itsm-description">{card.description}</div>
-              </div>
-          ))}
-        </section>
-      </>
+      <div className="slogan">
+        We are just simply <span className="buzzword">THE BEST</span>
+      </div>
+
+      <section className="itsm-section">
+        {cardData.map((card) => (
+          <div key={card.id} className="itsm-card">
+            <div className="itsm-number">
+              {String(card.id).padStart(2, "0")}
+            </div>
+            <div className="itsm-title">{card.title}</div>
+            <div className="itsm-description">{card.description}</div>
+          </div>
+        ))}
+      </section>
+    </>
   );
 }
 

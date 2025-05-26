@@ -5,14 +5,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchDevice, saveDevice } from "../hooks/devices";
 import { fetchUsers } from "../hooks/users";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 import { fetchUser } from "../hooks/users";
 
 function DeviceDetailsEdit() {
   const [device, setDevice] = useState(null);
   const { deviceId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const checkToken = useCheckTokenValidity();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [acquisitionDate, setAcquisitionDate] = useState("");
@@ -130,9 +130,8 @@ function DeviceDetailsEdit() {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
     displayDevice();
 
     const getUsers = async () => {

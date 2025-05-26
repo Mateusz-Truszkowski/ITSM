@@ -4,13 +4,13 @@ import "../assets/MainPanel.css";
 import "../assets/Users.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
-import { fetchUsers,fetchUsersReport } from "../hooks/users.js";
-import { useCheckTokenValidity } from "../global";
+import { fetchUsers, fetchUsersReport } from "../hooks/users.js";
+import { checkToken } from "../global";
 import { useNavigate } from "react-router-dom";
 
 function Users() {
   const [users, setUsers] = useState([]);
-  const checkToken = useCheckTokenValidity();
+
   const [isLoading, setIsLoading] = useState(true);
 
   const displayUsers = async () => {
@@ -39,17 +39,15 @@ function Users() {
   };
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
     displayUsers();
   }, []);
 
   const navigate = useNavigate();
   const CreateUser = () => {
-  navigate("/users/create");
-};
-
+    navigate("/users/create");
+  };
 
   return (
     <>
@@ -59,7 +57,7 @@ function Users() {
           <div className="records-container">
             <h2 className="records-header">Users</h2>
             <button className="report-button" onClick={CreateUser}>
-             New
+              New
             </button>
             <button className="report-button" onClick={MakeReport}>
               Download report

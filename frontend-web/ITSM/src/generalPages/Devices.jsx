@@ -5,13 +5,13 @@ import "../assets/Devices.css";
 import NavigationLP from "../components/NavigationLP.jsx";
 import MainPanel from "../components/MainPanel";
 import { useEffect, useState } from "react";
-import { fetchDevices,fetchDevicesReport } from "../hooks/devices.js";
-import { useCheckTokenValidity } from "../global";
+import { fetchDevices, fetchDevicesReport } from "../hooks/devices.js";
+import { checkToken } from "../global";
 import { useNavigate } from "react-router-dom";
 
 function Devices() {
   const [devices, setDevices] = useState([]);
-  const checkToken = useCheckTokenValidity();
+
   const [isLoading, setIsLoading] = useState(true);
 
   const displayDevices = async () => {
@@ -40,16 +40,15 @@ function Devices() {
   };
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
     displayDevices();
   }, []);
 
-const navigate = useNavigate();
-const CreateDevice = () => {
-  navigate("/devices/create");
-};
+  const navigate = useNavigate();
+  const CreateDevice = () => {
+    navigate("/devices/create");
+  };
 
   return (
     <>

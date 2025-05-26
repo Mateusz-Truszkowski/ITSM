@@ -4,14 +4,14 @@ import "../assets/RecordDetails.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchDevice } from "../hooks/devices";
-import { useCheckTokenValidity } from "../global";
+import { checkToken } from "../global";
 import { fetchUser } from "../hooks/users";
 
 function DeviceDetails() {
   const [device, setDevice] = useState(null);
   const { deviceId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const checkToken = useCheckTokenValidity();
+
   const navigate = useNavigate();
 
   const displayDevice = async () => {
@@ -48,9 +48,8 @@ function DeviceDetails() {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const isTokenValid = checkToken(token);
+    checkToken(token);
 
-    isTokenValid;
     displayDevice();
   }, []);
 

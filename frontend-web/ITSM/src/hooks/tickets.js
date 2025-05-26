@@ -50,6 +50,7 @@ export const fetchTicket = async (ticketId) => {
     return null;
   }
 };
+
 export const fetchTicketReport = async () => {
   const token = localStorage.getItem("authToken");
 
@@ -72,8 +73,9 @@ export const fetchTicketReport = async () => {
     return null;
   }
 };
+
 export const createTicket = async (ticketData) => {
-  const response = await fetch(serverPath +"/tickets", {
+  const response = await fetch(serverPath + "/tickets", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -84,11 +86,12 @@ export const createTicket = async (ticketData) => {
 
   return response.ok;
 };
+
 export const saveTicket = async (ticketData) => {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch(serverPath + `/tickets`, {
+    const response = await fetch(serverPath + "/tickets", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
