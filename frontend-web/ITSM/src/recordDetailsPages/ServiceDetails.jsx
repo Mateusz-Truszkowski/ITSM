@@ -1,7 +1,7 @@
 import NavigationLP from "../components/NavigationLP";
 import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
-import { fetchService } from "../hooks/services";
+import { fetchService, deleteService } from "../hooks/services";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCheckTokenValidity } from "../global";
@@ -40,6 +40,10 @@ function ServiceDetails() {
   const editRecord = () => {
     navigate(`/services/${service.id}/edit`);
   };
+  const deleteRecord = async () => {
+    await deleteService(service.id);
+    navigate(`/services`);
+  }
 
   return (
     <>
@@ -50,9 +54,14 @@ function ServiceDetails() {
             <div className="record-details-container">
               <div className="record-details-header">
                 <h1>Service Details</h1>
-                <button className="edit-button" onClick={editRecord}>
-                  Edit
-                </button>
+                <div className="Button-container">
+                  <button className="delete-button" onClick={deleteRecord}>
+                    delete
+                  </button>
+                  <button className="edit-button" onClick={editRecord}>
+                    Edit
+                  </button>
+                </div>
               </div>
               <div className="record-fields">
                 {isLoading ? (

@@ -106,3 +106,26 @@ export const saveTicket = async (ticketData) => {
     return false;
   }
 };
+
+export const deleteTicket = async (ticketId) => {
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const response = await fetch(serverPath + `/tickets/${ticketId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.ok;
+  } catch (error) {
+    console.error(`Error fetching ticket ${ticketId}:`, error);
+    return null;
+  }
+};

@@ -4,7 +4,7 @@ import MainPanel from "../components/MainPanel";
 import "../assets/RecordDetails.css";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchUser } from "../hooks/users";
+import { fetchUser, deleteUser } from "../hooks/users";
 import { useCheckTokenValidity } from "../global";
 
 function UserDetails() {
@@ -34,7 +34,15 @@ function UserDetails() {
     const token = localStorage.getItem("authToken");
     checkToken(token);
     displayUser();
+  
   }, []);
+  const editRecord = () => {
+    navigate(`/users/${userId}/edit`);
+  };
+  const deleteRecord = async () => {
+    await deleteUser(userId);
+    navigate(`/users`);
+  }
 
   return (
     <>
@@ -45,12 +53,14 @@ function UserDetails() {
             <div className="record-details-container">
               <div className="record-details-header">
                 <h1>User Details</h1>
-                <button
-                  className="edit-button"
-                  onClick={() => navigate(`/users/${userId}/edit`)}
-                >
-                  Edit
-                </button>
+                <div className="Button-container">
+                  <button className="delete-button" onClick={deleteRecord}>
+                    delete
+                  </button>
+                  <button className="edit-button" onClick={editRecord}>
+                    Edit
+                  </button>
+                </div>
               </div>
               {isLoading ? (
                 <div className="loading-spinner">
