@@ -6,6 +6,7 @@ import "../assets/RecordDetails.css";
 import { Link } from "react-router-dom";
 import { fetchTicket, deleteTicket } from "../hooks/tickets";
 import { fetchUser } from "../hooks/users";
+import { fetchServices } from "../hooks/services";
 import { useCheckTokenValidity } from "../global";
 
 function TicketDetails() {
@@ -13,6 +14,8 @@ function TicketDetails() {
   const checkToken = useCheckTokenValidity();
   const [isLoading, setIsLoading] = useState(true);
   const [ticket, setTicket] = useState();
+  const [services, setServices] = useState([]);
+
     const navigate = useNavigate();
 
   const displayTickets = async () => {
@@ -43,10 +46,19 @@ function TicketDetails() {
         userMap[user.id] = `${user.name} ${user.surname}`;
       });
 
+      const serviceList = await fetchServices();
+      setServices(serviceList);
+
+      const servicesMap = {};
+      serviceList.forEach((service) => {
+      servicesMap[service.id] = service.name;
+      });
+
       const enrichedTicket = {
         ...ticketData,
         requesterName: userMap[ticketData.requesterId] ?? "—",
         assigneeName: userMap[ticketData.assigneeId] ?? "—",
+        serviceName: servicesMap[ticketData.serviceId] ?? "—",
       };
 
       setTicket(enrichedTicket);
@@ -141,7 +153,13 @@ function TicketDetails() {
                     </div>
                     <div className="record-field">
                       <span className="record-label">Service ID:</span>
-                      <span className="record-value">{ticket.serviceId}</span>
+                      <span className="record-value">
+                        {
+                          <Link to={`/services/${ticket.serviceId}`}>
+                            {ticket.serviceName}
+                          </Link>
+                        }
+                      </span>
                     </div>
                     <div className="record-field">
                       <span className="record-label">Assignee:</span>

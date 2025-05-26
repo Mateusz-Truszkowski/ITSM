@@ -78,11 +78,9 @@ namespace ITSM.Services
         {
             var services = GetServices();
 
-
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Users");
 
-            // Nagłówki
             worksheet.Cell(1, 1).Value = "Id";
             worksheet.Cell(1, 2).Value = "Name";
             worksheet.Cell(1, 3).Value = "Description";
@@ -90,7 +88,6 @@ namespace ITSM.Services
             worksheet.Cell(1, 5).Value = "Status";
             worksheet.Cell(1, 6).Value = "SLA";
 
-            // Dodanie danych
             for (int i = 0; i < services.Count; i++)
             {
                 var service = services[i];
@@ -101,7 +98,6 @@ namespace ITSM.Services
                 worksheet.Cell(i + 2, 5).Value = service.Status;
                 worksheet.Cell(i + 2, 6).Value = service.SLA;
             }
-
 
             using var stream = new System.IO.MemoryStream();
             workbook.SaveAs(stream);

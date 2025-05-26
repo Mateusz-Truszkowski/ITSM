@@ -6,7 +6,7 @@ import "../assets/RecordDetails.css";
 import { useNavigate } from "react-router-dom";
 import { saveTicket,fetchTicket } from "../hooks/tickets";
 import { fetchUser,fetchUsers } from "../hooks/users";
-import { fetchService, fetchServices } from "../hooks/services";
+import { fetchServices } from "../hooks/services";
 import { useCheckTokenValidity } from "../global";
 
 function TicketDetailsEdit() {
@@ -155,16 +155,16 @@ function TicketDetailsEdit() {
     isTokenValid;
     displayTickets();
     const getServices = async () => {
-          const fetchedServices = await fetchServices();
-          setServices(fetchedServices);
-        };
-        getServices();
+      const fetchedServices = await fetchServices();
+      setServices(fetchedServices);
+    };
+    getServices();
 
-        const getUsers = async () => {
-          const fetchedUsers = await fetchUsers();
-          setUsers(fetchedUsers);
-        };
-        getUsers();
+    const getUsers = async () => {
+      const fetchedUsers = await fetchUsers();
+      setUsers(fetchedUsers);
+    };
+    getUsers();
   }, []);
 
   return (
